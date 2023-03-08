@@ -6,15 +6,19 @@ use Illuminate\Contracts\Support\Renderable;
 use Illuminate\Http\Request;
 use Illuminate\Routing\Controller;
 use Modules\Product\Entities\Product;
+use Modules\Product\Http\Resource\ProductCollection;
 class ProductController extends Controller
 {
     /**
      * Display a listing of the resource.
      * @return Renderable
      */
-    public function index()
+    public function index(Request $request)
     {
-        $products = Product::with('post')->paginate(3);
+        $sortType = $request->sortBy ? $request->sortBy : 'id';
+        $order = $request->order ? $request->order : 'asc';
+        // dd($request);
+        $products = Product::with('post:id,title')->orderBy($sortType, $order)->paginate(5);
         return view('product::index', compact('products') );
     }
 

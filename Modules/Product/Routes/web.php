@@ -13,5 +13,5 @@ use Modules\Product\Http\Controllers\ProductController;
 */
 
 Route::prefix('product')->group(function() {
-    Route::get('/', [ProductController::class, 'index'])->name('product');
+    Route::any('/', [ProductController::class, 'index'])->name('product');
 });
