@@ -18,7 +18,7 @@ class ProductController extends Controller
         $sortType = $request->sortBy ? $request->sortBy : 'id';
         $order = $request->order ? $request->order : 'asc';
         // dd($request);
-        $products = Product::with('post:id,title')->orderBy($sortType, $order)->paginate(5);
+        $products = Product::with('post:id,title')->orderBy($sortType, $order)->withTrashed()->paginate(5);
         return view('product::index', compact('products') );
     }
 
@@ -77,8 +77,14 @@ class ProductController extends Controller
      * @param int $id
      * @return Renderable
      */
-    public function destroy($id)
+    public function del($id)
     {
-        //
+        $prod = Product::find($id);
+        $prod->delete();
+    }
+
+    public function res($id)
+    {
+        Product::withTrashed()->find($id)->restore();
     }
 }
