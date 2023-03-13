@@ -14,6 +14,8 @@ use Modules\Product\Http\Controllers\ProductController;
 
 Route::prefix('product')->group(function() {
     Route::any('/', [ProductController::class, 'index'])->name('product');
-    Route::any('/delete/{id}', [ProductController::class, 'del'])->name('delete');
-    Route::any('/restore/{id}', [ProductController::class, 'res'])->name('delete');
+    Route::patch('/', [ProductController::class, 'delRes'])->name('delRes');
+    Route::get('/trashed', [ProductController::class, 'trashedItem'])->name('productTrashed');
+    Route::patch('/trashed', [ProductController::class, 'delRes'])->name('productTrashed');
+    Route::get('/create', [ProductController::class, 'create'])->name('createProduct');
 });

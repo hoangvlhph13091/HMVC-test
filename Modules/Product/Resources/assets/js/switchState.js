@@ -22,11 +22,22 @@ $('body').on('click', '.noNoButton', function(e){
 $('body').on('click', '.sureVkl', function(e){
     const id = $(this).data('id');
     const action = $(this).data('action');
-    const url = window.location.href
+    const url = window.location.href;
+    const page = $('.active_paginate_link').data('page');
     $.ajax({
-        url: url+'/'+action+'/'+id,
-        success(){
+        type: 'patch',
+        headers: {'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')},
+        data: {
+            id: id,
+            action: action,
+            },
+        url: url+'?page='+page,
+        success: function(response){
             $('#modalDiv').hide();
+            let paginateData = $(response).find("#paginateDivWarp").html()
+            let listDataTable = $(response).find(".listDataTable").html()
+            $("#paginateDivWarp").html(paginateData)
+            $(".listDataTable").html(listDataTable)
         }
     })
 

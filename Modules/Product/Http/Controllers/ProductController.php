@@ -6,6 +6,7 @@ use Illuminate\Contracts\Support\Renderable;
 use Illuminate\Http\Request;
 use Illuminate\Routing\Controller;
 use Modules\Product\Entities\Product;
+use Modules\Post\Entities\Post;
 use Modules\Product\Http\Resource\ProductCollection;
 class ProductController extends Controller
 {
@@ -18,7 +19,16 @@ class ProductController extends Controller
         $sortType = $request->sortBy ? $request->sortBy : 'id';
         $order = $request->order ? $request->order : 'asc';
         // dd($request);
-        $products = Product::with('post:id,title')->orderBy($sortType, $order)->withTrashed()->paginate(5);
+        $products = Product::with('post:id,title')->orderBy($sortType, $order)->paginate(5);
+        return view('product::index', compact('products') );
+    }
+
+    public function trashedItem(Request $request)
+    {
+        $sortType = $request->sortBy ? $request->sortBy : 'id';
+        $order = $request->order ? $request->order : 'asc';
+        // dd($request);
+        $products = Product::with('post:id,title')->orderBy($sortType, $order)->onlyTrashed()->paginate(5);
         return view('product::index', compact('products') );
     }
 
@@ -28,7 +38,7 @@ class ProductController extends Controller
      */
     public function create()
     {
-        return view('product::create');
+        return view('product::createProduct');
     }
 
     /**
@@ -77,14 +87,27 @@ class ProductController extends Controller
      * @param int $id
      * @return Renderable
      */
-    public function del($id)
+    public function delRes( Request $request)
     {
-        $prod = Product::find($id);
-        $prod->delete();
+
+        if ($request->action == 'delete') {
+            $prod = Product::find($request->id)->delete();
+            $sortType = $request->sortBy ? $request->sortBy : 'id';
+            $order = $request->order ? $request->order : 'asc';
+            $products = Product::with('post:id,title')->orderBy($sortType, $order)->paginate(5);
+            return view('product::index', compact('products') );
+        } else {
+            Product::withTrashed()->find($request->id)->restore();
+            $sortType = $request->sortBy ? $request->sortBy : 'id';
+            $order = $request->order ? $request->order : 'asc';
+            $products = Product::with('post:id,title')->orderBy($sortType, $order)->onlyTrashed()->paginate(5);
+            return view('product::index', compact('products') );
+        }
     }
 
-    public function res($id)
+    public function res( Request $request, $id)
     {
-        Product::withTrashed()->find($id)->restore();
+
+
     }
 }
