@@ -19,7 +19,7 @@ class ProductController extends Controller
     {
         $sortType = $request->sortBy ? $request->sortBy : 'id';
         $order = $request->order ? $request->order : 'asc';
-        $searchValue = $request->searchValue ? $request->searchValue : ' ';
+        $searchValue = $request->searchValue ? $request->searchValue : '';
         // dd($request);
         $products = Product::with('post:id,title')->where('name','like',"%$searchValue%")->orderBy($sortType, $order)->paginate(5);
         return view('product::index', compact('products') );

@@ -33,11 +33,11 @@ $('body').on('click', '.sureVkl', function(e){
             },
         url: url+'?page='+page,
         success: function(response){
-            $('#modalDiv').hide();
             let paginateData = $(response).find("#paginateDivWarp").html()
             let listDataTable = $(response).find(".listDataTable").html()
             $("#paginateDivWarp").html(paginateData)
             $(".listDataTable").html(listDataTable)
+            $('#modalDiv').hide();
         }
     })
 

@@ -13,7 +13,6 @@ function getData(url){
                 let listDataTable = $(response).find(".listDataTable").html()
                 $("#paginateDivWarp").html(paginateData??'')
                 $(".listDataTable").html(listDataTable??'')
-
             }
         })
 }
