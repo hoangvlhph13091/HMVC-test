@@ -33,9 +33,12 @@
                     <br>
                     <br>
                     <div class="relative overflow-x-auto shadow-md sm:rounded-lg">
-                        <table id="tblLocations" class="listDataTable w-full text-sm text-left text-gray-500 dark:text-gray-400 table-fixed">
+                        <table  class="listDataTable w-full text-sm text-left text-gray-500 dark:text-gray-400 table-fixed">
                             <thead class="text-xs text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400">
                                 <tr>
+                                    <th scope="col" class="px-6 py-3">
+                                        No.
+                                    </th>
                                     <th scope="col" class="px-6 py-3">
                                         Product Name
                                     </th>
@@ -77,13 +80,15 @@
                                     </th>
                                 </tr>
                             </thead>
-                            <tbody  >
-                                <tr hidden ></tr>
-                                @foreach ( $products as $prod )
+                            <tbody id="tblLocations">
+                                @foreach ( $products as $index => $prod )
                                     <tr class="bg-white border-b dark:bg-gray-800 dark:border-gray-700">
-                                        <th scope="row" class="px-6 py-4 font-medium text-gray-900 dark:text-white">
+                                        <td scope="row" class="px-6 py-4 font-medium text-gray-900 dark:text-white">
+                                            {{ $index + 1 }}
+                                        </td>
+                                        <td scope="row" class="px-6 py-4 font-medium text-gray-900 dark:text-white">
                                             {{ $prod->name }}
-                                        </th>
+                                        </td>
                                         <td class="px-6 py-4 font-medium text-gray-900 dark:text-white truncate	">
                                             {{ $prod->content }}
                                         </td>
@@ -148,7 +153,7 @@
         })
 
             $("#tblLocations").sortable({
-                items: 'tr:not(tr:first-child)',
+                items: 'tr',
                 cursor: 'pointer',
                 axis: 'y',
                 dropOnEmpty: false,
@@ -158,8 +163,8 @@
                 stop: function (e, ui) {
                     ui.item.removeClass("selected");
                     $(this).find("tr").each(function (index) {
-                        if (index > 0) {
-                            $(this).find("td").eq(2).html(index);
+                        if (index >= 0) {
+                            $(this).find("td").eq(0).html(index + 1);
                         }
                     });
                 }
