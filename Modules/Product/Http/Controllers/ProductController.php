@@ -6,6 +6,7 @@ use Illuminate\Contracts\Support\Renderable;
 use Illuminate\Http\Request;
 use Illuminate\Routing\Controller;
 use Modules\Product\Entities\Product;
+use Illuminate\Support\Facades\Redis;
 use Modules\Post\Entities\Post;
 use Modules\Product\Http\Resource\ProductCollection;
 class ProductController extends Controller
@@ -18,8 +19,9 @@ class ProductController extends Controller
     {
         $sortType = $request->sortBy ? $request->sortBy : 'id';
         $order = $request->order ? $request->order : 'asc';
+        $searchValue = $request->searchValue ? $request->searchValue : ' ';
         // dd($request);
-        $products = Product::with('post:id,title')->orderBy($sortType, $order)->paginate(5);
+        $products = Product::with('post:id,title')->where('name','like',"%$searchValue%")->orderBy($sortType, $order)->paginate(5);
         return view('product::index', compact('products') );
     }
 
@@ -58,7 +60,23 @@ class ProductController extends Controller
      */
     public function show($id)
     {
-        return view('product::show');
+        $prod_info = Redis::get('Prod_', $id);
+        if(isset($prod_info)) {
+            $prod = json_decode($prod_info, FALSE);
+            return response()->json([
+                "status_code" => 201,
+                "message" => "lmao sure vkl",
+                "data" => $prod,
+            ]);
+        } else {
+            $prod = Product::find($id);
+            Redis::set('Prod_', $id, $prod);
+            return response()->json([
+                "status_code" => 201,
+                "message" => "lmao Redis fail vkl",
+                "data" => $prod,
+            ]);
+        }
     }
 
     /**
@@ -105,9 +123,4 @@ class ProductController extends Controller
         }
     }
 
-    public function res( Request $request, $id)
-    {
-
-
-    }
 }

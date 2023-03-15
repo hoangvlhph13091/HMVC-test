@@ -24,11 +24,16 @@
                                 Deleted Item
                             </button>
                         </a>
+                        <input
+                            id="search"
+                            name="search"
+                            type="search"
+                            placeholder="search">
                     </div>
                     <br>
                     <br>
                     <div class="relative overflow-x-auto shadow-md sm:rounded-lg">
-                        <table class="listDataTable w-full text-sm text-left text-gray-500 dark:text-gray-400 table-fixed">
+                        <table id="tblLocations" class="listDataTable w-full text-sm text-left text-gray-500 dark:text-gray-400 table-fixed">
                             <thead class="text-xs text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400">
                                 <tr>
                                     <th scope="col" class="px-6 py-3">
@@ -72,7 +77,8 @@
                                     </th>
                                 </tr>
                             </thead>
-                            <tbody>
+                            <tbody  >
+                                <tr hidden ></tr>
                                 @foreach ( $products as $prod )
                                     <tr class="bg-white border-b dark:bg-gray-800 dark:border-gray-700">
                                         <th scope="row" class="px-6 py-4 font-medium text-gray-900 dark:text-white">
@@ -110,7 +116,6 @@
                         <br>
                         {!! $products->links() !!}
                     </div>
-
                 </div>
             </div>
         </div>
@@ -122,4 +127,42 @@
     <script src="{{ Module::asset('Product:js/paginate.js') }}"></script>
     <script src="{{ Module::asset('Product:js/sort.js') }}"></script>
     <script src="{{ Module::asset('Product:js/switchState.js') }}"></script>
+    <script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/1.8.3/jquery.min.js"></script>
+    <link rel="stylesheet" href="https://ajax.googleapis.com/ajax/libs/jqueryui/1.8.24/themes/smoothness/jquery-ui.css" />
+    <script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jqueryui/1.8.24/jquery-ui.min.js"></script>
+    <script>
+        $('#search').keyup(function(){
+            let searchValue = $(this).val();
+            const url = window.location.href;
+            $.ajax({
+                type:"get",
+                url: url+"?searchValue="+searchValue,
+                success: function(response){
+                    let paginateData = $(response).find("#paginateDivWarp").html()
+                    let listDataTable = $(response).find(".listDataTable").html()
+                    console.log(paginateData);
+                    $("#paginateDivWarp").html(paginateData??'')
+                    $(".listDataTable").html(listDataTable??'')
+                }
+            })
+        })
+
+            $("#tblLocations").sortable({
+                items: 'tr:not(tr:first-child)',
+                cursor: 'pointer',
+                axis: 'y',
+                dropOnEmpty: false,
+                start: function (e, ui) {
+                    ui.item.addClass("selected");
+                },
+                stop: function (e, ui) {
+                    ui.item.removeClass("selected");
+                    $(this).find("tr").each(function (index) {
+                        if (index > 0) {
+                            $(this).find("td").eq(2).html(index);
+                        }
+                    });
+                }
+            });
+    </script>
 @endsection

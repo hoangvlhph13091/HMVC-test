@@ -11,8 +11,8 @@ function getData(url){
             success: function(response){
                 let paginateData = $(response).find("#paginateDivWarp").html()
                 let listDataTable = $(response).find(".listDataTable").html()
-                $("#paginateDivWarp").html(paginateData)
-                $(".listDataTable").html(listDataTable)
+                $("#paginateDivWarp").html(paginateData??'')
+                $(".listDataTable").html(listDataTable??'')
 
             }
         })

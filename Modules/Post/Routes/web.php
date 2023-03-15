@@ -15,4 +15,5 @@ Route::prefix('post')->group(function() {
     Route::get('/', 'PostController@index')->name('post');
     Route::get('/create', [PostController::class, 'createForm' ] )->name('createForm');
     Route::post('/create', [PostController::class, 'create' ] )->name('create');
+
 });
