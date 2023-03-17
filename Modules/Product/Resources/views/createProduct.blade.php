@@ -56,14 +56,11 @@
                             <label class="block text-gray-700 text-sm font-bold mb-2" for="title">
                               Post ID
                             </label>
-                            @if ($errors->has('title'))
-                              <span class="text-red-600">{{ $errors->first('title') }}</span>
-                            @endif
-                            <input class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
-                            id="title"
-                            name="title"
-                            type="text"
-                            placeholder="Title">
+                            <div id="nested_list">
+                                <ul id="myUL">
+                                    {!! Modules\Post\Http\Controllers\PostController::tree_view($posts) !!}
+                                </ul>
+                            </div>
                           </div>
                         <div class="mb-6">
                           <label class="block text-gray-700 text-sm font-bold mb-2" for="Content">
@@ -90,4 +87,11 @@
 
 @section('scripts')
 <script src="{{ Module::asset('Product:js/test.js') }}"></script>
+<script src="{{ Module::asset('Post:js/viewTree.js') }}"></script>
+@endsection
+
+@section('css')
+
+<link rel="stylesheet" href="{{ Module::asset('Post:css/viewtree.css') }}">
+
 @endsection

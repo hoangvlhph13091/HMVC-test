@@ -21,7 +21,7 @@ class ProductController extends Controller
         $order = $request->order ? $request->order : 'asc';
         $searchValue = $request->searchValue ? $request->searchValue : '';
         // dd($request);
-        $products = Product::with('post:id,title')->where('name','like',"%$searchValue%")->orderBy($sortType, $order)->paginate(5);
+        $products = Product::where('name','like',"%$searchValue%")->orderBy($sortType, $order)->paginate(5);
         return view('product::index', compact('products') );
     }
 
@@ -30,7 +30,7 @@ class ProductController extends Controller
         $sortType = $request->sortBy ? $request->sortBy : 'id';
         $order = $request->order ? $request->order : 'asc';
         // dd($request);
-        $products = Product::with('post:id,title')->orderBy($sortType, $order)->onlyTrashed()->paginate(5);
+        $products = Product::orderBy($sortType, $order)->onlyTrashed()->paginate(5);
         return view('product::index', compact('products') );
     }
 
@@ -40,7 +40,8 @@ class ProductController extends Controller
      */
     public function create()
     {
-        return view('product::createProduct');
+        $posts = Post::all();
+        return view('product::createProduct', compact('posts'));
     }
 
     /**
@@ -112,13 +113,13 @@ class ProductController extends Controller
             $prod = Product::find($request->id)->delete();
             $sortType = $request->sortBy ? $request->sortBy : 'id';
             $order = $request->order ? $request->order : 'asc';
-            $products = Product::with('post:id,title')->orderBy($sortType, $order)->paginate(5);
+            $products = Product::orderBy($sortType, $order)->paginate(5);
             return view('product::index', compact('products') );
         } else {
             Product::withTrashed()->find($request->id)->restore();
             $sortType = $request->sortBy ? $request->sortBy : 'id';
             $order = $request->order ? $request->order : 'asc';
-            $products = Product::with('post:id,title')->orderBy($sortType, $order)->onlyTrashed()->paginate(5);
+            $products = Product::orderBy($sortType, $order)->onlyTrashed()->paginate(5);
             return view('product::index', compact('products') );
         }
     }

@@ -101,18 +101,18 @@ class PostController extends Controller
                 if($post->parent_id == $parent_id){
                     if(count($post->hasChild) != 0){
                         echo('<li id="'.$post->id.'" ><span class="caret" id="'.$post->id.'"></span><span style="width:100%"  >'.$post->title.'</span>
-                            <button hidden id="'.$post->id.'" class="btn-action bg-blue-500 hover:bg-blue-700 text-white font-bold  px-1 rounded">+</button>
-                            <button hidden id="'.$post->id.'" class="btn-action bg-blue-500 hover:bg-blue-700 text-white font-bold  px-1 rounded">-</button>
-                            <button hidden id="'.$post->id.'" class="btn-action bg-blue-500 hover:bg-blue-700 text-white font-bold  px-1 rounded">?</button>');
+                            <a  id="'.$post->id.'" href="#" class="hide btn-action bg-blue-500 hover:bg-blue-700 text-white font-bold  px-1 rounded">+</a>
+                            <a  id="'.$post->id.'" href="#" class="hide btn-action bg-blue-500 hover:bg-blue-700 text-white font-bold  px-1 rounded">-</a>
+                            <a  id="'.$post->id.'" href="#" class="hide btn-action bg-blue-500 hover:bg-blue-700 text-white font-bold  px-1 rounded">?</a>');
                         echo('</li>');
                             echo ('<ul class="nested" id="'.$post->id.'">');
                                 self::tree_view($posts, $post->id);
                             echo('</ul>');
                     } else {
                         echo('<li id="'.$post->id.'"><span >'.$post->title.'</span>
-                            <button hidden id="'.$post->id.'" class="btn-action bg-blue-500 hover:bg-blue-700 text-white font-bold  px-1 rounded">+</button>
-                            <button hidden id="'.$post->id.'" class="btn-action bg-blue-500 hover:bg-blue-700 text-white font-bold  px-1 rounded">-</button>
-                            <button hidden id="'.$post->id.'" class="btn-action bg-blue-500 hover:bg-blue-700 text-white font-bold  px-1 rounded">?</button>
+                            <a  id="'.$post->id.'" href="#" class="hide btn-action bg-blue-500 hover:bg-blue-700 text-white font-bold  px-1 rounded">+</a>
+                            <a  id="'.$post->id.'" href="#" class="hide btn-action bg-blue-500 hover:bg-blue-700 text-white font-bold  px-1 rounded">-</a>
+                            <a  id="'.$post->id.'" href="#" class="hide btn-action bg-blue-500 hover:bg-blue-700 text-white font-bold  px-1 rounded">?</a>
                         </li>');
                     }
                 }

@@ -54,8 +54,5 @@
 @endsection
 
 @section('scripts')
-<script>
-
-</script>
-<script src="{{ Module::asset('Post:js/formPost.js') }}"></script>
+    <script src="{{ Module::asset('Post:js/formPost.js') }}"></script>
 @endsection
