@@ -59,17 +59,17 @@ class PostService
 
     public function getAll()
     {
-        return $this->postRepository->getAll();
+        return $this->PostRepository->getAll();
     }
 
     public function searchPost($key)
     {
-        return $this->postRepository->searchPost($key);
+        return $this->PostRepository->searchPost($key);
     }
 
     public function getOne($id)
     {
-        return $this->postRepository->getOne($id);
+        return $this->PostRepository->getOne($id);
     }
 }
 

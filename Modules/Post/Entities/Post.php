@@ -16,4 +16,7 @@ class Post extends Model
     {
         return \Modules\Post\Database\factories\PostFactory::new();
     }
+    public function hasChild(){
+        return $this->hasMany(Post::class, 'parent_id', 'id');
+    }
 }

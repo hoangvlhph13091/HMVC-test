@@ -8,6 +8,7 @@ use Illuminate\Routing\Controller;
 use Modules\Post\Entities\Post;
 use Modules\Post\Http\Requests\PostRequets;
 use Modules\Post\Http\Services\PostService;
+use Modules\Post\Http\Resource\PostCollection;
 
 class PostController extends Controller
 {
@@ -28,7 +29,7 @@ class PostController extends Controller
      */
     public function index()
     {
-        $posts = Post::all();
+        $posts = Post::with('hasChild')->get();
         return view('post::index', compact('posts'));
     }
 
@@ -94,8 +95,27 @@ class PostController extends Controller
      * @param int $id
      * @return Renderable
      */
-    public function destroy($id)
+    public static function tree_view($posts, $parent_id = null)
     {
-        //
+            foreach ($posts as $post) {
+                if($post->parent_id == $parent_id){
+                    if(count($post->hasChild) != 0){
+                        echo('<li id="'.$post->id.'" ><span class="caret" id="'.$post->id.'"></span><span style="width:100%"  >'.$post->title.'</span>
+                            <button hidden id="'.$post->id.'" class="btn-action bg-blue-500 hover:bg-blue-700 text-white font-bold  px-1 rounded">+</button>
+                            <button hidden id="'.$post->id.'" class="btn-action bg-blue-500 hover:bg-blue-700 text-white font-bold  px-1 rounded">-</button>
+                            <button hidden id="'.$post->id.'" class="btn-action bg-blue-500 hover:bg-blue-700 text-white font-bold  px-1 rounded">?</button>');
+                        echo('</li>');
+                            echo ('<ul class="nested" id="'.$post->id.'">');
+                                self::tree_view($posts, $post->id);
+                            echo('</ul>');
+                    } else {
+                        echo('<li id="'.$post->id.'"><span >'.$post->title.'</span>
+                            <button hidden id="'.$post->id.'" class="btn-action bg-blue-500 hover:bg-blue-700 text-white font-bold  px-1 rounded">+</button>
+                            <button hidden id="'.$post->id.'" class="btn-action bg-blue-500 hover:bg-blue-700 text-white font-bold  px-1 rounded">-</button>
+                            <button hidden id="'.$post->id.'" class="btn-action bg-blue-500 hover:bg-blue-700 text-white font-bold  px-1 rounded">?</button>
+                        </li>');
+                    }
+                }
+            };
     }
 }

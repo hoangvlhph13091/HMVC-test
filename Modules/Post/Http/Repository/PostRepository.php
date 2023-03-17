@@ -28,7 +28,7 @@ class PostRepository
 
     public function getAll()
     {
-        // return $this->post->get();
+        return $this->post->get();
     }
 
     public function searchPost($key)

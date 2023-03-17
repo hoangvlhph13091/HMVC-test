@@ -1,6 +1,8 @@
 <?php
 
 use Illuminate\Http\Request;
+use Modules\Post\Http\Controllers\PostController;
+
 
 /*
 |--------------------------------------------------------------------------
@@ -13,6 +15,8 @@ use Illuminate\Http\Request;
 |
 */
 
-Route::middleware('auth:api')->get('/post', function (Request $request) {
-    return $request->user();
+Route::middleware('api')->group(function () {
+    Route::prefix('post')->group(function () {
+        // Route::get('/', [PostController::class, 'resource']);
+    });
 });
