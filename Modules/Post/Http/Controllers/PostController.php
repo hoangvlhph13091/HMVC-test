@@ -118,4 +118,22 @@ class PostController extends Controller
                 }
             };
     }
+
+    public static function tree_view_selection($posts, $parent_id = null)
+    {
+            foreach ($posts as $post) {
+                if($post->parent_id == $parent_id){
+                    if(count($post->hasChild) != 0){
+                        echo('<li id="'.$post->id.'" ><span class="caret" id="'.$post->id.'"></span><input type="checkbox" id="check_box" data-value="'.$post->title.'" data-id="'.$post->id.'"><span style="width:100%"  >'.$post->title.'</span>');
+                        echo('</li>');
+                            echo ('<ul class="nested" id="'.$post->id.'">');
+                                self::tree_view_selection($posts, $post->id);
+                            echo('</ul>');
+                    } else {
+                        echo('<li id="'.$post->id.'"><input type="checkbox" id="check_box" name="" data-value="'.$post->title.'" data-id="'.$post->id.'"><span >'.$post->title.'</span>
+                        </li>');
+                    }
+                }
+            };
+    }
 }

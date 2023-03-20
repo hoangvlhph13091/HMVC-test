@@ -47,4 +47,19 @@
       .hide{
         display: none;
       }
+      #nested_list_warp{
+        height: 150px;
+        overflow-y: scroll;
+        border: 1px solid grey;
+        padding: 10px;
+      }
+      #tag_warp{
+        height: 38px;
+        padding: 0.5rem;
+        border-radius: 5px 5px 0 0;
+        border: 1px solid grey;
+      }
+      #tag_warp:hover{
+        cursor: pointer;
+      }
 

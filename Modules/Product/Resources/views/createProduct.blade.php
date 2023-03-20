@@ -56,9 +56,12 @@
                             <label class="block text-gray-700 text-sm font-bold mb-2" for="title">
                               Post ID
                             </label>
-                            <div id="nested_list">
+                            <div id="tag_warp">
+                                <div id="tag_target"></div>
+                            </div>
+                            <div id="nested_list_warp" class="hide">
                                 <ul id="myUL">
-                                    {!! Modules\Post\Http\Controllers\PostController::tree_view($posts) !!}
+                                    {!! Modules\Post\Http\Controllers\PostController::tree_view_selection($posts) !!}
                                 </ul>
                             </div>
                           </div>
@@ -83,11 +86,27 @@
             </div>
         </div>
     </div>
+
 @endsection
 
 @section('scripts')
 <script src="{{ Module::asset('Product:js/test.js') }}"></script>
 <script src="{{ Module::asset('Post:js/viewTree.js') }}"></script>
+<script>
+    $('#tag_warp').click(function () {
+        $('#nested_list_warp').toggle('hide');
+    })
+    $('input[id^="check_box"]').each(function(){
+       $(this).click(function () {
+            if($(this).is(':checked')) {
+                $('#tag_target').append(`<span data-id="${$(this).data('id')}" >${$(this).data('value')}</span>`)
+            }
+            else if($(this).not(':checked')) {
+                $(`span[data-id^="${$(this).data('id')}"]`).remove()
+            }
+       })
+    })
+</script>
 @endsection
 
 @section('css')
