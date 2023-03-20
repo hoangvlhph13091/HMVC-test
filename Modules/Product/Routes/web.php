@@ -18,5 +18,6 @@ Route::prefix('product')->group(function() {
     Route::get('/trashed', [ProductController::class, 'trashedItem'])->name('productTrashed');
     Route::patch('/trashed', [ProductController::class, 'delRes'])->name('productTrashed');
     Route::get('/create', [ProductController::class, 'create'])->name('createProduct');
+    Route::post('/create', [ProductController::class, 'creating'])->name('createProduct');
     Route::get('/{id}', [ProductController::class, 'show' ])->name('detail');
 });

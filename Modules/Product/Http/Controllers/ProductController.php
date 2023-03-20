@@ -49,9 +49,9 @@ class ProductController extends Controller
      * @param Request $request
      * @return Renderable
      */
-    public function store(Request $request)
+    public function creating(Request $request)
     {
-        //
+        dd($request);
     }
 
     /**

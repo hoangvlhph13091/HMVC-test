@@ -14,30 +14,17 @@
                     <form class="bg-white shadow-md rounded px-8 pt-6 pb-8 mb-4" method="post">
                         @csrf
                         <div class="mb-4">
-                          <label class="block text-gray-700 text-sm font-bold mb-2" for="title">
-                            Title
-                          </label>
-                          @if ($errors->has('title'))
-                            <span class="text-red-600">{{ $errors->first('title') }}</span>
-                          @endif
-                          <input class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
-                          id="title"
-                          name="title"
-                          type="text"
-                          placeholder="Title">
-                        </div>
-                        <div class="mb-4">
                             <label class="block text-gray-700 text-sm font-bold mb-2" for="title">
                               Name
                             </label>
-                            @if ($errors->has('title'))
-                              <span class="text-red-600">{{ $errors->first('title') }}</span>
+                            @if ($errors->has('name'))
+                              <span class="text-red-600">{{ $errors->first('name') }}</span>
                             @endif
                             <input class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
-                            id="title"
-                            name="title"
+                            id="name"
+                            name="name"
                             type="text"
-                            placeholder="Title">
+                            placeholder="Name">
                           </div>
                           <div class="mb-4">
                             <label class="block text-gray-700 text-sm font-bold mb-2" for="title">
@@ -47,17 +34,17 @@
                               <span class="text-red-600">{{ $errors->first('title') }}</span>
                             @endif
                             <input class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
-                            id="title"
-                            name="title"
-                            type="text"
-                            placeholder="Title">
+                            id="price"
+                            name="price"
+                            type="number"
+                            placeholder="Price">
                           </div>
                           <div class="mb-4">
                             <label class="block text-gray-700 text-sm font-bold mb-2" for="title">
                               Post ID
                             </label>
                             <div id="tag_warp">
-                                <div id="tag_target"></div>
+                                <div  id="tag_target"></div>
                             </div>
                             <div id="nested_list_warp" class="hide">
                                 <ul id="myUL">
@@ -100,12 +87,15 @@
        $(this).click(function () {
             if($(this).is(':checked')) {
                 $('#tag_target').append(`<span data-id="${$(this).data('id')}" >${$(this).data('value')}</span>`)
+                $('#tag_warp').append(`<input type="text" hidden name="tag[]" id="tag_no_${$(this).data('id')}" value="${$(this).data('value')}">`)
             }
             else if($(this).not(':checked')) {
                 $(`span[data-id^="${$(this).data('id')}"]`).remove()
+                $(`input[id^="tag_no_${$(this).data('id')}"]`).remove()
             }
        })
     })
+    console.log();
 </script>
 @endsection
 
