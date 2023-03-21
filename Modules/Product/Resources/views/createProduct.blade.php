@@ -45,7 +45,7 @@
                             </label>
                             <div id="tag_warp">
                                 <p  id="tag_target_list"></p>
-                                <input type="text" class="tag_target"  name="" placeholder="click_me" id="tag_target">
+                                <input type="text" class="tag_target"  name="" readonly placeholder="click_me" id="tag_target">
                             </div>
                             <div id="actuall_input">
 
