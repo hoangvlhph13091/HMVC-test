@@ -44,7 +44,11 @@
                               Post ID
                             </label>
                             <div id="tag_warp">
-                                <div  id="tag_target"></div>
+                                <p  id="tag_target_list"></p>
+                                <input type="text" class="tag_target"  name="" placeholder="click_me" id="tag_target">
+                            </div>
+                            <div id="actuall_input">
+
                             </div>
                             <div id="nested_list_warp" class="hide">
                                 <ul id="myUL">
@@ -80,14 +84,14 @@
 <script src="{{ Module::asset('Product:js/test.js') }}"></script>
 <script src="{{ Module::asset('Post:js/viewTree.js') }}"></script>
 <script>
-    $('#tag_warp').click(function () {
+    $('#tag_target').click(function () {
         $('#nested_list_warp').toggle('hide');
     })
     $('input[id^="check_box"]').each(function(){
        $(this).click(function () {
             if($(this).is(':checked')) {
-                $('#tag_target').append(`<span data-id="${$(this).data('id')}" >${$(this).data('value')}</span>`)
-                $('#tag_warp').append(`<input type="text" hidden name="tag[]" id="tag_no_${$(this).data('id')}" value="${$(this).data('value')}">`)
+                $('#tag_target_list').append(`<span class="tag_bagde" data-id="${$(this).data('id')}" >${$(this).data('value')} <span class="tag_close" data-id="${$(this).data('id')}" >x</span> </span>`)
+                $('#actuall_input').append(`<input type="text" hidden name="tag[]" id="tag_no_${$(this).data('id')}" value="${$(this).data('id')}">`)
             }
             else if($(this).not(':checked')) {
                 $(`span[data-id^="${$(this).data('id')}"]`).remove()
@@ -95,7 +99,12 @@
             }
        })
     })
-    console.log();
+    $(document).on("click", "span.tag_close" , function() {
+            $(this).parent().remove();
+            $(`input[id^="tag_no_${$(this).data('id')}"]`).remove()
+            $(`input[data-id^="${$(this).data('id')}"]`).prop('checked', false);
+    });
+
 </script>
 @endsection
 
