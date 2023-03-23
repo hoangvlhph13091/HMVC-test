@@ -17,6 +17,6 @@ use Modules\Post\Http\Controllers\PostController;
 
 Route::middleware('api')->group(function () {
     Route::prefix('post')->group(function () {
-        // Route::get('/', [PostController::class, 'resource']);
+        Route::post('/show', [PostController::class, 'show' ] )->name('show');
     });
 });

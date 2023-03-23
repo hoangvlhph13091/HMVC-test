@@ -79,14 +79,10 @@
 @endsection
 
 @section('scripts')
+    <script src="{{ Module::asset('Post:js/constant.js') }}"></script>
+    <script src="https://code.jquery.com/jquery-3.6.3.js" integrity="sha256-nQLuAZGRRcILA+6dMBOvcRh5Pe310sBpanc6+QBmyVM=" crossorigin="anonymous"></script>
     <script src="{{ Module::asset('Post:js/viewTree.js') }}"></script>
-    <script>
-            $(".btn-action").click(function(e){
-            e.preventDefault();
-            let id =$(this).attr('id')
-            $('#parent_id').val(id)
-    })
-    </script>
+    <script src="{{ Module::asset('Post:js/modalForm.js') }}"></script>
 @endsection
 
 @section('css')

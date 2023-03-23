@@ -64,9 +64,10 @@ class PostController extends Controller
      * @param int $id
      * @return Renderable
      */
-    public function show($id)
+    public function show(Request $request)
     {
-        return view('post::show');
+        $post = Post::find($request->id);
+        return response()->json(['post' => $post]);
     }
 
     /**
@@ -103,7 +104,7 @@ class PostController extends Controller
                         echo('<li id="'.$post->id.'" ><span class="caret" id="'.$post->id.'"></span><span style="width:100%"  >'.$post->title.'</span>
                             <button  id="'.$post->id.'" data-toggle="modal" data-target="#exampleModalCenter" data-action="add" class="hide btn-action bg-blue-500 hover:bg-blue-700 text-white font-bold  px-1 rounded">+</button>
                             <button  id="'.$post->id.'" data-toggle="modal" data-target="#exampleModalCenter" data-action="edit"class="hide btn-action bg-blue-500 hover:bg-blue-700 text-white font-bold  px-1 rounded">-</button>
-                            <button  id="'.$post->id.'" data-toggle="modal" data-target="#exampleModalCenter" data-action="del"class="hide btn-action bg-blue-500 hover:bg-blue-700 text-white font-bold  px-1 rounded">?</button>');
+                            <button  id="'.$post->id.'" data-action="del"class="hide btn-action bg-blue-500 hover:bg-blue-700 text-white font-bold  px-1 rounded">?</button>');
                         echo('</li>');
                             echo ('<ul class="nested" id="'.$post->id.'">');
                                 self::tree_view($posts, $post->id);
@@ -112,7 +113,7 @@ class PostController extends Controller
                         echo('<li id="'.$post->id.'"><span >'.$post->title.'</span>
                         <button  id="'.$post->id.'" data-toggle="modal" data-target="#exampleModalCenter" data-action="add" class="hide btn-action bg-blue-500 hover:bg-blue-700 text-white font-bold  px-1 rounded">+</button>
                         <button  id="'.$post->id.'" data-toggle="modal" data-target="#exampleModalCenter" data-action="edit"class="hide btn-action bg-blue-500 hover:bg-blue-700 text-white font-bold  px-1 rounded">-</button>
-                        <button  id="'.$post->id.'" data-toggle="modal" data-target="#exampleModalCenter" data-action="del"class="hide btn-action bg-blue-500 hover:bg-blue-700 text-white font-bold  px-1 rounded">?</button>
+                        <button  id="'.$post->id.'" data-action="del"class="hide btn-action bg-blue-500 hover:bg-blue-700 text-white font-bold  px-1 rounded">?</button>
                         </li>');
                     }
                 }
