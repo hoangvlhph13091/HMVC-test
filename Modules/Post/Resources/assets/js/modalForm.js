@@ -14,7 +14,7 @@ $(".btn-action").click(function(e){
             },
             success: function(response){
                 if(action === 'add') {
-                    $('#exampleModalLongTitle').html(response.post.title+"'s Child");
+                    $('#exampleModalLongTitle').html("add "+response.post.title+"'s Child");
                     $('#parent_id').val(id);
                     $('#Content').val('');
                     $('#title').val('');
