@@ -101,18 +101,18 @@ class PostController extends Controller
                 if($post->parent_id == $parent_id){
                     if(count($post->hasChild) != 0){
                         echo('<li id="'.$post->id.'" ><span class="caret" id="'.$post->id.'"></span><span style="width:100%"  >'.$post->title.'</span>
-                            <a  id="'.$post->id.'" href="#" class="hide btn-action bg-blue-500 hover:bg-blue-700 text-white font-bold  px-1 rounded">+</a>
-                            <a  id="'.$post->id.'" href="#" class="hide btn-action bg-blue-500 hover:bg-blue-700 text-white font-bold  px-1 rounded">-</a>
-                            <a  id="'.$post->id.'" href="#" class="hide btn-action bg-blue-500 hover:bg-blue-700 text-white font-bold  px-1 rounded">?</a>');
+                            <button  id="'.$post->id.'" data-toggle="modal" data-target="#exampleModalCenter" data-action="add" class="hide btn-action bg-blue-500 hover:bg-blue-700 text-white font-bold  px-1 rounded">+</button>
+                            <button  id="'.$post->id.'" data-toggle="modal" data-target="#exampleModalCenter" data-action="edit"class="hide btn-action bg-blue-500 hover:bg-blue-700 text-white font-bold  px-1 rounded">-</button>
+                            <button  id="'.$post->id.'" data-toggle="modal" data-target="#exampleModalCenter" data-action="del"class="hide btn-action bg-blue-500 hover:bg-blue-700 text-white font-bold  px-1 rounded">?</button>');
                         echo('</li>');
                             echo ('<ul class="nested" id="'.$post->id.'">');
                                 self::tree_view($posts, $post->id);
                             echo('</ul>');
                     } else {
                         echo('<li id="'.$post->id.'"><span >'.$post->title.'</span>
-                            <a  id="'.$post->id.'" href="#" class="hide btn-action bg-blue-500 hover:bg-blue-700 text-white font-bold  px-1 rounded">+</a>
-                            <a  id="'.$post->id.'" href="#" class="hide btn-action bg-blue-500 hover:bg-blue-700 text-white font-bold  px-1 rounded">-</a>
-                            <a  id="'.$post->id.'" href="#" class="hide btn-action bg-blue-500 hover:bg-blue-700 text-white font-bold  px-1 rounded">?</a>
+                        <button  id="'.$post->id.'" data-toggle="modal" data-target="#exampleModalCenter" data-action="add" class="hide btn-action bg-blue-500 hover:bg-blue-700 text-white font-bold  px-1 rounded">+</button>
+                        <button  id="'.$post->id.'" data-toggle="modal" data-target="#exampleModalCenter" data-action="edit"class="hide btn-action bg-blue-500 hover:bg-blue-700 text-white font-bold  px-1 rounded">-</button>
+                        <button  id="'.$post->id.'" data-toggle="modal" data-target="#exampleModalCenter" data-action="del"class="hide btn-action bg-blue-500 hover:bg-blue-700 text-white font-bold  px-1 rounded">?</button>
                         </li>');
                     }
                 }
