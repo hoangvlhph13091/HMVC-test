@@ -27,7 +27,7 @@ $(".btn-action").click(function(e){
             }
         })
     } else {
-        console.log('lmao');
+        console.log(id);
     }
 
 })

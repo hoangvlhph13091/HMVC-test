@@ -35,15 +35,6 @@
 
             <!-- Page Content -->
             <main>
-                <div id="modalDiv" hidden>
-                    <div id="loadingModalOverlay" style="position: absolute; top:0; left:0; bottom:0; right:0; background-color: black; opacity: .2; z-index: 9;">
-
-                    </div>
-                    <div id="messageBox" style="background-color: white; height: 400px; width: 700px; margin: auto; position: absolute; top:25%; left:30%; z-index: 10; padding: 10px">
-                        <button class="sureVkl pointer-events-auto ml-8 rounded-md bg-blue-600 py-2 px-3 text-[0.8125rem] font-semibold leading-5 text-white hover:bg-blue-500">sure vkl</button>
-                        <button  class="noNoButton pointer-events-auto ml-8 rounded-md bg-red-600 py-2 px-3 text-[0.8125rem] font-semibold leading-5 text-white hover:bg-red-500">đéo</button>
-                    </div>
-                </div>
                 @yield('content')
             </main>
             @yield('scripts')

@@ -1,4 +1,4 @@
-@extends('post::layouts.master')
+@extends('product::layouts.master')
 
 @section('title')
 {!! config('product.name') !!}
@@ -116,12 +116,12 @@
 @endsection
 
 @section('scripts')
+    <script src="{{ Module::asset('Product:js/switchState.js') }}"></script>
     <script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/1.8.3/jquery.min.js"></script>
     <link rel="stylesheet" href="https://ajax.googleapis.com/ajax/libs/jqueryui/1.8.24/themes/smoothness/jquery-ui.css" />
     <script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jqueryui/1.8.24/jquery-ui.min.js"></script>
     <script src="{{ Module::asset('Product:js/dragableTableRow.js') }}"></script>
     <script src="{{ Module::asset('Product:js/paginate.js') }}"></script>
     <script src="{{ Module::asset('Product:js/sort.js') }}"></script>
-    <script src="{{ Module::asset('Product:js/switchState.js') }}"></script>
     <script src="{{ Module::asset('Product:js/search.js') }}"></script>
 @endsection
