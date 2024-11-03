@@ -1,0 +1,99 @@
+    #nested_list{
+        padding: 10px;
+    }
+
+    /* Remove default bullets */
+    ul, #myUL {
+        list-style-type: none;
+      }
+
+      /* Remove margins and padding from the parent ul */
+      #myUL {
+        margin: 0;
+        padding: 0;
+      }
+
+      /* Style the caret/arrow */
+      .caret {
+        cursor: pointer;
+        user-select: none; /* Prevent text selection */
+      }
+
+      /* Create the caret/arrow with a unicode, and style it */
+      .caret::before {
+        content: "\25B6";
+        color: black;
+        display: inline-block;
+        margin-right: 6px;
+      }
+
+      /* Rotate the caret/arrow icon when clicked on (using JavaScript) */
+      .caret-down::before {
+        transform: rotate(90deg) !important;
+      }
+
+      /* Hide the nested list */
+      .nested {
+        display: none;
+        padding: 10px;
+        border-left: 1px dashed grey;
+        border-bottom: 1px dashed grey;
+      }
+
+      /* Show the nested list when the user clicks on the caret/arrow (with JavaScript) */
+      .active {
+        display: block;
+      }
+      .hide{
+        display: none;
+      }
+      #nested_list_warp{
+        height: 150px;
+        overflow-y: scroll;
+        border: 1px solid grey;
+        padding: 10px;
+      }
+      #tag_warp{
+        height: 38px;
+        border-radius: 5px 5px 0 0;
+        border: 1px solid grey;
+        overflow: hidden;
+      }
+      #tag_warp input {
+        width: 50%;
+        display: block;
+        margin: 0;
+        border: none;
+    }
+    #tag_warp input:focus {
+        border: none !important;
+        outline: none !important;
+    }
+    #tag_warp input:hover {
+        cursor: pointer;
+    }
+    #tag_warp p {
+        float: left;
+        margin: 0.5rem;
+    }
+    .tag_close:hover{
+        cursor: pointer;
+      }
+      .tag_bagde{
+        color: #fff;
+        background-color: #007bff;
+        display: inline-block;
+        padding: .25em .4em;
+        font-weight: 700;
+        line-height: 1;
+        text-align: center;
+        white-space: nowrap;
+        vertical-align: baseline;
+        border-radius: .25rem;
+        margin-left: 5px;
+      }
+      input[type="checkbox"]:focus{
+        outline:0;
+    }
+
+
