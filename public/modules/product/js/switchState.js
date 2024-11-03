@@ -2,7 +2,7 @@ $('body').on('click', '.switchButton', function(e){
     const id = $(this).data('id')
     const action = $(this).data('action')
     $(this).data('action', action == 'delete' ? 'restore' : 'delete');
-    $('#modalDiv').show();
+    $('#modalDiv').css('visibility', 'visible');
     $('.noNoButton').data('id', id)
     $('.sureVkl').data('id', id)
     $('.sureVkl').data('action', action)
