@@ -12,15 +12,15 @@
         </a>
       </li>
       <li>
-        <a href="{{route('category')}}" class="nav-link {{ request()->is('category*')  ? 'active' :  'link-dark' }} " >
+        <a href="{{route('category')}}" class="nav-link {{ request()->is('category*')  ? 'active' :  'link-dark' }}" >
           <svg class="bi me-2" width="16" height="16"><use xlink:href="#speedometer2"></use></svg>
           Category
         </a>
       </li>
       <li>
-        <a href="#" class="nav-link link-dark">
+        <a href="{{route('book')}}" class="nav-link {{ request()->is('book*')  ? 'active' :  'link-dark' }}">
           <svg class="bi me-2" width="16" height="16"><use xlink:href="#table"></use></svg>
-          Orders
+          Book
         </a>
       </li>
       <li>

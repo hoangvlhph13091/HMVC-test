@@ -1,5 +1,6 @@
 {
     "Product": true,
     "Post": true,
-    "Category": true
+    "Category": true,
+    "Book": true
 }
