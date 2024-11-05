@@ -45,7 +45,6 @@ $(".btn-action").click(function(e){
         } else {
             return;
         }
-
     }
 
 })

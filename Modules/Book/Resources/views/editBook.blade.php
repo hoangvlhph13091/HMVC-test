@@ -38,7 +38,7 @@
                             id="price"
                             name="price"
                             type="number"
-                            value="{{ $book->title }}"
+                            value="{{ $book->price }}"
                             placeholder="Price">
                           </div>
                           <div class="mb-4">
@@ -58,6 +58,9 @@
                                 </ul>
                             </div>
                           </div>
+                           @foreach ($book->bookCategory as $item)
+                               <input type="hidden" class="book_tag_value" value="{{ $item->category_id }}">
+                           @endforeach
                         <div class="mb-6">
                           <label class="block text-gray-700 text-sm font-bold mb-2" for="Content">
                             Content
@@ -66,7 +69,7 @@
                           id="Content"
                           name="content"
                           rows="3"
-                          class="mt-1 block w-full rounded-md border-0 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:py-1.5 sm:text-sm sm:leading-6" placeholder="insert content here"></textarea>
+                          class="mt-1 block w-full rounded-md border-0 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:py-1.5 sm:text-sm sm:leading-6" placeholder="insert content here">{{ $book->content }}</textarea>
                         </div>
                         <div class="bg-gray-50 px-4 py-3 text-right sm:px-6">
                             <button type="submit"
@@ -107,6 +110,16 @@
             $(`input[data-id^="${$(this).data('id')}"]`).prop('checked', false);
     });
     $( document ).ready(function() {
+        var listCate = [];
+        $('input[class^="book_tag_value"]').each(function(){
+            listCate.push($(this).val());
+        })
+        $('input[id^="check_box"]').each(function(){
+            if (listCate.includes($(this).attr('data-id'))) {
+                $(this).prop("checked", true).change();
+            }
+        })
+
         $('input[id^="check_box"]').each(function(){
             if($(this).is(':checked')) {
                 $('#tag_target_list').append(`<span class="tag_bagde" data-id="${$(this).data('id')}" >${$(this).data('value')} <span class="tag_close" data-id="${$(this).data('id')}" >x</span> </span>`)

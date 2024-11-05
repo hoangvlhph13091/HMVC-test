@@ -37,23 +37,20 @@ class BookServices
         return $result = $this->bookRepository->saveTag($tag, $id);
     }
 
-    public function editCategoryData($data, $id)
+    public function updateBookData($data, $id)
     {
 
-            $result = $this->categoryRepository->updateCategory($id, $data);
+        return $result = $this->bookRepository->updateBookData($id, $data);
+    }
 
-            return $result;
-
+    public function updateBookTagData($data, $id)
+    {
+        return $this->bookRepository->updateBookTagData($id, $data);
     }
 
     public function getAll()
     {
         return $this->categoryRepository->getAll();
-    }
-
-    public function searchCategory($key)
-    {
-        return $this->categoryRepository->searchCategory($key);
     }
 
     public function getOne($id)
