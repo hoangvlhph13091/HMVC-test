@@ -12,7 +12,8 @@ class Book extends Model
 
     protected $guarded = ['id'];
 
-    // public function hasChild(){
-    //     return $this->hasMany(Category::class, 'parent_id', 'id');
-    // }
+    public function bookCategory(): HasMany
+    {
+        return $this->hasMany(BookTag::class, 'book_id', 'id');
+    }
 }

@@ -5,6 +5,7 @@ $("body").on('click', '.paginateLink',function(event){
 });
 function getData(url){
         let requetsUrl = url
+        let ;
         $.ajax({
             type: 'GET',
             url: requetsUrl,

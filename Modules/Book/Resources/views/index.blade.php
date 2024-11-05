@@ -41,7 +41,7 @@
                                     <th scope="col" class="px-6 py-3 break-all">
                                         <div class="flex items-center">
                                             Content
-                                            <a href="#" class="sortbutton" data-sort="desc" data-name="content"><svg xmlns="http://www.w3.org/2000/svg" class="w-3 h-3 ml-1" aria-hidden="true" fill="currentColor"
+                                            <a href="#" class="sortbutton" id="content_sort" data-sort="desc" data-name="content"><svg xmlns="http://www.w3.org/2000/svg" class="w-3 h-3 ml-1" aria-hidden="true" fill="currentColor"
                                                 viewBox="0 0 320 512">
                                                 <path d="M27.66 224h264.7c24.6 0 36.89-29.78 19.54-47.12l-132.3-136.8c-5.406-5.406-12.47-8.107-19.53-8.107c-7.055 0-14.09 2.701-19.45 8.107L8.119 176.9C-9.229 194.2 3.055 224 27.66 224zM292.3 288H27.66c-24.6 0-36.89 29.77-19.54 47.12l132.5 136.8C145.9 477.3 152.1 480 160 480c7.053 0 14.12-2.703 19.53-8.109l132.3-136.8C329.2 317.8 316.9 288 292.3 288z"/>
                                                 </svg>
@@ -51,7 +51,7 @@
                                     <th scope="col" class="px-6 py-3">
                                         <div class="flex items-center">
                                             Price
-                                            <a href="#" class="sortbutton" data-sort="desc" data-name="price" >
+                                            <a href="#" class="sortbutton" id="price_sort" data-sort="desc" data-name="price" >
                                                 <svg xmlns="http://www.w3.org/2000/svg" class="w-3 h-3 ml-1" aria-hidden="true" fill="currentColor"
                                                 viewBox="0 0 320 512">
                                                 <path d="M27.66 224h264.7c24.6 0 36.89-29.78 19.54-47.12l-132.3-136.8c-5.406-5.406-12.47-8.107-19.53-8.107c-7.055 0-14.09 2.701-19.45 8.107L8.119 176.9C-9.229 194.2 3.055 224 27.66 224zM292.3 288H27.66c-24.6 0-36.89 29.77-19.54 47.12l132.5 136.8C145.9 477.3 152.1 480 160 480c7.053 0 14.12-2.703 19.53-8.109l132.3-136.8C329.2 317.8 316.9 288 292.3 288z"/>
@@ -83,19 +83,10 @@
                                                 {{ $book->price }}
                                             </td>
                                             <td class="px-6 py-4 ">
-                                                <a href="#" class="font-medium text-blue-600 dark:text-blue-500 hover:underline">Edit</a>
+                                                <a href="{{ route('book.editForm',['id' => $book->id]) }}" class="font-medium text-blue-600 dark:text-blue-500 hover:underline">Edit</a>
                                             </td>
                                             <td class="px-6 py-4 ">
-                                                <input
-                                                class=" switchButton mt-[0.3rem] mr-2 h-3.5 w-8 appearance-none rounded-[0.4375rem] bg-[rgba(0,0,0,0.25)] outline-none before:pointer-events-none before:absolute before:h-3.5 before:w-3.5 before:rounded-full before:bg-transparent before:content-[''] after:absolute after:z-[2] after:-mt-[0.1875rem] after:h-5 after:w-5 after:rounded-full after:border-none after:bg-white after:shadow-[0_0px_3px_0_rgb(0_0_0_/_7%),_0_2px_2px_0_rgb(0_0_0_/_4%)] after:transition-[background-color_0.2s,transform_0.2s] after:content-[''] checked:bg-primary checked:after:absolute checked:after:z-[2] checked:after:-mt-[3px] checked:after:ml-[1.0625rem] checked:after:h-5 checked:after:w-5 checked:after:rounded-full checked:after:border-none checked:after:bg-primary checked:after:shadow-[0_3px_1px_-2px_rgba(0,0,0,0.2),_0_2px_2px_0_rgba(0,0,0,0.14),_0_1px_5px_0_rgba(0,0,0,0.12)] checked:after:transition-[background-color_0.2s,transform_0.2s] checked:after:content-[''] hover:cursor-pointer focus:before:scale-100 focus:before:opacity-[0.12] focus:before:shadow-[3px_-1px_0px_13px_rgba(0,0,0,0.6)] focus:before:transition-[box-shadow_0.2s,transform_0.2s] focus:after:absolute focus:after:z-[1] focus:after:block focus:after:h-5 focus:after:w-5 focus:after:rounded-full focus:after:content-[''] checked:focus:border-primary checked:focus:bg-primary checked:focus:before:ml-[1.0625rem] checked:focus:before:scale-100 checked:focus:before:shadow-[3px_-1px_0px_13px_#3b71ca] checked:focus:before:transition-[box-shadow_0.2s,transform_0.2s]"
-                                                type="checkbox"
-                                                data-id="{{ $book->id }}"
-                                                data-action='{{ $book->deleted_at == null ? 'delete' : 'restore' }}'
-                                                role="switch"
-                                                id="flexSwitchCheckDefault"
-                                                @if ($book->deleted_at == null)
-                                                    checked
-                                                @endif />
+                                                <a href="{{ route('book.del',['id' => $book->id]) }}" onclick="return confirm('ayyy')" class="font-medium text-blue-600 dark:text-blue-500 hover:underline">Del</a>
                                             </td>
                                         </tr>
                                     @endforeach

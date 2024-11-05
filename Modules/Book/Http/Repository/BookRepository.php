@@ -4,6 +4,7 @@ namespace Modules\Book\Http\Repository;
 
 use Modules\Book\Entities\Book;
 use Modules\Book\Entities\BookTag;
+use Illuminate\Support\Facades\DB;
 
 class BookRepository
 {
@@ -30,25 +31,14 @@ class BookRepository
 
     public function saveTag($tag, $id)
     {
-        foreach ($tag as $key => $value) {
-            $book_tag = new $this->book_tag;
-
-            $book_tag->book_id = $id;
-
-            $book_tag->category_id = $id;
-
-            $book_tag->save();
+        foreach ($tag['tag'] as $key => $value) {
+            DB::statement("INSERT INTO book_tag (book_id, category_id, created_at, updated_at) VALUES ({$id}, {$value}, CURRENT_TIMESTAMP , CURRENT_TIMESTAMP );");
         }
     }
 
     public function getAll()
     {
         return $this->category->get();
-    }
-
-    public function searchCategory($key)
-    {
-        // return $this->category->where('title', 'like', "%$key%")->get();
     }
 
     public function getOne($id)

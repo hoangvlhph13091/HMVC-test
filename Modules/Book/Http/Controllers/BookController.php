@@ -73,9 +73,11 @@ class BookController extends Controller
      * @param int $id
      * @return Renderable
      */
-    public function edit($id)
+    public function editForm($id)
     {
-        return view('book::edit');
+        $book = Book::find($id);
+        $categories = Category::all();
+        return view('book::editBook', compact('categories', 'book'));
     }
 
     /**
@@ -96,6 +98,8 @@ class BookController extends Controller
      */
     public function destroy($id)
     {
-        //
+        Book::destroy($id);
+
+        return redirect(route('book'));
     }
 }

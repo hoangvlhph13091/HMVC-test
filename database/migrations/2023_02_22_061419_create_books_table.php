@@ -17,6 +17,8 @@ return new class extends Migration
             $table->string('content');
             $table->integer('price');
             $table->string('image')->nullable();
+            $table->string('total_amount')->nullable();
+            $table->string('actuall_amount')->nullable();
             $table->softDeletes();
             $table->timestamps();
         });
