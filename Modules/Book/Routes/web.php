@@ -18,6 +18,7 @@ Route::middleware('auth')->group(function () {
         Route::get('/create', [BookController::class, 'createForm'])->name('book.addForm');
         Route::post('/create', [BookController::class, 'create'])->name('book.add');
         Route::get('/edit/{id}', [BookController::class, 'editForm'])->name('book.editForm');
+        Route::post('/edit/{id}', [BookController::class, 'edit'])->name('book.edit');
         Route::any('/delete/{id}', [BookController::class, 'destroy'])->name('book.del');
     });
 });

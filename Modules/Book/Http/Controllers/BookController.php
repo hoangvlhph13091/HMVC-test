@@ -86,9 +86,15 @@ class BookController extends Controller
      * @param int $id
      * @return Renderable
      */
-    public function update(Request $request, $id)
+    public function edit(Request $request, $id)
     {
-        //
+        $data = $request->except(['_token', 'tag']);
+        $tagData =  $request->only('tag');
+
+        $this->bookServices->updateBookData($data, $id);
+        $this->bookServices->updateBookTagData($tagData, $id);
+
+        return redirect(route('book'));
     }
 
     /**

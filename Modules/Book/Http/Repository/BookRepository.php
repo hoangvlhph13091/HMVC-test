@@ -36,26 +36,25 @@ class BookRepository
         }
     }
 
-    public function getAll()
+    public function updateBookData($id, $data)
     {
-        return $this->category->get();
+        $book = $this->book->find($id);
+
+        $book->fill($data);
+
+        $book->save();
+
+        return $book->fresh();
+
     }
 
-    public function getOne($id)
+    public function updateBookTagData($id, $tag)
     {
-        // return $this->category->find($id);
-    }
+        DB::statement("DELETE FROM book_tag WHERE book_id = {$id}");
 
-    public function updateCategory($id, $data)
-    {
-        $category = $this->category->find($id);
-
-        $category->fill($data);
-
-        $category->save();
-
-        return $category->fresh();
-
+        foreach ($tag['tag'] as $key => $value) {
+            DB::statement("INSERT INTO book_tag (book_id, category_id, created_at, updated_at) VALUES ({$id}, {$value}, CURRENT_TIMESTAMP , CURRENT_TIMESTAMP );");
+        }
     }
 
 }
