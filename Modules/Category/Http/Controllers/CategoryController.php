@@ -126,7 +126,7 @@ class CategoryController extends Controller
                                 self::tree_view_selection($categories, $cate->id);
                             echo('</ul>');
                     } else {
-                        echo('<li id="'.$cate->id.'"><input type="checkbox" id="check_box" name="" data-value="'.$cate->title.'" data-id="'.$cate->id.'"><span >'.$cate->name.'</span>
+                        echo('<li id="'.$cate->id.'"><input type="checkbox" id="check_box" name="" data-value="'.$cate->name.'" data-id="'.$cate->id.'"><span >'.$cate->name.'</span>
                         </li>');
                     }
                 }
