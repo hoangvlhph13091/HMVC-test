@@ -2,5 +2,6 @@
     "Product": true,
     "Post": true,
     "Category": true,
-    "Book": true
+    "Book": true,
+    "Customer": true
 }
