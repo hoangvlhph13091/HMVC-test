@@ -1,7 +1,7 @@
 @extends('customer::layouts.master')
 
 @section('title')
-    {!! config('book.name') !!}
+    {!! config('customer.name') !!}
 @endsection
 
 

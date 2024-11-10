@@ -3,5 +3,6 @@
     "Post": true,
     "Category": true,
     "Book": true,
-    "Customer": true
+    "Customer": true,
+    "BorrowHistory": true
 }

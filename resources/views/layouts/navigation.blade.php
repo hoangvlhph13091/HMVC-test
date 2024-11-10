@@ -30,9 +30,9 @@
         </a>
       </li>
       <li>
-        <a href="#" class="nav-link link-dark">
+        <a href="{{route('borrowhistory')}}" class="nav-link {{ request()->is('borrowhistory*')  ? 'active' :  'link-dark' }}">
           <svg class="bi me-2" width="16" height="16"><use xlink:href="#people-circle"></use></svg>
-          Customers
+          History
         </a>
       </li>
     </ul>

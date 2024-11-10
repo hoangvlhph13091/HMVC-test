@@ -1,0 +1,11 @@
+{
+    "name": "BorrowHistory",
+    "alias": "borrowhistory",
+    "description": "",
+    "keywords": [],
+    "priority": 0,
+    "providers": [
+        "Modules\\BorrowHistory\\Providers\\BorrowHistoryServiceProvider"
+    ],
+    "files": []
+}
