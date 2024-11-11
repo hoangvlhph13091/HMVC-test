@@ -32,7 +32,7 @@ class BookRepository
     public function saveTag($tag, $id)
     {
         foreach ($tag['tag'] as $key => $value) {
-            DB::statement("INSERT INTO book_tag (book_id, category_id, created_at, updated_at) VALUES ({$id}, {$value}, CURRENT_TIMESTAMP , CURRENT_TIMESTAMP );");
+            DB::statement("INSERT INTO book_category (book_id, category_id, created_at, updated_at) VALUES ({$id}, {$value}, CURRENT_TIMESTAMP , CURRENT_TIMESTAMP );");
         }
     }
 
@@ -50,10 +50,10 @@ class BookRepository
 
     public function updateBookTagData($id, $tag)
     {
-        DB::statement("DELETE FROM book_tag WHERE book_id = {$id}");
+        DB::statement("DELETE FROM book_category WHERE book_id = {$id}");
 
         foreach ($tag['tag'] as $key => $value) {
-            DB::statement("INSERT INTO book_tag (book_id, category_id, created_at, updated_at) VALUES ({$id}, {$value}, CURRENT_TIMESTAMP , CURRENT_TIMESTAMP );");
+            DB::statement("INSERT INTO book_category (book_id, category_id, created_at, updated_at) VALUES ({$id}, {$value}, CURRENT_TIMESTAMP , CURRENT_TIMESTAMP );");
         }
     }
 

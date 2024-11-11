@@ -8,7 +8,7 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 class BookTag extends Model
 {
     use HasFactory;
-    protected $table ='book_tag';
+    protected $table ='book_category';
 
     protected $guarded = ['id'];
 }

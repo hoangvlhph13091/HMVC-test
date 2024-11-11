@@ -1,5 +1,8 @@
 $(".btn-action").click(function(e){
     e.preventDefault();
+    $('.err_text').text('').change();
+    $('#name').val('').change();
+    $('#Content').val('').change();
     const id = $(this).attr('id');
     const action = $(this).data('action');
     if(action !== 'del'){
@@ -51,6 +54,7 @@ $(".btn-action").click(function(e){
 
 $('#cate_modal_form_submit_btn').click(function(e){
     e.preventDefault();
+    $('.err_text').text('');
     const form = $('#cate_modal_form')[0];
     const data = new FormData(form);
     const curenturl = window.location.href;
@@ -70,7 +74,16 @@ $('#cate_modal_form_submit_btn').click(function(e){
         contentType: false,
         cache: false,
         success: function(){
-            window.location.replace(curenturl);
+            window.location.reload();
+        },
+        error: function(response){
+            let errors = response.responseJSON.errors;
+            console.log(errors);
+            $.each( errors, function( key, value ) {
+                console.log(key);
+                console.log(value[0]);
+                $('#'+key+'_err').text(value[0])
+            })
         }
     })
 })

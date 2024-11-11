@@ -100,9 +100,9 @@
                                                 {{ $history->return_date }}
                                             </td>
                                             <td class="px-6 py-4 ">
-                                                <a href="#" id="history_view"
-                                                {{-- {{ route('borrowhistory.view', ['id' => $history->id]) }} --}}
+                                                <a href="{{ route('borrowhistory.view', ['id' => $history->id]) }}" id="history_view"
                                                     data-toggle="modal" data-target="#exampleModalCenter"
+                                                    data-id="{{ $history->id }}"
                                                     class="font-medium text-blue-600 dark:text-blue-500 hover:underline">Chi
                                                     Tiết</a>
                                             </td>
@@ -138,35 +138,66 @@
                     </button>
                 </div>
                 <div class="modal-body" id="exampleModalCenterBody">
-                    <form action="" id="cate_modal_form">
-                        @csrf
                         <div class="mb-4">
                             <label class="block text-gray-700 text-sm font-bold mb-2" for="title">
-                                Title
+                                Tên Bạn Đọc
                             </label>
-                            @if ($errors->has('title'))
-                                <span class="text-red-600">{{ $errors->first('title') }}</span>
-                            @endif
-                            <input
-                                class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
-                                id="title" name="name" type="text" placeholder="Title">
+                            <p id="reader_name"> </p>
                         </div>
                         <div class="mb-4">
-                            <input hidden type="text" name="parent_id" id="parent_id">
+                            <label class="block text-gray-700 text-sm font-bold mb-2" for="title">
+                                ID
+                            </label>
+                            <p id="reader_id"> aaaa</p>
+                        </div>
+                        <div class="mb-4">
+                            <label class="block text-gray-700 text-sm font-bold mb-2" for="title">
+                                Phân Loại Bạn Đọc
+                            </label>
+                            <p id="reader_status"> aaaa</p>
+                        </div>
+                        <div class="mb-4">
+                            <label class="block text-gray-700 text-sm font-bold mb-2" for="title">
+                                Địa Chỉ
+                            </label>
+                            <p id="reader_address"> aaaa</p>
+                        </div>
+                        <div class="mb-4">
+                            <label class="block text-gray-700 text-sm font-bold mb-2" for="title">
+                                Số Điện Thoại
+                            </label>
+                            <p id="reader_phone"> aaaa</p>
+                        </div>
+                        <div class="mb-4">
+                            <label class="block text-gray-700 text-sm font-bold mb-2" for="title">
+                                Sách Mượn
+                            </label>
+                            <div id="borrow_book">
+
+                            </div>
+                        </div>
+                        <div class="mb-4">
+                            <label class="block text-gray-700 text-sm font-bold mb-2" for="title">
+                                Ngày Mượn
+                            </label>
+                            <p id="borrow_date"> aaaa</p>
+                        </div>
+                        <div class="mb-4">
+                            <label class="block text-gray-700 text-sm font-bold mb-2" for="title">
+                                Ngày Trả
+                            </label>
+                            <p id="return_date"> aaaa</p>
                         </div>
                         <div class="mb-6">
                             <label class="block text-gray-700 text-sm font-bold mb-2" for="Content">
-                                Content
+                                Ghi Chú
                             </label>
-                            <textarea id="Content" name="comment" rows="3"
-                                class="mt-1 block w-full rounded-md border-0 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:py-1.5 sm:text-sm sm:leading-6"
-                                placeholder="insert content here"></textarea>
+                            <p id="note"> aaaa</p>
                         </div>
-                    </form>
                 </div>
                 <div class="modal-footer">
-                    <button type="reset" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                    <button type="submit" class="btn btn-primary" id="cate_modal_form_submit_btn">Save changes</button>
+                    <button type="reset" class="btn btn-secondary" data-dismiss="modal">Đóng</button>
+                    <a href="#" class="btn btn-primary" id="his_edit_button">Chỉnh Sửa</a>
                 </div>
             </div>
         </div>
@@ -174,11 +205,39 @@
 @endsection
 
 @section('scripts')
-    <script src="{{ Module::asset('Book:js/switchState.js') }}"></script>
-    <script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/1.8.3/jquery.min.js"></script>
-    <link rel="stylesheet" href="https://ajax.googleapis.com/ajax/libs/jqueryui/1.8.24/themes/smoothness/jquery-ui.css" />
-    <script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jqueryui/1.8.24/jquery-ui.min.js"></script>
-    <script src="{{ Module::asset('Book:js/paginate.js') }}"></script>
-    <script src="{{ Module::asset('Book:js/sort.js') }}"></script>
-    <script src="{{ Module::asset('Book:js/search.js') }}"></script>
+
+<script>
+    $('#history_view').on('click', function(e) {
+        e.preventDefault();
+        let id = $(this).attr('data-id');
+        $('#his_edit_button').attr('href', window.location.href + '/edit/' +id)
+        let url = $(this).attr('href');
+        $.ajax({
+            type: 'GET',
+            url: url,
+            success: function(response){
+                let data = response.data;
+                let books = response.bookData;
+                $('#borrow_book').html('');
+                $.each( books, function( key, value ) {
+                    let html = `<p>Tên Sách : `+value['book_name']+` (Số Lượng : `+value['amount']+`)</p>`
+                    $('#borrow_book').append(html);
+                })
+                $.each( data, function( key, value ) {
+                    $('#'+key).html(value);
+                    if (key == 'reader_status') {
+                        $('#'+key).html(value == 1 ? "Đã Đăng Ký" : "Chưa Đăng Ký");
+                    } else if(key == 'return_date') {
+                        if (value == '' || value == null) {
+                            $('#'+key).html("Chưa Hoàn Trả Sách")
+                        } else {
+                            $('#'+key).html(value);
+                        }
+                    }
+                });
+            }
+        })
+    })
+</script>
+
 @endsection

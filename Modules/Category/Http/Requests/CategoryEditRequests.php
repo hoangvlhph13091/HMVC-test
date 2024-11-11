@@ -4,7 +4,7 @@ namespace Modules\Category\Http\Requests;
 
 use Illuminate\Foundation\Http\FormRequest;
 
-class CategoryRequests extends FormRequest
+class CategoryEditRequests extends FormRequest
 {
     /**
      * Get the validation rules that apply to the request.
@@ -14,7 +14,7 @@ class CategoryRequests extends FormRequest
     public function rules()
     {
         return [
-            'name'=>"required|min:6|max:50|unique:categories"
+            'name'=>"required|min:6|max:50|unique:categories,name,".$this->id
         ];
     }
 

@@ -7,6 +7,7 @@ use Illuminate\Http\Request;
 use Illuminate\Routing\Controller;
 use Modules\Category\Entities\Category;
 use Modules\Category\Http\Requests\CategoryRequests;
+use Modules\Category\Http\Requests\CategoryEditRequests;
 use Modules\Category\Http\Services\CategoryService;
 use Modules\Category\Http\Resource\CategoryCollection;
 
@@ -70,7 +71,7 @@ class CategoryController extends Controller
      * @param int $id
      * @return Renderable
      */
-    public function edit(CategoryRequests $request, $id)
+    public function edit(CategoryEditRequests $request, $id)
     {
         $data = $request->except('_token');
         try {

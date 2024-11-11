@@ -69,7 +69,7 @@ class BorrowHistoryController extends Controller
 
 
         foreach ($book_ids['book_id'] as $key => $id) {
-            $book = Book::find($id)->first();
+            $book = Book::where('id', $id)->first();
             $detail = new HistoryDetail();
             $detail->book_id = $id;
             $detail->book_name = $book->name;
@@ -88,9 +88,49 @@ class BorrowHistoryController extends Controller
      */
     public function view($id)
     {
-        $history = BorrowHistory::find($id);
+        $history = BorrowHistory::with('historyDetail')->find($id);
 
-        return response()->json(['status' => 200, 'data' => $history]);
+        $bookData = $history->historyDetail;
+
+        return response()->json(['status' => 200, 'data' => $history, 'bookData' => $bookData]);
+    }
+
+    /**
+     * Show the form for creating a new resource.
+     * @return Renderable
+     */
+    public function edit(Request $request, $id)
+    {
+        $data = $request->except(['_token', 'book_id']);
+        $history = BorrowHistory::find($id);
+        $history->fill($data);
+        $history->save();
+
+        $book_ids = $request->only(['book_id']);
+        $amount = $request->only(['amount']);
+        HistoryDetail::Where('history_id', $id)->delete();
+        foreach ($book_ids['book_id'] as $key => $book_id) {
+            $book = Book::where('id', $book_id)->first();
+            $detail = new HistoryDetail();
+            $detail->book_id = $book_id;
+            $detail->book_name = $book->name;
+            $detail->history_id = $id;
+            $detail->amount = $amount['amount'][$key];
+            $detail->save();
+        }
+
+        return redirect(route('borrowhistory'));
+    }
+
+     /**
+     * Show the form for creating a new resource.
+     * @return Renderable
+     */
+    public function editForm($id)
+    {
+        $books = Book::all();
+        $history = BorrowHistory::with('historyDetail')->find($id);
+        return view('borrowhistory::editHistory', compact('books', 'history'));
     }
 
     /**

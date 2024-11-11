@@ -19,6 +19,8 @@ Route::middleware('auth')->group(function () {
         Route::get('/create', [BorrowHistoryController::class, 'createForm'])->name('borrowhistory.addForm');
         Route::post('/create', [BorrowHistoryController::class, 'create'])->name('borrowhistory.add');
         Route::get('/view/{id}', [BorrowHistoryController::class, 'view'])->name('borrowhistory.view');
+        Route::get('/edit/{id}', [BorrowHistoryController::class, 'editForm'])->name('borrowhistory.editForm');
+        Route::post('/edit/{id}', [BorrowHistoryController::class, 'edit'])->name('borrowhistory.edit');
         Route::any('/return/{id}', [BorrowHistoryController::class, 'return'])->name('borrowhistory.return');
 
         Route::get('/addRow', [BorrowHistoryController::class, 'AddNewRow'])->name('borrowhistory.addRow');

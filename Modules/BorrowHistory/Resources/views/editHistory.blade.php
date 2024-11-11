@@ -19,67 +19,49 @@
                             <label class="block text-gray-700 text-sm font-bold mb-2" for="title">
                                 Tên Bạn Đọc
                             </label>
-                            @if ($errors->has('name'))
-                                <span class="text-red-600">{{ $errors->first('name') }}</span>
-                            @endif
                             <input
                                 class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
-                                id="reader_name" name="reader_name" type="text" placeholder="Name">
+                                id="reader_name" name="reader_name" disabled type="text" placeholder="Name" value="{{ $history->reader_name }}">
                         </div>
                         <div class="mb-4">
                             <label class="block text-gray-700 text-sm font-bold mb-2" for="title">
                                 ID
                             </label>
-                            @if ($errors->has('name'))
-                                <span class="text-red-600">{{ $errors->first('name') }}</span>
-                            @endif
                             <input
                                 class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
-                                id="reader_id" name="reader_id" type="text" placeholder="id">
+                                id="reader_id" name="reader_id" disabled type="text" placeholder="id" value="{{ $history->reader_id }}">
                         </div>
                         <div class="mb-4">
                             <label class="block text-gray-700 text-sm font-bold mb-2" for="title">
                                 Phân Loại Bạn Đọc
                             </label>
-                            @if ($errors->has('title'))
-                                <span class="text-red-600">{{ $errors->first('title') }}</span>
-                            @endif
                             <Select
                                 class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
                                 name="reader_status" id="reader_status">
-                                <Option class="reder_register" id="reader_registed" value="1">Đã Đăng Ký</Option>
-                                <Option class="reder_register" id="reader_not_resgisterd" value="0">Chưa Đăng Ký</Option>
+                                <Option @if ($history->reader_status == 1) selected @endif class="reder_register" id="reader_registed" value="1">Đã Đăng Ký</Option>
+                                <Option @if ($history->reader_status == 0) selected @endif class="reder_register" id="reader_not_resgisterd" value="0">Chưa Đăng Ký</Option>
                             </Select>
                         </div>
                         <div class="mb-4">
                             <label class="block text-gray-700 text-sm font-bold mb-2" for="title">
                                 Địa Chỉ
                             </label>
-                            @if ($errors->has('name'))
-                                <span class="text-red-600">{{ $errors->first('name') }}</span>
-                            @endif
                             <input
                                 class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
-                                id="reader_address" name="reader_address" type="text" placeholder="address">
+                                id="reader_address" disabled name="reader_address" type="text" placeholder="address" value="{{ $history->reader_address }}">
                         </div>
                         <div class="mb-4">
                             <label class="block text-gray-700 text-sm font-bold mb-2" for="title">
                                 Số Điện Thoại
                             </label>
-                            @if ($errors->has('name'))
-                                <span class="text-red-600">{{ $errors->first('name') }}</span>
-                            @endif
                             <input
                                 class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
-                                id="reader_tel" name="reader_phone" type="text" placeholder="phone">
+                                id="reader_tel" name="reader_phone" type="text" placeholder="phone" value="{{ $history->reader_phone }}">
                         </div>
                         <div class="mb-4">
                             <label class="block text-gray-700 text-sm font-bold mb-2" for="title">
                                 Sách Mượn
                             </label>
-                            @if ($errors->has('name'))
-                                <span class="text-red-600">{{ $errors->first('name') }}</span>
-                            @endif
                             <table>
                                 <thead>
                                     <tr>
@@ -88,23 +70,25 @@
                                     </tr>
                                 </thead>
                                 <tbody id="book_borrow_list">
-
-                                    <tr>
-                                        <td class="col-sm-8" style="padding-left: 0">
-                                              <select id="select-state" class="form-control" name="book_id[]">
-                                                <option value="">Select a state...</option>
-                                                @foreach ($books as $book)
-                                                    <option value="{{ $book->id }}">{{ $book->name }}</option>
-                                                @endforeach
-                                              </select>
-                                        </td>
-                                        <td class="col-sm-2" style="padding-left: 0">
-                                            <input type="text" name="amount[]"
-                                                class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" />
-                                        </td>
-                                        <td class="col-sm-2"><a class="deleteRow"></a>
-                                        </td>
-                                    </tr>
+                                    @foreach ($history->historyDetail as $item)
+                                        <tr>
+                                            <td class="col-sm-8" style="padding-left: 0">
+                                                <select id="" class="select-book form-control" name="book_id[]">
+                                                    <option value="">Select a book</option>
+                                                    @foreach ($books as $book)
+                                                        <option @if ($item->book_id == $book->id) selected @endif value="{{ $book->id }}">{{ $book->name }}</option>
+                                                    @endforeach
+                                                </select>
+                                            </td>
+                                            <td class="col-sm-2" style="padding-left: 0">
+                                                <input type="text" name="amount[]"
+                                                    value="{{ $item->amount }}"
+                                                    class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" />
+                                            </td>
+                                            <td class="col-sm-2"><a class="deleteRow"></a>
+                                            </td>
+                                        </tr>
+                                    @endforeach
                                 </tbody>
                                 <tfoot>
                                     <tr>
@@ -124,7 +108,7 @@
                             </label>
                             <textarea id="Content" name="note" rows="3"
                                 class="mt-1 block w-full rounded-md border-0 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:py-1.5 sm:text-sm sm:leading-6"
-                                placeholder="insert content here"></textarea>
+                                placeholder="insert content here">{{ $history->note }}</textarea>
                         </div>
                         <div class="bg-gray-50 px-4 py-3 text-right sm:px-6">
                             <button type="submit"
@@ -141,48 +125,9 @@
 
 @section('scripts')
     <script>
-        $(document).on('change','#reader_status',function(){
-            $('#reader_name').val('').change();
-            $('#reader_id').val('').change();
-            $('#reader_address').val('').change();
-            $('#reader_tel').val('').change();
-            $('.reder_register').each(function(){
-                if ($(this).is(':selected')) {
-                    if ($(this).attr('id') == "reader_registed") {
-                        $('#reader_name').prop('readonly', true).change();
-                        $('#reader_id').prop('readonly', false).change();
-                        $('#reader_tel').prop('readonly', true).change();
-                        $('#reader_address').prop('readonly', true).change();
-                    } else if ($(this).attr('id') == "reader_not_resgisterd") {
-                        $('#reader_name').prop('readonly', false).change();
-                        $('#reader_id').prop('readonly', true).change();
-                        $('#reader_tel').prop('readonly', false).change();
-                        $('#reader_address').prop('readonly', false).change();
-                    }
-                }
-            })
-        });
-        $('#reader_id').on('blur', function() {
-            if ($.trim($(this).val()) == '' ) {
-                return;
-            }
-            let id = $.trim($(this).val())
-            let url = "{{ route('borrowhistory.findUser') }}"
-            $.ajax({
-                type: 'GET',
-                url: url,
-                data: { id: id },
-                success: function(response){
-                    let cust = response.customer
-                    $('#reader_name').val(cust.name);
-                    $('#reader_address').val(cust.address);
-                    $('#reader_tel').val(cust.phone_number);
-                }
-            })
-        })
         $(document).ready(function() {
             var counter = 0;
-            $('#select-state').selectize({
+            $('.select-book').selectize({
                 sortField: 'text'
             });
 
@@ -210,39 +155,10 @@
                 counter++;
             });
 
-            $('.reder_register').each(function(){
-                if ($(this).is(':selected')) {
-                    if ($(this).attr('id') == "reader_registed") {
-                        $('#reader_name').prop('readonly', true).change();
-                        $('#reader_id').prop('readonly', false).change();
-                        $('#reader_tel').prop('readonly', true).change();
-                        $('#reader_address').prop('readonly', true).change();
-                    } else if ($(this).attr('id') == "reader_not_resgisterd") {
-                        $('#reader_name').prop('readonly', false).change();
-                        $('#reader_id').prop('readonly', true).change();
-                        $('#reader_tel').prop('readonly', false).change();
-                        $('#reader_address').prop('readonly', false).change();
-                    }
-                }
-            })
-
             $("#book_borrow_list").on("click", ".ibtnDel", function(event) {
                 $(this).closest("tr").remove();
                 counter -= 1
             });
         });
-
-        function calculateRow(row) {
-            var price = +row.find('input[name^="price"]').val();
-
-        }
-
-        function calculateGrandTotal() {
-            var grandTotal = 0;
-            $("table.order-list").find('input[name^="price"]').each(function() {
-                grandTotal += +$(this).val();
-            });
-            $("#grandtotal").text(grandTotal.toFixed(2));
-        }
     </script>
 @endsection

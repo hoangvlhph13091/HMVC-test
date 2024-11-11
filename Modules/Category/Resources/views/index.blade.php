@@ -45,14 +45,12 @@
                     <label class="block text-gray-700 text-sm font-bold mb-2" for="title">
                       Title
                     </label>
-                    @if ($errors->has('title'))
-                      <span class="text-red-600">{{ $errors->first('title') }}</span>
-                    @endif
                     <input class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
                     id="title"
                     name="name"
                     type="text"
                     placeholder="Title">
+                    <span class="text-red-600 err_text" id="name_err"></span>
                 </div>
                 <div class="mb-4">
                     <input hidden type="text" name="parent_id" id="parent_id" >

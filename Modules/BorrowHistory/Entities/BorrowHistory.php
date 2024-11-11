@@ -14,6 +14,6 @@ class BorrowHistory extends Model
 
     public function historyDetail()
     {
-        return $this->hasMany(HistoryDetail::class, 'book_id', 'id');
+        return $this->hasMany(HistoryDetail::class, 'history_id', 'id');
     }
 }
