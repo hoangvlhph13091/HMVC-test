@@ -7,6 +7,7 @@ use Illuminate\Http\Request;
 use Illuminate\Routing\Controller;
 use Modules\Book\Entities\Book;
 use Modules\Category\Entities\Category;
+use Modules\Book\Http\Requests\BookRequests;
 use Modules\Book\Http\Services\BookServices;
 
 class BookController extends Controller
@@ -47,7 +48,7 @@ class BookController extends Controller
      * @param Request $request
      * @return Renderable
      */
-    public function Create(Request $request)
+    public function Create(BookRequests $request)
     {
         $data = $request->except(['_token', 'tag']);
 
