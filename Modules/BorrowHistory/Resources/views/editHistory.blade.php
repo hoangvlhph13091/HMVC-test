@@ -13,7 +13,7 @@
                     <a href="{{ route('borrowhistory') }}"
                         class="font-medium text-blue-600 dark:text-blue-500 hover:underline" id="back_link">back</a>
 
-                    <form class="bg-white shadow-md rounded px-8 pt-6 pb-8 mb-4" id="BookForm" method="POST">
+                    <form class="bg-white shadow-md rounded px-8 pt-6 pb-8 mb-4" id="historyFrom" method="POST">
                         @csrf
                         <div class="mb-4">
                             <label class="block text-gray-700 text-sm font-bold mb-2" for="title">
@@ -21,7 +21,7 @@
                             </label>
                             <input
                                 class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
-                                id="reader_name" name="reader_name" disabled type="text" placeholder="Name" value="{{ $history->reader_name }}">
+                                id="reader_name" name="reader_name" disabled type="text" placeholder="Tên Bạn Đọc" value="{{ $history->reader_name }}">
                         </div>
                         <div class="mb-4">
                             <label class="block text-gray-700 text-sm font-bold mb-2" for="title">
@@ -48,7 +48,7 @@
                             </label>
                             <input
                                 class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
-                                id="reader_address" disabled name="reader_address" type="text" placeholder="address" value="{{ $history->reader_address }}">
+                                id="reader_address" disabled name="reader_address" type="text" placeholder="Địa Chỉ" value="{{ $history->reader_address }}">
                         </div>
                         <div class="mb-4">
                             <label class="block text-gray-700 text-sm font-bold mb-2" for="title">
@@ -56,7 +56,7 @@
                             </label>
                             <input
                                 class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
-                                id="reader_tel" name="reader_phone" type="text" placeholder="phone" value="{{ $history->reader_phone }}">
+                                id="reader_tel" disabled name="reader_phone" type="text" placeholder="Số Điện Thoại" value="{{ $history->reader_phone }}">
                         </div>
                         <div class="mb-4">
                             <label class="block text-gray-700 text-sm font-bold mb-2" for="title">
@@ -101,6 +101,8 @@
                                     </tr>
                                 </tfoot>
                             </table>
+                            <p class="text-red-600 err_text" id="book_id_err"></p>
+                            <p class="text-red-600 err_text" id="amount_err"></p>
                         </div>
                         <div class="mb-6">
                             <label class="block text-gray-700 text-sm font-bold mb-2" for="Content">
@@ -159,6 +161,40 @@
                 $(this).closest("tr").remove();
                 counter -= 1
             });
+
+            $('#historyFrom').submit(function(e) {
+                e.preventDefault();
+                $('.err_text').text('');
+                const form = $('#historyFrom')[0];
+                const data = new FormData(form);
+                const curenturl = window.location.href;
+                const backurl = $('#back_link').attr('href');
+                $.ajax({
+                    type: 'POST',
+                    enctype: "multipart/form-data",
+                    url: curenturl,
+                    data: data,
+                    processData: false,
+                    contentType: false,
+                    cache: false,
+                    success: function() {
+                        window.location.replace(backurl);
+                    },
+                    error: function(response){
+                        let errors = response.responseJSON.errors;
+                        console.log(errors);
+                        $.each( errors, function( key, value ) {
+                            if (key.includes('book_id')) {
+                                $('#book_id_err').text(value[0]);
+                            } else if(key.includes('amount')){
+                                $('#amount_err').text(value[0]);
+                            } else {
+                                $('#'+key+'_err').text(value[0]);
+                            }
+                        })
+                    }
+                })
+            })
         });
     </script>
 @endsection

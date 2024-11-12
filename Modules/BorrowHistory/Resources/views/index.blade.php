@@ -33,8 +33,8 @@
                                     <th scope="col" class="px-6 py-3 break-all">
                                         <div class="flex items-center">
                                             Tên Bạn Đọc
-                                            <a href="#" class="sortbutton" id="name_sort" data-sort="desc"
-                                                data-name="name"><svg xmlns="http://www.w3.org/2000/svg"
+                                            <a href="#" class="sortbutton" id="reader_name_sort" data-sort="desc"
+                                                data-name="reader_name"><svg xmlns="http://www.w3.org/2000/svg"
                                                     class="w-3 h-3 ml-1" aria-hidden="true" fill="currentColor"
                                                     viewBox="0 0 320 512">
                                                     <path
@@ -50,8 +50,8 @@
                                     <th scope="col" class="px-6 py-3">
                                         <div class="flex items-center">
                                             Ngày Mượn
-                                            <a href="#" class="sortbutton" id="price_sort" data-sort="desc"
-                                                data-name="price">
+                                            <a href="#" class="sortbutton" id="borrow_date_sort" data-sort="desc"
+                                                data-name="borrow_date">
                                                 <svg xmlns="http://www.w3.org/2000/svg" class="w-3 h-3 ml-1"
                                                     aria-hidden="true" fill="currentColor" viewBox="0 0 320 512">
                                                     <path
@@ -63,8 +63,8 @@
                                     <th scope="col" class="px-6 py-3">
                                         <div class="flex items-center">
                                             Ngày Trả
-                                            <a href="#" class="sortbutton" id="price_sort" data-sort="desc"
-                                                data-name="price">
+                                            <a href="#" class="sortbutton" id="return_date_sort" data-sort="desc"
+                                                data-name="return_date">
                                                 <svg xmlns="http://www.w3.org/2000/svg" class="w-3 h-3 ml-1"
                                                     aria-hidden="true" fill="currentColor" viewBox="0 0 320 512">
                                                     <path
@@ -205,7 +205,9 @@
 @endsection
 
 @section('scripts')
-
+<script src="{{ Module::asset('BorrowHistory:js/paginate.js') }}"></script>
+<script src="{{ Module::asset('BorrowHistory:js/sort.js') }}"></script>
+<script src="{{ Module::asset('BorrowHistory:js/search.js') }}"></script>
 <script>
     $('#history_view').on('click', function(e) {
         e.preventDefault();

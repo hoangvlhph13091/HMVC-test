@@ -14,7 +14,7 @@ return new class extends Migration
         Schema::create('borrow_history', function (Blueprint $table) {
             $table->id();
             $table->string('reader_name');
-            $table->string('reader_id');
+            $table->string('reader_id')->nullable();
             $table->string('reader_phone');
             $table->string('reader_address');
             $table->string('reader_status');

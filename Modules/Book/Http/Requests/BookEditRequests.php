@@ -4,7 +4,7 @@ namespace Modules\Book\Http\Requests;
 
 use Illuminate\Foundation\Http\FormRequest;
 
-class BookRequests extends FormRequest
+class BookEditRequests extends FormRequest
 {
     /**
      * Get the validation rules that apply to the request.
@@ -14,7 +14,7 @@ class BookRequests extends FormRequest
     public function rules()
     {
         return [
-            'name'=>"required|min:6|max:50|unique:books",
+            'name'=>"required|min:6|max:50|unique:books,name,".$this->id,
             'tag'=>"required|array",
             'tag.*'=>"required|distinct",
         ];

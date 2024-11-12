@@ -9,6 +9,8 @@ use Modules\BorrowHistory\Entities\BorrowHistory;
 use Modules\BorrowHistory\Entities\HistoryDetail;
 use Modules\Book\Entities\Book;
 use Modules\Customer\Entities\Customer;
+use Modules\BorrowHistory\Http\Requests\BorrowHistoryRequests;
+use Modules\BorrowHistory\Http\Requests\BorrowHistoryEditRequests;
 
 class BorrowHistoryController extends Controller
 {
@@ -55,7 +57,7 @@ class BorrowHistoryController extends Controller
      * @param Request $request
      * @return Renderable
      */
-    public function create(Request $request)
+    public function create(BorrowHistoryRequests $request)
     {
         $data = $request->except(['_token', 'book_id']);
         $history = new BorrowHistory();
@@ -99,7 +101,7 @@ class BorrowHistoryController extends Controller
      * Show the form for creating a new resource.
      * @return Renderable
      */
-    public function edit(Request $request, $id)
+    public function edit(BorrowHistoryEditRequests $request, $id)
     {
         $data = $request->except(['_token', 'book_id']);
         $history = BorrowHistory::find($id);

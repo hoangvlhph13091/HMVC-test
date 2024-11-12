@@ -87,7 +87,7 @@ class BookController extends Controller
      * @param int $id
      * @return Renderable
      */
-    public function edit(Request $request, $id)
+    public function edit(BookEditRequests $request, $id)
     {
         $data = $request->except(['_token', 'tag']);
         $tagData =  $request->only('tag');

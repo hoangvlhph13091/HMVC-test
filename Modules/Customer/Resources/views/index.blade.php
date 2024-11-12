@@ -35,7 +35,7 @@
                                 </th>
                                 <th scope="col" class="px-6 py-3 break-all">
                                     <div class="flex items-center">
-                                        name
+                                        Tên Bạn Đọc
                                         <a href="#" class="sortbutton" id="name_sort" data-sort="desc" data-name="name"><svg xmlns="http://www.w3.org/2000/svg" class="w-3 h-3 ml-1" aria-hidden="true" fill="currentColor"
                                             viewBox="0 0 320 512">
                                             <path d="M27.66 224h264.7c24.6 0 36.89-29.78 19.54-47.12l-132.3-136.8c-5.406-5.406-12.47-8.107-19.53-8.107c-7.055 0-14.09 2.701-19.45 8.107L8.119 176.9C-9.229 194.2 3.055 224 27.66 224zM292.3 288H27.66c-24.6 0-36.89 29.77-19.54 47.12l132.5 136.8C145.9 477.3 152.1 480 160 480c7.053 0 14.12-2.703 19.53-8.109l132.3-136.8C329.2 317.8 316.9 288 292.3 288z"/>
@@ -44,12 +44,12 @@
                                     </div>
                                 </th>
                                 <th scope="col" class="px-6 py-3">
-                                    Sex
+                                    Giới Tính
                                 </th>
                                 <th scope="col" class="px-6 py-3">
                                     <div class="flex items-center">
-                                        Age
-                                        <a href="#" class="sortbutton" id="price_sort" data-sort="desc" data-name="price" >
+                                        Tuổi
+                                        <a href="#" class="sortbutton" id="age_sort" data-sort="desc" data-name="age" >
                                             <svg xmlns="http://www.w3.org/2000/svg" class="w-3 h-3 ml-1" aria-hidden="true" fill="currentColor"
                                             viewBox="0 0 320 512">
                                             <path d="M27.66 224h264.7c24.6 0 36.89-29.78 19.54-47.12l-132.3-136.8c-5.406-5.406-12.47-8.107-19.53-8.107c-7.055 0-14.09 2.701-19.45 8.107L8.119 176.9C-9.229 194.2 3.055 224 27.66 224zM292.3 288H27.66c-24.6 0-36.89 29.77-19.54 47.12l132.5 136.8C145.9 477.3 152.1 480 160 480c7.053 0 14.12-2.703 19.53-8.109l132.3-136.8C329.2 317.8 316.9 288 292.3 288z"/>
@@ -59,8 +59,8 @@
                                 </th>
                                 <th scope="col" class="px-6 py-3">
                                     <div class="flex items-center">
-                                        Date Of Birth
-                                        <a href="#" class="sortbutton" id="price_sort" data-sort="desc" data-name="price" >
+                                        Ngày Sinh
+                                        <a href="#" class="sortbutton" id="date_of_birth_sort" data-sort="desc" data-name="date_of_birth" >
                                             <svg xmlns="http://www.w3.org/2000/svg" class="w-3 h-3 ml-1" aria-hidden="true" fill="currentColor"
                                             viewBox="0 0 320 512">
                                             <path d="M27.66 224h264.7c24.6 0 36.89-29.78 19.54-47.12l-132.3-136.8c-5.406-5.406-12.47-8.107-19.53-8.107c-7.055 0-14.09 2.701-19.45 8.107L8.119 176.9C-9.229 194.2 3.055 224 27.66 224zM292.3 288H27.66c-24.6 0-36.89 29.77-19.54 47.12l132.5 136.8C145.9 477.3 152.1 480 160 480c7.053 0 14.12-2.703 19.53-8.109l132.3-136.8C329.2 317.8 316.9 288 292.3 288z"/>
@@ -69,14 +69,13 @@
                                     </div>
                                 </th>
                                 <th scope="col" class="px-6 py-3">
-                                    Address
+                                    Địa Chỉ
                                 </th>
                                 <th scope="col" class="px-6 py-3">
-                                    Phone number
+                                    Số Điện Thoại
                                 </th>
                                 <th scope="col" colspan="2" class="px-6 py-3">
                                     <div class="flex items-center">
-                                        Action
                                     </div>
                                 </th>
                             </tr>
@@ -131,11 +130,10 @@
 @endsection
 
 @section('scripts')
-    <script src="{{ Module::asset('Book:js/switchState.js') }}"></script>
     <script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/1.8.3/jquery.min.js"></script>
     <link rel="stylesheet" href="https://ajax.googleapis.com/ajax/libs/jqueryui/1.8.24/themes/smoothness/jquery-ui.css" />
     <script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jqueryui/1.8.24/jquery-ui.min.js"></script>
-    <script src="{{ Module::asset('Book:js/paginate.js') }}"></script>
-    <script src="{{ Module::asset('Book:js/sort.js') }}"></script>
-    <script src="{{ Module::asset('Book:js/search.js') }}"></script>
+    <script src="{{ Module::asset('Customer:js/paginate.js') }}"></script>
+    <script src="{{ Module::asset('Customer:js/sort.js') }}"></script>
+    <script src="{{ Module::asset('Customer:js/search.js') }}"></script>
 @endsection

@@ -10,78 +10,64 @@
         <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
             <div class="bg-white overflow-hidden shadow-sm sm:rounded-lg">
                 <div class="p-6 text-gray-900">
-                    <a
-                    href="{{ route('customer') }}"
-                    class="font-medium text-blue-600 dark:text-blue-500 hover:underline" id="back_link">back</a>
+                    <a href="{{ route('customer') }}" class="font-medium text-blue-600 dark:text-blue-500 hover:underline"
+                        id="back_link">back</a>
                     <br>
                     <form class="bg-white shadow-md rounded px-8 pt-6 pb-8 mb-4" id="Customer_Form" method="POST">
                         @csrf
                         <div class="mb-4">
                             <label class="block text-gray-700 text-sm font-bold mb-2" for="title">
-                                Name
+                                Tên Bạn Đọc
                             </label>
-                            @if ($errors->has('name'))
-                                <span class="text-red-600">{{ $errors->first('name') }}</span>
-                            @endif
                             <input
                                 class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
-                                id="name" name="name" type="text" placeholder="Name">
+                                id="name" name="name" type="text" placeholder="Tên Bạn Đọc">
+                            <span class="text-red-600 err_text" id="name_err"></span>
                         </div>
                         <div class="mb-4">
                             <label class="block text-gray-700 text-sm font-bold mb-2" for="title">
-                                Age
+                                Tuổi
                             </label>
-                            @if ($errors->has('title'))
-                                <span class="text-red-600">{{ $errors->first('title') }}</span>
-                            @endif
                             <input
                                 class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
-                                id="price" name="age" type="number" placeholder="Age">
+                                id="price" name="age" type="number" placeholder="Tuổi">
+                            <span class="text-red-600 err_text" id="age_err"></span>
                         </div>
                         <div class="mb-4">
                             <label class="block text-gray-700 text-sm font-bold mb-2" for="title">
-                                Sex
+                                Giới Tính
                             </label>
-                            @if ($errors->has('title'))
-                                <span class="text-red-600">{{ $errors->first('title') }}</span>
-                            @endif
-                            <Select name="sex">
-                                <option value="1">Male</option>
-                                <option value="0">Female</option>
+                            <Select name="sex" class="form-control">
+                                <option value="1">Nam</option>
+                                <option value="0">Nữ</option>
                             </Select>
                         </div>
                         <div class="mb-4">
                             <label class="block text-gray-700 text-sm font-bold mb-2" for="title">
-                                Date Of Birth
+                                Ngày Sinh
                             </label>
-                            @if ($errors->has('title'))
-                                <span class="text-red-600">{{ $errors->first('title') }}</span>
-                            @endif
                             <input
                                 class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
-                                id="price" name="date_of_birth" type="date" placeholder="Date Of Birth">
+                                id="price" name="date_of_birth" type="date" placeholder="Ngày Sinh">
+                                <span class="text-red-600 err_text" id="date_of_birth_err"></span>
                         </div>
                         <div class="mb-4">
                             <label class="block text-gray-700 text-sm font-bold mb-2" for="title">
-                                Address
+                                Địa Chỉ
                             </label>
-                            @if ($errors->has('title'))
-                                <span class="text-red-600">{{ $errors->first('title') }}</span>
-                            @endif
                             <input
                                 class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
-                                id="price" name="address" type="text" placeholder="Address">
+                                id="price" name="address" type="text" placeholder="Địa Chỉ">
+                                <span class="text-red-600 err_text" id="address_err"></span>
                         </div>
                         <div class="mb-4">
                             <label class="block text-gray-700 text-sm font-bold mb-2" for="title">
-                                Phone Number
+                                Số Điện Thoại
                             </label>
-                            @if ($errors->has('title'))
-                                <span class="text-red-600">{{ $errors->first('title') }}</span>
-                            @endif
                             <input
                                 class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
-                                id="price" name="phone_number" type="number" placeholder="Phone Number">
+                                id="price" name="phone_number" type="number" placeholder="Số Điện Thoại">
+                                <span class="text-red-600 err_text" id="phone_number_err"></span>
                         </div>
 
                         <div class="bg-gray-50 px-4 py-3 text-right sm:px-6">
@@ -99,31 +85,36 @@
 
 @section('scripts')
     <script>
-        $(document).ready(function(){
-    $('#Customer_Form').submit(function(e){
-        e.preventDefault();
-
-        const form = $('#Customer_Form')[0];
-        const data = new FormData(form);
-        const curenturl = window.location.href;
-        const backurl = $('#back_link').attr('href');
-        $.ajax({
-            type: 'POST',
-            enctype: "multipart/form-data",
-            url: curenturl,
-            data: data,
-            processData: false,
-            contentType: false,
-            cache: false,
-            success: function(){
-                window.location.replace(backurl);
-            }
+        $(document).ready(function() {
+            $('#Customer_Form').submit(function(e) {
+                e.preventDefault();
+                $('.err_text').text('');
+                const form = $('#Customer_Form')[0];
+                const data = new FormData(form);
+                const curenturl = window.location.href;
+                const backurl = $('#back_link').attr('href');
+                $.ajax({
+                    type: 'POST',
+                    enctype: "multipart/form-data",
+                    url: curenturl,
+                    data: data,
+                    processData: false,
+                    contentType: false,
+                    cache: false,
+                    success: function() {
+                        window.location.replace(backurl);
+                    },
+                    error: function(response){
+                        let errors = response.responseJSON.errors;
+                        console.log(errors);
+                        $.each( errors, function( key, value ) {
+                            console.log(key);
+                            console.log(value[0]);
+                            $('#'+key+'_err').text(value[0])
+                        })
+                    }
+                })
+            })
         })
-    })
-})
     </script>
 @endsection
-
-{{-- @section('css')
-    <link rel="stylesheet" href="{{ Module::asset('Category:css/viewtree.css') }}">
-@endsection --}}

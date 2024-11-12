@@ -6,6 +6,8 @@ use Illuminate\Contracts\Support\Renderable;
 use Illuminate\Http\Request;
 use Illuminate\Routing\Controller;
 use Modules\Customer\Entities\Customer;
+use Modules\Customer\Http\Requests\CustomerRequests;
+use Modules\Customer\Http\Requests\CustomerEditRequest;
 
 class CustomerController extends Controller
 {
@@ -13,9 +15,12 @@ class CustomerController extends Controller
      * Display a listing of the resource.
      * @return Renderable
      */
-    public function index()
+    public function index(Request $request)
     {
-        $customers = Customer::paginate(10);
+        $sortType = $request->sortBy ? $request->sortBy : 'id';
+        $order = $request->order ? $request->order : 'asc';
+        $searchValue = $request->searchValue ? $request->searchValue : '';
+        $customers = Customer::where('name','like',"%$searchValue%")->orderBy($sortType, $order)->paginate(5);
         return view('customer::index', compact('customers'));
     }
 
@@ -33,7 +38,7 @@ class CustomerController extends Controller
      * @param Request $request
      * @return Renderable
      */
-    public function create(Request $request)
+    public function create(CustomerRequests $request)
     {
        $data = $request->except('_token');
 
@@ -63,7 +68,7 @@ class CustomerController extends Controller
      * @param int $id
      * @return Renderable
      */
-    public function edit(Request $request, $id)
+    public function edit(CustomerEditRequest $request, $id)
     {
         $data = $request->except('_token');
 

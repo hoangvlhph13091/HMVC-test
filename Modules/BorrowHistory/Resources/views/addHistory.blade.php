@@ -13,37 +13,30 @@
                     <a href="{{ route('borrowhistory') }}"
                         class="font-medium text-blue-600 dark:text-blue-500 hover:underline" id="back_link">back</a>
 
-                    <form class="bg-white shadow-md rounded px-8 pt-6 pb-8 mb-4" id="BookForm" method="POST">
+                    <form class="bg-white shadow-md rounded px-8 pt-6 pb-8 mb-4" id="historyFrom" method="POST">
                         @csrf
                         <div class="mb-4">
                             <label class="block text-gray-700 text-sm font-bold mb-2" for="title">
                                 Tên Bạn Đọc
                             </label>
-                            @if ($errors->has('name'))
-                                <span class="text-red-600">{{ $errors->first('name') }}</span>
-                            @endif
                             <input
                                 class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
-                                id="reader_name" name="reader_name" type="text" placeholder="Name">
+                                id="reader_name" name="reader_name" type="text" placeholder="Tên Bạn Đọc">
+                                <span class="text-red-600 err_text" id="reader_name_err"></span>
                         </div>
                         <div class="mb-4">
                             <label class="block text-gray-700 text-sm font-bold mb-2" for="title">
                                 ID
                             </label>
-                            @if ($errors->has('name'))
-                                <span class="text-red-600">{{ $errors->first('name') }}</span>
-                            @endif
                             <input
                                 class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
                                 id="reader_id" name="reader_id" type="text" placeholder="id">
+                                <span class="text-red-600 err_text" id="reader_id_err"></span>
                         </div>
                         <div class="mb-4">
                             <label class="block text-gray-700 text-sm font-bold mb-2" for="title">
                                 Phân Loại Bạn Đọc
                             </label>
-                            @if ($errors->has('title'))
-                                <span class="text-red-600">{{ $errors->first('title') }}</span>
-                            @endif
                             <Select
                                 class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
                                 name="reader_status" id="reader_status">
@@ -55,31 +48,24 @@
                             <label class="block text-gray-700 text-sm font-bold mb-2" for="title">
                                 Địa Chỉ
                             </label>
-                            @if ($errors->has('name'))
-                                <span class="text-red-600">{{ $errors->first('name') }}</span>
-                            @endif
                             <input
                                 class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
-                                id="reader_address" name="reader_address" type="text" placeholder="address">
+                                id="reader_address" name="reader_address" type="text" placeholder="Địa Chỉ">
+                                <span class="text-red-600 err_text" id="reader_address_err"></span>
                         </div>
                         <div class="mb-4">
                             <label class="block text-gray-700 text-sm font-bold mb-2" for="title">
                                 Số Điện Thoại
                             </label>
-                            @if ($errors->has('name'))
-                                <span class="text-red-600">{{ $errors->first('name') }}</span>
-                            @endif
                             <input
                                 class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
-                                id="reader_tel" name="reader_phone" type="text" placeholder="phone">
+                                id="reader_tel" name="reader_phone" type="text" placeholder="Số Điện Thoại">
+                                <span class="text-red-600 err_text" id="reader_phone_err"></span>
                         </div>
                         <div class="mb-4">
                             <label class="block text-gray-700 text-sm font-bold mb-2" for="title">
                                 Sách Mượn
                             </label>
-                            @if ($errors->has('name'))
-                                <span class="text-red-600">{{ $errors->first('name') }}</span>
-                            @endif
                             <table>
                                 <thead>
                                     <tr>
@@ -117,6 +103,8 @@
                                     </tr>
                                 </tfoot>
                             </table>
+                            <p class="text-red-600 err_text" id="book_id_err"></p>
+                            <p class="text-red-600 err_text" id="amount_err"></p>
                         </div>
                         <div class="mb-6">
                             <label class="block text-gray-700 text-sm font-bold mb-2" for="Content">
@@ -232,17 +220,39 @@
             });
         });
 
-        function calculateRow(row) {
-            var price = +row.find('input[name^="price"]').val();
+        $('#historyFrom').submit(function(e) {
+                e.preventDefault();
+                $('.err_text').text('');
+                const form = $('#historyFrom')[0];
+                const data = new FormData(form);
+                const curenturl = window.location.href;
+                const backurl = $('#back_link').attr('href');
+                $.ajax({
+                    type: 'POST',
+                    enctype: "multipart/form-data",
+                    url: curenturl,
+                    data: data,
+                    processData: false,
+                    contentType: false,
+                    cache: false,
+                    success: function() {
+                        window.location.replace(backurl);
+                    },
+                    error: function(response){
+                        let errors = response.responseJSON.errors;
+                        console.log(errors);
+                        $.each( errors, function( key, value ) {
+                            if (key.includes('book_id')) {
+                                $('#book_id_err').text(value[0]);
+                            } else if(key.includes('amount')){
+                                $('#amount_err').text(value[0]);
+                            } else {
+                                $('#'+key+'_err').text(value[0]);
+                            }
+                        })
+                    }
+                })
+            })
 
-        }
-
-        function calculateGrandTotal() {
-            var grandTotal = 0;
-            $("table.order-list").find('input[name^="price"]').each(function() {
-                grandTotal += +$(this).val();
-            });
-            $("#grandtotal").text(grandTotal.toFixed(2));
-        }
     </script>
 @endsection

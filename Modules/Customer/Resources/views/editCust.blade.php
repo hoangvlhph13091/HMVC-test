@@ -18,70 +18,57 @@
                         @csrf
                         <div class="mb-4">
                             <label class="block text-gray-700 text-sm font-bold mb-2" for="title">
-                                Name
+                                Tên Bạn Đọc
                             </label>
-                            @if ($errors->has('name'))
-                                <span class="text-red-600">{{ $errors->first('name') }}</span>
-                            @endif
                             <input
                                 class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
-                                id="name" name="name" type="text" value="{{ $cust->name }}" placeholder="Name">
+                                id="name" name="name" type="text" value="{{ $cust->name }}" placeholder="Tên Bạn Đọc">
+                                <span class="text-red-600 err_text" id="name_err"></span>
                         </div>
                         <div class="mb-4">
                             <label class="block text-gray-700 text-sm font-bold mb-2" for="title">
-                                Age
+                                Tuổi
                             </label>
-                            @if ($errors->has('title'))
-                                <span class="text-red-600">{{ $errors->first('title') }}</span>
-                            @endif
                             <input
                                 class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
-                                id="price" name="age" type="number" value="{{ $cust->age }}" placeholder="Age">
+                                id="price" name="age" type="number" value="{{ $cust->age }}" placeholder="Tuổi">
+                                <span class="text-red-600 err_text" id="age_err"></span>
                         </div>
                         <div class="mb-4">
                             <label class="block text-gray-700 text-sm font-bold mb-2" for="title">
-                                Sex
+                                Giới Tính
                             </label>
-                            @if ($errors->has('title'))
-                                <span class="text-red-600">{{ $errors->first('title') }}</span>
-                            @endif
-                            <Select name="sex">
+                            <Select name="sex" class="form-control">
                                 <option {{ $cust->sex == 1 ? 'selected' : '' }} value="1">Male</option>
                                 <option {{ $cust->sex == 0 ? 'selected' : '' }} value="0">Female</option>
                             </Select>
                         </div>
                         <div class="mb-4">
                             <label class="block text-gray-700 text-sm font-bold mb-2" for="title">
-                                Date Of Birth
+                                Ngày Sinh
                             </label>
-                            @if ($errors->has('title'))
-                                <span class="text-red-600">{{ $errors->first('title') }}</span>
-                            @endif
                             <input
                                 class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
-                                id="price" name="date_of_birth" value="{{ $cust->date_of_birth }}" type="date" placeholder="Date Of Birth">
+                                id="price" name="date_of_birth" value="{{ $cust->date_of_birth }}" type="date" placeholder="Ngày Sinh">
+                                <span class="text-red-600 err_text" id="date_of_birth_err"></span>
                         </div>
                         <div class="mb-4">
                             <label class="block text-gray-700 text-sm font-bold mb-2" for="title">
-                                Address
+                                Địa Chỉ
                             </label>
-                            @if ($errors->has('title'))
-                                <span class="text-red-600">{{ $errors->first('title') }}</span>
-                            @endif
                             <input
                                 class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
-                                id="price" name="address" type="text" value="{{ $cust->address }}" placeholder="Address">
+                                id="price" name="address" type="text" value="{{ $cust->address }}" placeholder="Địa Chỉ">
+                                <span class="text-red-600 err_text" id="address_err"></span>
                         </div>
                         <div class="mb-4">
                             <label class="block text-gray-700 text-sm font-bold mb-2" for="title">
-                                Phone Number
+                                Số Điện Thoại
                             </label>
-                            @if ($errors->has('title'))
-                                <span class="text-red-600">{{ $errors->first('title') }}</span>
-                            @endif
                             <input
                                 class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
-                                id="price" name="phone_number" type="number" value="{{ $cust->phone_number }}" placeholder="Phone Number">
+                                id="price" name="phone_number" type="number" value="{{ $cust->phone_number }}" placeholder="Số Điện Thoại">
+                                <span class="text-red-600 err_text" id="phone_number_err"></span>
                         </div>
 
                         <div class="bg-gray-50 px-4 py-3 text-right sm:px-6">
@@ -102,7 +89,7 @@
         $(document).ready(function(){
     $('#Customer_Form').submit(function(e){
         e.preventDefault();
-
+        $('.err_text').text('');
         const form = $('#Customer_Form')[0];
         const data = new FormData(form);
         const curenturl = window.location.href;
@@ -117,6 +104,15 @@
             cache: false,
             success: function(){
                 window.location.replace(backurl);
+            },
+            error: function(response){
+                let errors = response.responseJSON.errors;
+                console.log(errors);
+                $.each( errors, function( key, value ) {
+                    console.log(key);
+                    console.log(value[0]);
+                    $('#'+key+'_err').text(value[0])
+                })
             }
         })
     })
