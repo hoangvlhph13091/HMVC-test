@@ -9,6 +9,7 @@ use Modules\Book\Entities\Book;
 use Modules\Category\Entities\Category;
 use Modules\Book\Http\Requests\BookRequests;
 use Modules\Book\Http\Services\BookServices;
+use Modules\Book\Http\Requests\BookEditRequests;
 
 class BookController extends Controller
 {

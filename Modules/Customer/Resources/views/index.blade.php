@@ -109,7 +109,7 @@
                                             <a href="{{ route('customer.editForm',['id' => $cust->id]) }}" class="font-medium text-blue-600 dark:text-blue-500 hover:underline">Edit</a>
                                         </td>
                                         <td class="px-6 py-4 ">
-                                            <a href="{{ route('customer.del',['id' => $cust->id]) }}" onclick="return confirm('delete cust??')" class="font-medium text-blue-600 dark:text-blue-500 hover:underline">Del</a>
+                                            <a href="{{ route('customer.del',['id' => $cust->id]) }}" onclick="return confirm('Xóa Bạn Đọc??')" class="font-medium text-blue-600 dark:text-blue-500 hover:underline">Del</a>
                                         </td>
                                     </tr>
                                 @endforeach

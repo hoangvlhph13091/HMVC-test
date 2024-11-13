@@ -14,7 +14,7 @@ return new class extends Migration
         Schema::create('book_area', function (Blueprint $table) {
             $table->id();
             $table->string('book_area_name');
-            $table->string('book_area_note');
+            $table->string('book_area_note')->nullable();
             $table->timestamps();
         });
     }

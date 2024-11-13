@@ -8,31 +8,37 @@
       <li class="nav-item">
         <a href="#" class="nav-link " aria-current="page">
           <svg class="bi me-2" width="16" height="16"><use xlink:href="#home"></use></svg>
-          Home
+          Trang Chủ
         </a>
       </li>
       <li>
         <a href="{{route('category')}}" class="nav-link {{ request()->is('category*')  ? 'active' :  'link-dark' }}" >
           <svg class="bi me-2" width="16" height="16"><use xlink:href="#speedometer2"></use></svg>
-          Category
+          Quản Lý Phân Loại Sách
         </a>
       </li>
       <li>
         <a href="{{route('book')}}" class="nav-link {{ request()->is('book*')  ? 'active' :  'link-dark' }}">
           <svg class="bi me-2" width="16" height="16"><use xlink:href="#table"></use></svg>
-          Book
+          Quản Lý Sách
         </a>
       </li>
       <li>
         <a href="{{route('customer')}}" class="nav-link {{ request()->is('customer*')  ? 'active' :  'link-dark' }}">
           <svg class="bi me-2" width="16" height="16"><use xlink:href="#grid"></use></svg>
-          Customer
+          Quản Lý Bạn Đọc
         </a>
       </li>
       <li>
         <a href="{{route('borrowhistory')}}" class="nav-link {{ request()->is('borrowhistory*')  ? 'active' :  'link-dark' }}">
           <svg class="bi me-2" width="16" height="16"><use xlink:href="#people-circle"></use></svg>
-          History
+          Quản Lý Lịch Sử Mượn Sách
+        </a>
+      </li>
+      <li>
+        <a href="{{route('area')}}" class="nav-link {{ request()->is('area*')  ? 'active' :  'link-dark' }}">
+          <svg class="bi me-2" width="16" height="16"><use xlink:href="#people-circle"></use></svg>
+          Quản Lý Khu Vực Sách
         </a>
       </li>
     </ul>

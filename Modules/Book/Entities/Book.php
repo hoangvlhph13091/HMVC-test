@@ -16,4 +16,9 @@ class Book extends Model
     {
         return $this->hasMany(BookTag::class, 'book_id', 'id');
     }
+
+    public function bookBorrowed()
+    {
+        return $this->hasMany(HistoryDetail::class, 'book_id', 'id');
+    }
 }

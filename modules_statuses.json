@@ -4,5 +4,6 @@
     "Category": true,
     "Book": true,
     "Customer": true,
-    "BorrowHistory": true
+    "BorrowHistory": true,
+    "Area": true
 }

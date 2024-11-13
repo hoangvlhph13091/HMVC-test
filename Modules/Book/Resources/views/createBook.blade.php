@@ -80,6 +80,14 @@
                             </div>
                             <span class="text-red-600 err_text" id="tag_err"></span>
                         </div>
+                        <div class="mb-4">
+                            <label class="block text-gray-700 text-sm font-bold mb-2" for="title">
+                                Số Lượng
+                            </label>
+                            <input
+                                class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+                                id="total_amount" name="total_amount" type="number" placeholder="Số Lượng">
+                        </div>
                         <div class="mb-6">
                             <label class="block text-gray-700 text-sm font-bold mb-2" for="Content">
                                 Tóm Tắt
