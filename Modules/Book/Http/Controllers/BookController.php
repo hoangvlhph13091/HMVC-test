@@ -10,6 +10,7 @@ use Modules\Category\Entities\Category;
 use Modules\Book\Http\Requests\BookRequests;
 use Modules\Book\Http\Services\BookServices;
 use Modules\Book\Http\Requests\BookEditRequests;
+use Modules\Area\Entities\Area;
 
 class BookController extends Controller
 {
@@ -40,8 +41,9 @@ class BookController extends Controller
      */
     public function createForm()
     {
+        $areas = Area::all();
         $categories = Category::all();
-        return view('book::createBook', compact('categories'));
+        return view('book::createBook', compact('categories', 'areas'));
     }
 
     /**
@@ -77,9 +79,10 @@ class BookController extends Controller
      */
     public function editForm($id)
     {
+        $areas = Area::all();
         $book = Book::find($id);
         $categories = Category::all();
-        return view('book::editBook', compact('categories', 'book'));
+        return view('book::editBook', compact('categories', 'book', 'areas'));
     }
 
     /**

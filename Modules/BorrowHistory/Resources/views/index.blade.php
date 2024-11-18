@@ -103,7 +103,7 @@
                                                 <a href="{{ route('borrowhistory.view', ['id' => $history->id]) }}" id="history_view"
                                                     data-toggle="modal" data-target="#exampleModalCenter"
                                                     data-id="{{ $history->id }}"
-                                                    class="font-medium text-blue-600 dark:text-blue-500 hover:underline">Chi
+                                                    class="font-medium text-blue-600 dark:text-blue-500 hover:underline history_view_btn">Chi
                                                     Tiết</a>
                                             </td>
                                             <td class="px-6 py-4 ">
@@ -148,25 +148,25 @@
                             <label class="block text-gray-700 text-sm font-bold mb-2" for="title">
                                 ID
                             </label>
-                            <p id="reader_id"> aaaa</p>
+                            <p id="reader_id"> </p>
                         </div>
                         <div class="mb-4">
                             <label class="block text-gray-700 text-sm font-bold mb-2" for="title">
                                 Phân Loại Bạn Đọc
                             </label>
-                            <p id="reader_status"> aaaa</p>
+                            <p id="reader_status"> </p>
                         </div>
                         <div class="mb-4">
                             <label class="block text-gray-700 text-sm font-bold mb-2" for="title">
                                 Địa Chỉ
                             </label>
-                            <p id="reader_address"> aaaa</p>
+                            <p id="reader_address"> </p>
                         </div>
                         <div class="mb-4">
                             <label class="block text-gray-700 text-sm font-bold mb-2" for="title">
                                 Số Điện Thoại
                             </label>
-                            <p id="reader_phone"> aaaa</p>
+                            <p id="reader_phone"> </p>
                         </div>
                         <div class="mb-4">
                             <label class="block text-gray-700 text-sm font-bold mb-2" for="title">
@@ -180,19 +180,19 @@
                             <label class="block text-gray-700 text-sm font-bold mb-2" for="title">
                                 Ngày Mượn
                             </label>
-                            <p id="borrow_date"> aaaa</p>
+                            <p id="borrow_date"> </p>
                         </div>
                         <div class="mb-4">
                             <label class="block text-gray-700 text-sm font-bold mb-2" for="title">
                                 Ngày Trả
                             </label>
-                            <p id="return_date"> aaaa</p>
+                            <p id="return_date"> </p>
                         </div>
                         <div class="mb-6">
                             <label class="block text-gray-700 text-sm font-bold mb-2" for="Content">
                                 Ghi Chú
                             </label>
-                            <p id="note"> aaaa</p>
+                            <p id="note"> </p>
                         </div>
                 </div>
                 <div class="modal-footer">
@@ -209,7 +209,7 @@
 <script src="{{ Module::asset('BorrowHistory:js/sort.js') }}"></script>
 <script src="{{ Module::asset('BorrowHistory:js/search.js') }}"></script>
 <script>
-    $('#history_view').on('click', function(e) {
+    $('.history_view_btn').on('click', function(e) {
         e.preventDefault();
         let id = $(this).attr('data-id');
         $('#his_edit_button').attr('href', window.location.href + '/edit/' +id)

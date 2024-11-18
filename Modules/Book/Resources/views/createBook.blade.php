@@ -56,9 +56,11 @@
                             <label class="block text-gray-700 text-sm font-bold mb-2" for="title">
                                 Khu Vực
                             </label>
-                            <input
-                                class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
-                                id="area" name="area" type="text" placeholder="Khu Vực">
+                            <select  id="area" name="area" class="form-control">
+                                @foreach ($areas as $area)
+                                    <option value="{{ $area->id }}">{{ $area->book_area_name }}</option>
+                                @endforeach
+                            </select>
                             <span class="text-red-600 err_text" id="area_err"></span>
                         </div>
                         <div class="mb-4">

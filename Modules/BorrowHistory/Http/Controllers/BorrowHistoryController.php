@@ -149,6 +149,13 @@ class BorrowHistoryController extends Controller
 
         $history->save();
 
+        $details = HistoryDetail::Where('history_id', $id)->get();
+
+        foreach ($details as $key => $detail) {
+            $detail->status = 1 ;
+            $detail->save();
+        }
+
         return redirect(route('borrowhistory'));
     }
 }
