@@ -13,8 +13,8 @@
                 <div class="p-6 text-gray-900">
                     <div>
                         <a href="{{ route('category.createForm') }}"
-                        class="pointer-events-auto ml-8 rounded-md bg-blue-600 py-2 px-3 text-[0.8125rem] font-semibold leading-5 text-white hover:bg-blue-500">
-                            <button>Create new Category</button>
+                        class="btn btn-primary">
+                           Tạo Phân Loại Mới
                         </a>
                     </div>
                     <br>
@@ -45,7 +45,7 @@
                     <label class="block text-gray-700 text-sm font-bold mb-2" for="title">
                       Title
                     </label>
-                    <input class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+                    <input class="form-control"
                     id="title"
                     name="name"
                     type="text"
@@ -63,7 +63,7 @@
                     id="Content"
                     name="comment"
                     rows="3"
-                    class="mt-1 block w-full rounded-md border-0 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:py-1.5 sm:text-sm sm:leading-6" placeholder="insert content here"></textarea>
+                    class="form-control" placeholder="insert content here"></textarea>
                 </div>
             </form>
         </div>
@@ -81,10 +81,5 @@
     <script src="https://code.jquery.com/jquery-3.6.3.js" integrity="sha256-nQLuAZGRRcILA+6dMBOvcRh5Pe310sBpanc6+QBmyVM=" crossorigin="anonymous"></script>
     <script src="{{ Module::asset('Category:js/viewTree.js') }}"></script>
     <script src="{{ Module::asset('Category:js/modalForm.js') }}"></script>
-@endsection
-
-@section('css')
-
 <link rel="stylesheet" href="{{ Module::asset('Category:css/viewtree.css') }}">
-
 @endsection

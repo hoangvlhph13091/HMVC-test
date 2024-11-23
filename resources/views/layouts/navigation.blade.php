@@ -1,81 +1,80 @@
-<div class="d-flex flex-column flex-shrink-0 p-3 bg-light" style="width: 280px; position: absolute; bottom: 0; top: 0">
-    <a href="/" class="d-flex align-items-center mb-3 mb-md-0 me-md-auto link-dark text-decoration-none">
-        <svg class="bi me-2" width="40" height="32">
-            <use xlink:href="#bootstrap"></use>
-        </svg>
-        <span class="fs-4">Sidebar</span>
-    </a>
-    <hr>
-    <ul class="nav nav-pills flex-column mb-auto">
+  <!-- Sidebar user panel (optional) -->
+  <div class="user-panel mt-3 pb-3 mb-3 d-flex">
+    <div class="image">
+        <img src="{{ asset('assets/dist/img/user2-160x160.jpg') }}" class="img-circle elevation-2" alt="User Image">
+    </div>
+    <div class="info">
+        <a href="#" class="d-block">{{ Auth::user()->name; }}</a>
+    </div>
+</div>
+
+<!-- Sidebar Menu -->
+<nav class="mt-2">
+    <ul class="nav nav-pills nav-sidebar flex-column" data-widget="treeview" role="menu"
+        data-accordion="false">
         <li class="nav-item">
             <a href="{{ route('dashboard') }}"
                 class="nav-link {{ request()->is('dashboard*') ? 'active' : 'link-dark' }}">
-                <svg class="bi me-2" width="16" height="16">
-                    <use xlink:href="#home"></use>
-                </svg>
-                Trang Chủ
+                <i class="nav-icon fas fa-th"></i>
+                <p>
+                    Trang Chủ
+                </p>
             </a>
         </li>
-        <li>
+        <li class="nav-item">
             <a href="{{ route('category') }}"
                 class="nav-link {{ request()->is('category*') ? 'active' : 'link-dark' }}">
-                <svg class="bi me-2" width="16" height="16">
-                    <use xlink:href="#speedometer2"></use>
-                </svg>
-                Quản Lý Phân Loại Sách
+                <i class="nav-icon fas fa-th"></i>
+                <p>
+                    Quản Lý Phân Loại Sách
+                </p>
             </a>
         </li>
-        <li>
-            <a href="{{ route('book') }}" class="nav-link {{ request()->is('book*') ? 'active' : 'link-dark' }}">
-                <svg class="bi me-2" width="16" height="16">
-                    <use xlink:href="#table"></use>
-                </svg>
-                Quản Lý Sách
+        <li class="nav-item">
+            <a href="{{ route('book') }}"
+                class="nav-link {{ request()->is('book*') ? 'active' : 'link-dark' }}">
+                <i class="nav-icon fas fa-th"></i>
+                <p>
+                    Quản Lý Sách
+                </p>
             </a>
         </li>
-        <li>
+        <li class="nav-item">
             <a href="{{ route('customer') }}"
                 class="nav-link {{ request()->is('customer*') ? 'active' : 'link-dark' }}">
-                <svg class="bi me-2" width="16" height="16">
-                    <use xlink:href="#grid"></use>
-                </svg>
-                Quản Lý Bạn Đọc
+                <i class="nav-icon fas fa-th"></i>
+                <p>
+                    Quản Lý Bạn Đọc
+                </p>
             </a>
         </li>
-        <li>
+        <li class="nav-item">
             <a href="{{ route('borrowhistory') }}"
                 class="nav-link {{ request()->is('borrowhistory*') ? 'active' : 'link-dark' }}">
-                <svg class="bi me-2" width="16" height="16">
-                    <use xlink:href="#people-circle"></use>
-                </svg>
-                Quản Lý Lịch Sử Mượn Sách
+                <i class="nav-icon fas fa-th"></i>
+                <p>
+                    Quản Lý Lịch Sử Mượn Sách
+                </p>
             </a>
         </li>
-        <li>
-            <a href="{{ route('area') }}" class="nav-link {{ request()->is('area*') ? 'active' : 'link-dark' }}">
-                <svg class="bi me-2" width="16" height="16">
-                    <use xlink:href="#people-circle"></use>
-                </svg>
-                Quản Lý Khu Vực Sách
+        <li class="nav-item">
+            <a href="{{ route('area') }}"
+                class="nav-link {{ request()->is('area*') ? 'active' : 'link-dark' }}">
+                <i class="nav-icon fas fa-th"></i>
+                <p>
+                    Quản Lý Khu Vực Sách
+                </p>
             </a>
         </li>
-        <li>
-            <a href="{{ route('user') }}" class="nav-link {{ request()->is('user*') ? 'active' : 'link-dark' }}">
-                <svg class="bi me-2" width="16" height="16">
-                    <use xlink:href="#people-circle"></use>
-                </svg>
-                Quản Lý Thành Viên
-            </a>
-        </li>
-        <hr>
-        <li>
-            <a href="{{ route('logout') }}"
-                class="nav-link {{ request()->is('logout*') ? 'active' : 'link-dark' }}">
-                <svg class="bi me-2" width="16" height="16">
-                    <use xlink:href="#people-circle"></use>
-                </svg>
-                Đăng Xuất
+        <li class="nav-item">
+            <a href="{{ route('user') }}"
+                class="nav-link {{ request()->is('user*') ? 'active' : 'link-dark' }}">
+                <i class="nav-icon fas fa-th"></i>
+                <p>
+                    Quản Lý Thành Viên
+                </p>
             </a>
         </li>
     </ul>
-</div>
+</nav>
+<!-- /.sidebar-menu -->

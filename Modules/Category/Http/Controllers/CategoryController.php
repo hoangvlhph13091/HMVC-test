@@ -98,18 +98,18 @@ class CategoryController extends Controller
                 if($cate->parent_id === $parent_id){
                     if(count($cate->hasChild) != 0){
                         echo('<li id="'.$cate->id.'" ><span class="caret" id="'.$cate->id.'"></span><span style="width:100%"  >'.$cate->name.'</span>
-                            <button  id="'.$cate->id.'" data-toggle="modal" data-target="#exampleModalCenter" data-action="add" class="hide btn-action bg-blue-500 hover:bg-blue-700 text-white font-bold  px-1 rounded">add</button>
-                            <button  id="'.$cate->id.'" data-toggle="modal" data-target="#exampleModalCenter" data-action="edit"class="hide btn-action bg-blue-500 hover:bg-blue-700 text-white font-bold  px-1 rounded">edit</button>
-                            <button  id="'.$cate->id.'" data-action="del"class="hide btn-action bg-blue-500 hover:bg-blue-700 text-white font-bold  px-1 rounded">del</button>');
+                            <button  id="'.$cate->id.'" data-toggle="modal" data-target="#exampleModalCenter" data-action="add" class="hide btn-action bg-gradient-primary rounded">add</button>
+                            <button  id="'.$cate->id.'" data-toggle="modal" data-target="#exampleModalCenter" data-action="edit"class="hide btn-action bg-gradient-primary rounded">edit</button>
+                            <button  id="'.$cate->id.'" data-action="del"class="hide btn-action bg-gradient-primary rounded">del</button>');
                         echo('</li>');
                             echo ('<ul class="nested" id="'.$cate->id.'">');
                                 self::tree_view($categories, $cate->id);
                             echo('</ul>');
                     } else {
                         echo('<li id="'.$cate->id.'"><span >'.$cate->name.'</span>
-                            <button  id="'.$cate->id.'" data-toggle="modal" data-target="#exampleModalCenter" data-action="add" class="hide btn-action bg-blue-500 hover:bg-blue-700 text-white font-bold  px-1 rounded">add</button>
-                        <button  id="'.$cate->id.'" data-toggle="modal" data-target="#exampleModalCenter" data-action="edit"class="hide btn-action bg-blue-500 hover:bg-blue-700 text-white font-bold  px-1 rounded">edit</button>
-                        <button  id="'.$cate->id.'" data-action="del"class="hide btn-action bg-blue-500 hover:bg-blue-700 text-white font-bold  px-1 rounded">del</button>
+                            <button  id="'.$cate->id.'" data-toggle="modal" data-target="#exampleModalCenter" data-action="add" class="hide btn-action bg-gradient-primary rounded">add</button>
+                        <button  id="'.$cate->id.'" data-toggle="modal" data-target="#exampleModalCenter" data-action="edit"class="hide btn-action bg-gradient-primary rounded">edit</button>
+                        <button  id="'.$cate->id.'" data-action="del"class="hide btn-action bg-gradient-primary rounded">del</button>
                         </li>');
                     }
                 }
