@@ -53,8 +53,12 @@ class BookController extends Controller
      */
     public function Create(BookRequests $request)
     {
-        $data = $request->except(['_token', 'tag']);
 
+        $data = $request->except(['_token', 'tag']);
+        if ($request->has('image')) {
+            $imgPath = $request->file('image')->store('public/image');
+            $data['image'] = $imgPath;
+        }
         $tagData =  $request->only('tag');
         $newBook = $this->bookServices->saveBookData($data);
         $this->bookServices->saveBookTagData($tagData, $newBook->id);
