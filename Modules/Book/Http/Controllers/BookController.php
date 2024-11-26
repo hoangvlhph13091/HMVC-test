@@ -6,10 +6,15 @@ use Illuminate\Contracts\Support\Renderable;
 use Illuminate\Http\Request;
 use Illuminate\Routing\Controller;
 use Modules\Book\Entities\Book;
+use Modules\Book\Entities\BookReceipt;
+use Modules\Book\Entities\BookReceiptDetail;
+use Modules\Book\Entities\BookTag;
+use Illuminate\Support\Facades\DB;
 use Modules\Category\Entities\Category;
 use Modules\Book\Http\Requests\BookRequests;
 use Modules\Book\Http\Services\BookServices;
 use Modules\Book\Http\Requests\BookEditRequests;
+use Modules\Book\Http\Requests\ReceiptRequests;
 use Modules\Area\Entities\Area;
 
 class BookController extends Controller
@@ -26,13 +31,11 @@ class BookController extends Controller
      * Display a listing of the resource.
      * @return Renderable
      */
-    public function index(Request $request)
+    public function index()
     {
-        $sortType = $request->sortBy ? $request->sortBy : 'id';
-        $order = $request->order ? $request->order : 'asc';
-        $searchValue = $request->searchValue ? $request->searchValue : '';
-        $books = Book::where('name','like',"%$searchValue%")->orderBy($sortType, $order)->paginate(5);
-        return view('book::index', compact('books') );
+        $books = Book::all();
+        $receipts =  BookReceipt::all();
+        return view('book::index', compact('books', 'receipts') );
     }
 
     /**
@@ -64,6 +67,159 @@ class BookController extends Controller
         $this->bookServices->saveBookTagData($tagData, $newBook->id);
 
         return redirect(route('book'));
+    }
+
+    public function createReceiptForm()
+    {
+        $areas = Area::all();
+        $categories = Category::all();
+        return view('book::createReceiptForm', compact('categories', 'areas'));
+    }
+
+    public function addBookRow()
+    {
+        $areas = Area::all();
+        $categories = Category::all();
+        return view('book::layouts.bookRow', compact('categories', 'areas'));
+    }
+
+    public function createReceipt (ReceiptRequests $request){
+        $data = $request->except(['_token', 'name','price', 'author', 'total_amount', 'overview', 'tag']);
+
+       try {
+        DB::beginTransaction();
+        $name = $request->only(['name']);
+        $price = $request->only(['price']);
+        $author = $request->only(['author']);
+        $total_amount = $request->only(['total_amount']);
+        $overview = $request->only(['overview']);
+        $tag = $request->only(['tag']);
+        $area = $request->only(['area']);
+
+        $receipt = new BookReceipt();
+        $receipt->fill($data);
+        $receipt->save();
+
+        $rec = $receipt->fresh();
+
+        foreach ($name['name'] as $key => $val) {
+            $book = new Book();
+            $book->name = $val;
+            $book->price = $price['price'][$key];
+            $book->author = $author['author'][$key];
+            $book->area = $area['area'][$key];
+            $book->overview = $overview['overview'][$key];
+            $book->total_amount = $total_amount['total_amount'][$key];
+            $book->save();
+
+            $b = $book->fresh();
+
+            $recDetail = new BookReceiptDetail();
+            $recDetail->receipt_unique_id = $rec->receipt_unique_id;
+            $recDetail->book_id = $b->id;
+            $recDetail->save();
+
+            $bookCate = new BookTag();
+
+            $bookCate->book_id = $b->id;
+            $bookCate->category_id = $tag['tag'][$key];
+
+            $bookCate->save();
+
+            DB::commit();
+        }
+       } catch (\Exception $e) {
+        DB::rollBack();
+
+        throw new Exception($e->getMessage());
+       }
+    }
+
+    public function editReceiptForm($id)
+    {
+        $receipt = BookReceipt::Where('id',$id)->with('detail')->first();
+        $categories = Category::all();
+        $areas = Area::all();
+
+        $book_ids = [];
+
+        foreach ($receipt->detail as $key => $value) {
+            array_push($book_ids, $value->book_id);
+        }
+
+        $books = Book::Wherein('id', $book_ids)->with('bookCategory')->get();
+
+        return view('book::editReceiptForm', compact('receipt', 'categories', 'areas', 'books'));
+    }
+
+    public function editReceipt(Request $request, $id)
+    {
+        $data = $request->except(['_token', 'name','price', 'author', 'total_amount', 'overview', 'tag']);
+
+        try {
+         DB::beginTransaction();
+         $name = $request->only(['name']);
+         $price = $request->only(['price']);
+         $author = $request->only(['author']);
+         $total_amount = $request->only(['total_amount']);
+         $overview = $request->only(['overview']);
+         $tag = $request->only(['tag']);
+         $area = $request->only(['area']);
+         $book_id_list = $request->only(['book_id']);
+
+         $receipt = BookReceipt::find($id);
+         $receipt->fill($data);
+         $receipt->save();
+
+         $rec = $receipt->fresh();
+
+         BookReceiptDetail::Where('receipt_unique_id', $rec->receipt_unique_id)->delete();
+
+         foreach ($name['name'] as $key => $val) {
+             if (isset($book_id_list['book_id'][$key])) {
+                $b = Book::find($book_id_list['book_id'][$key]);
+                $b->name = $val;
+                $b->price = $price['price'][$key];
+                $b->author = $author['author'][$key];
+                $b->area = $area['area'][$key];
+                $b->overview = $overview['overview'][$key];
+                $b->total_amount = $total_amount['total_amount'][$key];
+                $b->save();
+
+                BookTag::where('book_id', $book_id_list['book_id'][$key])->delete();
+             } else {
+                $book = new Book();
+                $book->name = $val;
+                $book->price = $price['price'][$key];
+                $book->author = $author['author'][$key];
+                $book->area = $area['area'][$key];
+                $book->overview = $overview['overview'][$key];
+                $book->total_amount = $total_amount['total_amount'][$key];
+                $book->save();
+
+                $b = $book->fresh();
+             }
+
+
+             $recDetail = new BookReceiptDetail();
+             $recDetail->receipt_unique_id = $rec->receipt_unique_id;
+             $recDetail->book_id = $b->id;
+             $recDetail->save();
+
+             $bookCate = new BookTag();
+
+             $bookCate->book_id = $b->id;
+             $bookCate->category_id = $tag['tag'][$key];
+
+             $bookCate->save();
+
+             DB::commit();
+         }
+        } catch (\Exception $e) {
+         DB::rollBack();
+
+         throw new Exception($e->getMessage());
+        }
     }
 
     /**

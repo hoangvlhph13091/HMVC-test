@@ -20,5 +20,13 @@ Route::middleware('auth')->group(function () {
         Route::get('/edit/{id}', [BookController::class, 'editForm'])->name('book.editForm');
         Route::post('/edit/{id}', [BookController::class, 'edit'])->name('book.edit');
         Route::any('/delete/{id}', [BookController::class, 'destroy'])->name('book.del');
+
+        Route::get('/create-receipt', [BookController::class, 'createReceiptForm'])->name('book.receipt.addForm');
+        Route::post('/create-receipt', [BookController::class, 'createReceipt'])->name('book.receipt.add');
+        Route::any('/create-receipt-add-book-row', [BookController::class, 'addBookRow'])->name('book.receipt-add-book-row');
+        Route::get('/edit-receipt/{id}', [BookController::class, 'editReceiptForm'])->name('book.receipt.editForm');
+        Route::post('/edit-receipt/{id}', [BookController::class, 'editReceipt'])->name('book.receipt.edit');
+
+
     });
 });

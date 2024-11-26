@@ -133,6 +133,7 @@
   border-radius: 4px; }
   .select2-container--default .select2-selection--single .select2-selection__rendered {
     color: #444;
+    height: auto;
     line-height: 28px; }
   .select2-container--default .select2-selection--single .select2-selection__clear {
     cursor: pointer;
@@ -196,7 +197,7 @@
     margin-right: 10px;
     padding: 1px; }
   .select2-container--default .select2-selection--multiple .select2-selection__choice {
-    background-color: #e4e4e4;
+    background-color: #007bff;
     border: 1px solid #aaa;
     border-radius: 4px;
     cursor: default;

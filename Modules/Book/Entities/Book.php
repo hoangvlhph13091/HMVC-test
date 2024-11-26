@@ -14,7 +14,7 @@ class Book extends Model
 
     public function bookCategory()
     {
-        return $this->hasMany(BookTag::class, 'book_id', 'id');
+        return $this->hasOne(BookTag::class, 'book_id', 'id');
     }
 
     public function bookBorrowed()
