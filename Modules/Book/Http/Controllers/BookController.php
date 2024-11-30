@@ -16,6 +16,7 @@ use Modules\Book\Http\Services\BookServices;
 use Modules\Book\Http\Requests\BookEditRequests;
 use Modules\Book\Http\Requests\ReceiptRequests;
 use Modules\Area\Entities\Area;
+use Exception;
 
 class BookController extends Controller
 {
@@ -76,11 +77,15 @@ class BookController extends Controller
         return view('book::createReceiptForm', compact('categories', 'areas'));
     }
 
-    public function addBookRow()
+    public function searchBook(Request $request)
     {
-        $areas = Area::all();
-        $categories = Category::all();
-        return view('book::layouts.bookRow', compact('categories', 'areas'));
+        $name = $request->name;
+        try {
+            $book_id = Book::where('name', $name)->pluck('id');
+            return $book_id[0];
+        } catch (\Throwable $th) {
+            return NULL;
+        }
     }
 
     public function createReceipt (ReceiptRequests $request){
@@ -95,6 +100,7 @@ class BookController extends Controller
         $overview = $request->only(['overview']);
         $tag = $request->only(['tag']);
         $area = $request->only(['area']);
+        $book_id_list = $request->only(['book_id']);
 
         $receipt = new BookReceipt();
         $receipt->fill($data);
@@ -103,16 +109,29 @@ class BookController extends Controller
         $rec = $receipt->fresh();
 
         foreach ($name['name'] as $key => $val) {
-            $book = new Book();
-            $book->name = $val;
-            $book->price = $price['price'][$key];
-            $book->author = $author['author'][$key];
-            $book->area = $area['area'][$key];
-            $book->overview = $overview['overview'][$key];
-            $book->total_amount = $total_amount['total_amount'][$key];
-            $book->save();
+            if (isset($book_id_list['book_id'][$key]) && $book_id_list['book_id'][$key] !='') {
+                $b = Book::find($book_id_list['book_id'][$key]);
+                $b->name = $val;
+                $b->price = $price['price'][$key];
+                $b->author = $author['author'][$key];
+                $b->area = $area['area'][$key];
+                $b->overview = $overview['overview'][$key];
+                $b->total_amount = $b->total_amount + $total_amount['total_amount'][$key];
+                $b->save();
 
-            $b = $book->fresh();
+                BookTag::where('book_id', $book_id_list['book_id'][$key])->delete();
+             } else {
+                $book = new Book();
+                $book->name = $val;
+                $book->price = $price['price'][$key];
+                $book->author = $author['author'][$key];
+                $book->area = $area['area'][$key];
+                $book->overview = $overview['overview'][$key];
+                $book->total_amount = $total_amount['total_amount'][$key];
+                $book->save();
+
+                $b = $book->fresh();
+             }
 
             $recDetail = new BookReceiptDetail();
             $recDetail->receipt_unique_id = $rec->receipt_unique_id;
@@ -176,14 +195,14 @@ class BookController extends Controller
          BookReceiptDetail::Where('receipt_unique_id', $rec->receipt_unique_id)->delete();
 
          foreach ($name['name'] as $key => $val) {
-             if (isset($book_id_list['book_id'][$key])) {
+             if (isset($book_id_list['book_id'][$key]) && $book_id_list['book_id'][$key] !='') {
                 $b = Book::find($book_id_list['book_id'][$key]);
                 $b->name = $val;
                 $b->price = $price['price'][$key];
                 $b->author = $author['author'][$key];
                 $b->area = $area['area'][$key];
                 $b->overview = $overview['overview'][$key];
-                $b->total_amount = $total_amount['total_amount'][$key];
+                $b->total_amount = $book->total_amount + $total_amount['total_amount'][$key];
                 $b->save();
 
                 BookTag::where('book_id', $book_id_list['book_id'][$key])->delete();

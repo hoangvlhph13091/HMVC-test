@@ -62,8 +62,9 @@
                     <div class="col-sm-2">
                         <div class="form-group">
                             <label for="exampleInputPassword1">Tên Sách</label>
-                            <input type="text" class="form-control" id="name" name="name[]" placeholder="Tên Sách">
+                            <input type="text" class="form-control book_name" data-id="0" id="name" name="name[]" placeholder="Tên Sách">
                             <span class="text-red-600 err_text" id="name_0_err"></span>
+                            <input type="hidden" name="book_id[0]" id="book_id_0" >
                         </div>
                     </div>
                     <div class="col-sm-1">
@@ -154,30 +155,6 @@
             $('.select2').select2()
         });
 
-        $('#tag_target').click(function() {
-            $('#nested_list_warp').toggle('hide');
-        })
-        $('input[id^="check_box"]').each(function() {
-            $(this).click(function() {
-                if ($(this).is(':checked')) {
-                    $('#tag_target_list').append(
-                        `<span class="tag_bagde" data-id="${$(this).data('id')}" >${$(this).data('value')} <span class="tag_close" data-id="${$(this).data('id')}" >x</span> </span>`
-                    )
-                    $('#actuall_input').append(
-                        `<input type="text" hidden name="tag[]" id="tag_no_${$(this).data('id')}" value="${$(this).data('id')}">`
-                    )
-                } else if ($(this).not(':checked')) {
-                    $(`span[data-id^="${$(this).data('id')}"]`).remove()
-                    $(`input[id^="tag_no_${$(this).data('id')}"]`).remove()
-                }
-            })
-        })
-        $(document).on("click", "span.tag_close", function() {
-            $(this).parent().remove();
-            $(`input[id^="tag_no_${$(this).data('id')}"]`).remove()
-            $(`input[data-id^="${$(this).data('id')}"]`).prop('checked', false);
-        });
-
         $('#receiptForm').submit(function(e) {
             e.preventDefault();
             $('.err_text').text('');
@@ -220,8 +197,9 @@
                             <div class="col-sm-2">
                                 <div class="form-group">
                                     <label for="exampleInputPassword1">Tên Sách</label>
-                                    <input type="text" class="form-control" id="name" name="name[`+counter+`]" placeholder="Tên Sách">
+                                    <input type="text" class="form-control book_name" data-id="`+counter+`" id="name" name="name[`+counter+`]" placeholder="Tên Sách">
                                     <span class="text-red-600 err_text" id="name_`+counter+`_err"></span>
+                                    <input type="hidden" name="book_id[`+counter+`]" id="book_id_0" >
                                 </div>
                             </div>
                             <div class="col-sm-1">
@@ -300,6 +278,31 @@
         $(document).on('click', '.btn_delete_row', function(e){
             e.preventDefault()
             $(this).closest(".book_add_row").remove();
+        })
+
+        $(document).on('blur', '.book_name', function(e){
+            e.preventDefault()
+            if ($.trim($(this).val()) == '') {
+                return;
+            }
+
+            let url = "{{ route('book.search_book') }}"
+            let name = $.trim($(this).val());
+            let id = $(this).attr('data-id');
+            $.ajax({
+                type: 'GET',
+                url: url,
+                data: {
+                    name: name,
+                },
+                success: function(response) {
+                    if (response != '') {
+                        $('#book_id_'+id).val(response).change();
+                    } else {
+                        $('#book_id_'+id).val('').change();
+                    }
+                }
+            })
         })
     </script>
 @endsection

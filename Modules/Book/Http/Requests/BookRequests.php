@@ -15,8 +15,8 @@ class BookRequests extends FormRequest
     {
         return [
             'name'=>"required|min:6|max:50|unique:books",
-            'tag'=>"required|array",
-            'tag.*'=>"required|distinct",
+            'tag'=>"required",
+            // 'tag.*'=>"required|distinct",
         ];
     }
 

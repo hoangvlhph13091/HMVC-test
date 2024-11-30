@@ -97,8 +97,6 @@
                                     <th>
                                         <a href="{{ route('book.receipt.editForm', ['id' => $receipt->id]) }}"
                                             class="btn btn-info">Edit</a>
-                                        <a href="{{ route('book.del', ['id' => $receipt->id]) }}"
-                                            onclick="return confirm('Xóa đầu sách??')"class="btn btn-danger">Del</a>
                                     </th>
                                 </tr>
                             @endforeach
@@ -155,6 +153,6 @@
                 orderable: false,
                 targets: [5]
             }]
-        }).buttons().container().appendTo('#example1_wrapper .col-md-6:eq(0)');
+        }).buttons().container().appendTo('#receipt_table_wrapper .col-md-6:eq(0)');
     </script>
 @endsection

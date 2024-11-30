@@ -17,7 +17,7 @@ class ReceiptRequests extends FormRequest
             'receipt_unique_id'=>"required|unique:book_import_receipt,receipt_unique_id",
             'receipt_date' => "required",
             'name'=>"required|array",
-            'name.*'=>"required|distinct|min:6|max:50|unique:books,name",
+            'name.*'=>"required|distinct|min:6|max:50",
             'tag'=>"required|array",
             'tag.*'=>"required",
         ];
@@ -29,7 +29,6 @@ class ReceiptRequests extends FormRequest
             'name.*.required'=>'Tên sách không được để trống',
             'name.*.min'=>'Tên sách chứa tối thiểu 6 ký tự',
             'name.*.max'=>'Tên sách chứa tối đa 50 ký tự',
-            'name.*.unique'=>'Tên sách mục bị trùng',
             'tag.required'=>'Hãy Chọn Ít Nhất 1 Hạng Mục Phân Loại',
         ];
     }

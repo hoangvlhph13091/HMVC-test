@@ -23,7 +23,7 @@ Route::middleware('auth')->group(function () {
 
         Route::get('/create-receipt', [BookController::class, 'createReceiptForm'])->name('book.receipt.addForm');
         Route::post('/create-receipt', [BookController::class, 'createReceipt'])->name('book.receipt.add');
-        Route::any('/create-receipt-add-book-row', [BookController::class, 'addBookRow'])->name('book.receipt-add-book-row');
+        Route::get('/search-book', [BookController::class, 'searchBook'])->name('book.search_book');
         Route::get('/edit-receipt/{id}', [BookController::class, 'editReceiptForm'])->name('book.receipt.editForm');
         Route::post('/edit-receipt/{id}', [BookController::class, 'editReceipt'])->name('book.receipt.edit');
 

@@ -15,8 +15,8 @@ class BookEditRequests extends FormRequest
     {
         return [
             'name'=>"required|min:6|max:50|unique:books,name,".$this->id,
-            'tag'=>"required|array",
-            'tag.*'=>"required|distinct",
+            'tag'=>"required",
+            // 'tag.*'=>"required|distinct",
         ];
     }
 
@@ -27,7 +27,7 @@ class BookEditRequests extends FormRequest
             'name.min'=>'Tên sách chứa tối thiểu 6 ký tự',
             'name.max'=>'Tên sách chứa tối đa 50 ký tự',
             'name.unique'=>'Tên sách mục bị trùng',
-            'tag.required'=>'Hãy Chọn Ít Nhất 1 Hạng Mục Phân Loại',
+            // 'tag.required'=>'Hãy Chọn Ít Nhất 1 Hạng Mục Phân Loại',
         ];
     }
 
