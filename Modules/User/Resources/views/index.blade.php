@@ -5,99 +5,69 @@
 @endsection
 
 @section('content')
-
-    <div class="py-12">
-        <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
-            <div class="bg-white overflow-hidden shadow-sm sm:rounded-lg">
-                <div class="p-6 text-gray-900">
-
-                    <div class="inline-flex rounded-md shadow-sm" role="group">
-                        <a href="{{ route('user.addForm') }}">
-                            <button type="button" class="inline-flex items-center px-4 py-2 text-sm font-medium text-gray-900 bg-transparent border border-gray-900 rounded-l-lg hover:bg-gray-900 hover:text-white focus:z-10 focus:ring-2 focus:ring-gray-500 focus:bg-gray-900 focus:text-white dark:border-white dark:text-white dark:hover:text-white dark:hover:bg-gray-700 dark:focus:bg-gray-700">
-                                <svg aria-hidden="true" class="w-4 h-4 mr-2 fill-current" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><path fill-rule="evenodd" d="M18 10a8 8 0 11-16 0 8 8 0 0116 0zm-6-3a2 2 0 11-4 0 2 2 0 014 0zm-2 4a5 5 0 00-4.546 2.916A5.986 5.986 0 0010 16a5.986 5.986 0 004.546-2.084A5 5 0 0010 11z" clip-rule="evenodd"></path></svg>
-                                Thêm Khu Vực
-                            </button>
-                        </a>
-
-                    </div>
-                    <input
-                            id="search"
-                            name="search"
-                            type="search"
-                            style="right: 0"
-                            placeholder="search">
-                    <br>
-                    <br>
-                    <div class="relative overflow-x-auto shadow-md sm:rounded-lg">
-                        <table  class="listDataTable w-full text-sm text-left text-gray-500 dark:text-gray-400 table-fixed">
-                            <thead class="text-xs text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400">
-                                <tr>
-                                    <th scope="col" class="px-6 py-3">
-                                        No.
-                                    </th>
-                                    <th scope="col" class="px-6 py-3">
-                                        Tên Nhân Viên
-                                    </th>
-                                    <th scope="col" class="px-6 py-3 break-all">
-                                        Email
-                                    </th>
-                                    <th scope="col" class="px-6 py-3 break-all">
-                                        Chức Vụ
-                                    </th>
-                                    <th scope="col" colspan="2" class="px-6 py-3">
-                                        <div class="flex items-center">
-
-                                        </div>
-                                    </th>
-                                </tr>
-                            </thead>
-                            <tbody id="tblLocations">
-                               @if (isset($users))
-                                    @foreach ( $users as $index => $user )
-                                        <tr class="bg-white border-b dark:bg-gray-800 dark:border-gray-700">
-                                            <td scope="row" class="px-6 py-4 font-medium text-gray-900 dark:text-white">
-                                                {{ $index + 1 }}
-                                            </td>
-                                            <td scope="row" class="px-6 py-4 font-medium text-gray-900 dark:text-white">
-                                                {{ $user->name }}
-                                            </td>
-                                            <td class="px-6 py-4 font-medium text-gray-900 dark:text-white truncate	">
-                                                {{ $user->email }}
-                                            </td>
-                                            <td class="px-6 py-4 font-medium text-gray-900 dark:text-white truncate	">
-                                                {{ $user->hasRole('admin') ? 'Quản Trị Viên' : 'Nhân Viên' }}
-                                            </td>
-                                            <td class="px-6 py-4 ">
-                                                <a href="{{ route('user.editForm',['id' => $user->id]) }}" class="font-medium text-blue-600 dark:text-blue-500 hover:underline">Edit</a>
-                                            </td>
-                                            <td class="px-6 py-4 ">
-                                                <a href="{{ route('user.del',['id' => $user->id]) }}" onclick="return confirm('Xóa Thành Viên ??')" class="font-medium text-blue-600 dark:text-blue-500 hover:underline">Del</a>
-                                            </td>
-                                        </tr>
-                                    @endforeach
-                               @else
-
-                               @endif
-                            </tbody>
-                        </table>
-                        <br>
-                        @if (isset($users))
-                            {!! $users->links() !!}
-                        @endif
-                    </div>
-                </div>
-            </div>
+    <div class="card">
+        <div class="inline-flex rounded-md shadow-sm" role="group">
+            <a href="{{ route('user.addForm') }}" class="btn btn-primary">
+                Thêm Thành Viên
+            </a>
+        </div>
+        <div class="card-body">
+            <table id="user_table" class="table table-bordered table-striped">
+                <thead>
+                    <tr>
+                        <th>ID</th>
+                        <th>Tên Nhân Viên</th>
+                        <th>Email</th>
+                        <th>Chức Vụ</th>
+                        <th></th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach ($users as $user)
+                        <tr>
+                            <th>{{ $user->id }}</th>
+                            <th>{{ $user->name }}</th>
+                            <th>{{ $user->email }}</th>
+                            <th>{{ $user->hasRole('admin') ? 'Quản Trị Viên' : 'Nhân Viên' }}</th>
+                            <th>
+                                <a href="{{ route('user.editForm', ['id' => $user->id]) }}" class="btn btn-info">Chỉnh Sửa</a>
+                                <a href="{{ route('user.del', ['id' => $user->id]) }}" onclick="return confirm('Xóa Thành Viên??')" class="btn btn-info">Xóa</a>
+                            </th>
+                        </tr>
+                    @endforeach
+                </tbody>
+                <tfoot>
+                    <tr>
+                        <th>ID</th>
+                        <th>Tên Nhân Viên</th>
+                        <th>Email</th>
+                        <th>Chức Vụ</th>
+                        <th></th>
+                    </tr>
+                </tfoot>
+            </table>
         </div>
     </div>
 
 @endsection
 
 @section('scripts')
-    <script src="{{ Module::asset('Book:js/switchState.js') }}"></script>
-    <script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/1.8.3/jquery.min.js"></script>
-    <link rel="stylesheet" href="https://ajax.googleapis.com/ajax/libs/jqueryui/1.8.24/themes/smoothness/jquery-ui.css" />
-    <script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jqueryui/1.8.24/jquery-ui.min.js"></script>
-    <script src="{{ Module::asset('Book:js/paginate.js') }}"></script>
-    <script src="{{ Module::asset('Book:js/sort.js') }}"></script>
-    <script src="{{ Module::asset('Book:js/search.js') }}"></script>
+<script>
+    $("#user_table").DataTable({
+        "responsive": true,
+        "lengthChange": false,
+        "autoWidth": false,
+        "buttons": [{
+            extend: 'excel',
+            exportOptions: {
+                columns: 'th:not(:last-child)'
+            }
+        }],
+        "columnDefs": [{
+            orderable: false,
+            targets: [4]
+        }]
+    }).buttons().container().appendTo('#user_table_wrapper .col-md-6:eq(0)');
+
+</script>
 @endsection
