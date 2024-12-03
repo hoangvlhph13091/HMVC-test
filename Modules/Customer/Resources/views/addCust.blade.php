@@ -4,87 +4,151 @@
     {!! config('customer.name') !!}
 @endsection
 
-
 @section('content')
-    <div class="py-12">
-        <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
-            <div class="bg-white overflow-hidden shadow-sm sm:rounded-lg">
-                <div class="p-6 text-gray-900">
-                    <a href="{{ route('customer') }}" class="font-medium text-blue-600 dark:text-blue-500 hover:underline"
-                        id="back_link">back</a>
-                    <br>
-                    <form class="bg-white shadow-md rounded px-8 pt-6 pb-8 mb-4" id="Customer_Form" method="POST">
-                        @csrf
-                        <div class="mb-4">
-                            <label class="block text-gray-700 text-sm font-bold mb-2" for="title">
-                                Tên Bạn Đọc
-                            </label>
-                            <input
-                                class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
-                                id="name" name="name" type="text" placeholder="Tên Bạn Đọc">
-                            <span class="text-red-600 err_text" id="name_err"></span>
+    <div class="card card-primary">
+        <a href="{{ route('customer') }}" class="font-medium text-blue-600 dark:text-blue-500 hover:underline"
+            id="back_link">back</a>
+        <br>
+        <!-- /.card-header -->
+        <!-- form start -->
+        <form id="Customer_Form" method="POST">
+            @csrf
+            <div class="card-body">
+                <div class="form-group">
+                    <label for="exampleInputEmail1">Tên Bạn Đọc</label>
+                    <input type="text" class="form-control" id="name" name="name" type="text"
+                        placeholder="Tên Bạn Đọc">
+                    <span class="text-red-600 err_text" id="name_err"></span>
+                </div>
+
+                <div class="form-group">
+                    <label for="exampleInputPassword1">Giới Tính</label>
+                    <select id="sex" name="sex" class="form-control">
+                        <option value="0">Nữ</option>
+                        <option value="1">Nam</option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <div class="row">
+                        <div class="col-sm-4">
+                            <label>Ngày Sinh:</label>
+                            <div class="input-group date" id="date_of_birth" data-target-input="nearest">
+                                <input type="text" name="date_of_birth" id="date_of_birth_input" class="form-control datetimepicker-input"
+                                    data-target="#date_of_birth" />
+                                <div class="input-group-append" data-target="#date_of_birth" data-toggle="datetimepicker">
+                                    <div class="input-group-text"><i class="fa fa-calendar"></i></div>
+                                </div>
+                                <span class="text-red-600 err_text" id="date_of_birth_err"></span>
+                            </div>
                         </div>
-                        <div class="mb-4">
-                            <label class="block text-gray-700 text-sm font-bold mb-2" for="title">
-                                Tuổi
-                            </label>
-                            <input
-                                class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
-                                id="price" name="age" type="number" placeholder="Tuổi">
+                        <div class="col-sm-8">
+                            <label for="exampleInputPassword1"> Tuổi</label>
+                            <input type="text" class="form-control" readonly id="age" name="age" type="number"
+                                placeholder=" Tuổi">
                             <span class="text-red-600 err_text" id="age_err"></span>
                         </div>
-                        <div class="mb-4">
-                            <label class="block text-gray-700 text-sm font-bold mb-2" for="title">
-                                Giới Tính
-                            </label>
-                            <Select name="sex" class="form-control">
-                                <option value="1">Nam</option>
-                                <option value="0">Nữ</option>
-                            </Select>
-                        </div>
-                        <div class="mb-4">
-                            <label class="block text-gray-700 text-sm font-bold mb-2" for="title">
-                                Ngày Sinh
-                            </label>
-                            <input
-                                class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
-                                id="price" name="date_of_birth" type="date" placeholder="Ngày Sinh">
-                                <span class="text-red-600 err_text" id="date_of_birth_err"></span>
-                        </div>
-                        <div class="mb-4">
-                            <label class="block text-gray-700 text-sm font-bold mb-2" for="title">
-                                Địa Chỉ
-                            </label>
-                            <input
-                                class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
-                                id="price" name="address" type="text" placeholder="Địa Chỉ">
-                                <span class="text-red-600 err_text" id="address_err"></span>
-                        </div>
-                        <div class="mb-4">
-                            <label class="block text-gray-700 text-sm font-bold mb-2" for="title">
-                                Số Điện Thoại
-                            </label>
-                            <input
-                                class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
-                                id="price" name="phone_number" type="number" placeholder="Số Điện Thoại">
-                                <span class="text-red-600 err_text" id="phone_number_err"></span>
-                        </div>
-
-                        <div class="bg-gray-50 px-4 py-3 text-right sm:px-6">
-                            <button type="submit"
-                                class="inline-flex justify-center rounded-md bg-blue-600 py-2 px-3 text-sm font-semibold text-white shadow-sm hover:bg-blue-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-500">
-                                Save
-                            </button>
-                        </div>
-                    </form>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label for="exampleInputPassword1">Địa Chỉ</label>
+                    <input type="text" class="form-control" id="address" name="address" type="text"
+                        placeholder="Địa Chỉ">
+                    <span class="text-red-600 err_text" id="address_err"></span>
+                </div>
+                    <div class="form-group">
+                    <label for="exampleInputPassword1"> Số Điện Thoại</label>
+                    <input type="text" class="form-control" id="phone_number" name="phone_number"
+                        placeholder=" Số Điện Thoại">
                 </div>
             </div>
-        </div>
+            <!-- /.card-body -->
+
+            <div class="card-footer">
+                <button type="submit" class="btn btn-primary">Submit</button>
+            </div>
+        </form>
     </div>
 @endsection
 
 @section('scripts')
     <script>
+        $('#date_of_birth').datetimepicker({
+            format: 'DD/MM/YYYY',
+            maxDate: new Date()
+        });
+
+        $('#date_of_birth').on('change.datetimepicker', function(e){
+
+            let birthDate = $('#date_of_birth_input').val();
+            let dob = birthDate.split('/');
+            let dob_str = dob[1]+'/'+dob[0]+'/'+dob[2];
+
+            if ($.trim($('#date_of_birth_input').val()) == '' || isNaN(Date.parse(dob_str))) {
+                return;
+            }
+
+            let curDate = new Date();
+
+            let d = curDate.getDate();
+            let m = curDate.getMonth() + 1;
+            let y = curDate.getFullYear();
+
+            let age = parseInt(y) - parseInt(dob[2]);
+
+            if (parseInt(dob[2]) <= parseInt(y)) {
+                if (parseInt(dob[1]) < parseInt(m)) {
+                    if (age > 0) {
+                        age = age - 1
+                    }
+                } else if (parseInt(dob[1]) == parseInt(m)) {
+                    if (parseInt(dob[0]) < parseInt(d)) {
+                        if (age > 0) {
+                            age = age - 1
+                        }
+                    }
+                }
+            }
+
+            $('#age').val(age).change();
+        })
+
+        $('#date_of_birth_input').on('blur', function(e){
+            e.preventDefault();
+
+            let birthDate = $('#date_of_birth_input').val();
+            let dob = birthDate.split('/');
+            let dob_str = dob[1]+'/'+dob[0]+'/'+dob[2];
+
+            if ($.trim($('#date_of_birth_input').val()) == '' || isNaN(Date.parse(dob_str))) {
+                return;
+            }
+
+            let curDate = new Date();
+
+            let d = curDate.getDate();
+            let m = curDate.getMonth() + 1;
+            let y = curDate.getFullYear();
+
+            let age = parseInt(y) - parseInt(dob[2]);
+
+            if (parseInt(dob[2]) <= parseInt(y)) {
+                if (parseInt(dob[1]) < parseInt(m)) {
+                    if (age > 0) {
+                        age = age - 1
+                    }
+                } else if (parseInt(dob[1]) == parseInt(m)) {
+                    if (parseInt(dob[0]) < parseInt(d)) {
+                        if (age > 0) {
+                            age = age - 1
+                        }
+                    }
+                }
+            }
+
+            $('#age').val(age).change();
+        })
+
+
         $(document).ready(function() {
             $('#Customer_Form').submit(function(e) {
                 e.preventDefault();
@@ -104,13 +168,10 @@
                     success: function() {
                         window.location.replace(backurl);
                     },
-                    error: function(response){
+                    error: function(response) {
                         let errors = response.responseJSON.errors;
-                        console.log(errors);
-                        $.each( errors, function( key, value ) {
-                            console.log(key);
-                            console.log(value[0]);
-                            $('#'+key+'_err').text(value[0])
+                        $.each(errors, function(key, value) {
+                            $('#' + key + '_err').text(value[0])
                         })
                     }
                 })

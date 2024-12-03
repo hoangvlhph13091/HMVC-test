@@ -81,3 +81,7 @@ href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,400i,700&d
   <link rel="stylesheet" href="{{ asset('assets/plugins/datatables-buttons/css/buttons.bootstrap4.min.css') }}">
 
   <link rel="stylesheet" href="{{ asset('assets/appCss/appCss.css') }}">
+
+  <script src="{{ asset('assets/plugins/moment/moment.min.js') }}"></script>
+  <script src="{{ asset('assets/plugins/daterangepicker/daterangepicker.js') }}"></script>
+  <script src="{{ asset('assets/plugins/tempusdominus-bootstrap-4/js/tempusdominus-bootstrap-4.min.js') }}"></script>
