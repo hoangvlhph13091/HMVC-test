@@ -8,18 +8,18 @@
     <div class="card">
         <ul class="nav nav-tabs" id="custom-content-below-tab" role="tablist">
             <li class="nav-item">
-                <a class="nav-link active" id="custom-content-below-home-tab" data-toggle="pill"
-                    href="#custom-content-below-home" role="tab" aria-controls="custom-content-below-home"
+                <a class="nav-link active" id="quan_ly_sach-tab" data-toggle="pill"
+                    href="#quan_ly_sach" role="tab" aria-controls="quan_ly_sach-home"
                     aria-selected="true">Sách</a>
             </li>
             <li class="nav-item">
-                <a class="nav-link" id="custom-content-below-profile-tab" data-toggle="pill"
-                    href="#custom-content-below-profile" role="tab" aria-controls="custom-content-below-profile"
+                <a class="nav-link" id="form_nhap_sach-tab" data-toggle="pill"
+                    href="#form_nhap_sach" role="tab" aria-controls="form_nhap_sach"
                     aria-selected="false">Đơn Nhập</a>
             </li>
         </ul>
-        <div class="tab-content" id="custom-content-below-tabContent">
-            <div class="tab-pane fade show active" id="custom-content-below-home" role="tabpanel"
+        <div class="tab-content" id="quan_ly_sach-tabContent">
+            <div class="tab-pane fade show active" id="quan_ly_sach-home" role="tabpanel"
                 aria-labelledby="custom-content-below-home-tab">
                 <br>
                 <div class="inline-flex rounded-md shadow-sm" role="group">
@@ -66,7 +66,7 @@
                     </table>
                 </div>
             </div>
-            <div class="tab-pane fade" id="custom-content-below-profile" role="tabpanel"
+            <div class="tab-pane fade" id="form_nhap_sach" role="tabpanel"
                 aria-labelledby="custom-content-below-profile-tab">
                 <br>
                 <div class="inline-flex rounded-md shadow-sm" role="group">
