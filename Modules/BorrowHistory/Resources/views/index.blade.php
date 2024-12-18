@@ -11,6 +11,9 @@
             <a href="{{ route('borrowhistory.addForm') }}" class="btn btn-primary">
                 Đăng Ký Mượn Sách
             </a>
+            <a href="{{ route('borrowhistory.returnBookForm') }}" class="btn btn-primary">
+                Trả Sách
+            </a>
         </div>
         <div class="card-body">
             <table id="his_table" class="table table-bordered table-striped">
@@ -29,12 +32,12 @@
                         <tr>
                             <th>{{ $history->id }}</th>
                             <th>{{ $history->reader_name }}</th>
-                            <th>{{ $history->borrow_status == 1 ? 'Chưa Trả' : 'Đã Trả' }}</th>
-                            <th>{{ $history->borrow_date }}</th>
-                            <th>{{ $history->return_date }}</th>
+                            <th>{{ $history->borrow_status == 0 ? 'Chưa Trả' : 'Đã Trả' }}</th>
+                            <th>{{ date('Y/m/d', strtotime($history->borrow_date)) }}</th>
+                            <th>{{ date('Y/m/d', strtotime($history->return_date)) }}</th>
                             <th>
                                 <a href="{{ route('borrowhistory.editForm', ['id' => $history->id]) }}" class="btn btn-info">Chi Tiết</a>
-                                <a href="{{ route('borrowhistory.return', ['id' => $history->id]) }}" class="btn btn-info">Hoàn Trả</a>
+                                <a href="{{ route('borrowhistory.return', ['id' => $history->id]) }}" onclick="return confirm('Xác nhận hoàn trả?')" class="btn btn-info">Hoàn Trả</a>
                             </th>
                         </tr>
                     @endforeach

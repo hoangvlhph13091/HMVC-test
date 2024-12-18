@@ -12,7 +12,7 @@ use Modules\Category\Http\Controllers\CategoryController;
 |
 */
 
-Route::prefix('category')->group(function() {
+Route::prefix('category', 'auth')->group(function() {
     Route::get('/', 'CategoryController@index')->name('category');
     Route::get('/create', [CategoryController::class, 'createForm' ] )->name('category.createForm');
     Route::post('/create', [CategoryController::class, 'create' ] )->name('category.create');

@@ -13,7 +13,7 @@ return new class extends Migration
     {
         Schema::create('book_import_receipt', function (Blueprint $table) {
             $table->id();
-            $table->string('receipt_unique_id');
+            $table->string('receipt_unique_id', 32)->unique();
             $table->string('receipt_date');
             $table->string('receipt_person');
             $table->string('receipt_source')->nullable();

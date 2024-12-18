@@ -13,9 +13,12 @@ return new class extends Migration
     {
         Schema::create('book_import_receipt_detail', function (Blueprint $table) {
             $table->id();
-            $table->string('receipt_unique_id');
-            $table->string('book_id');
+            $table->string('receipt_unique_id', 32);
+            $table->unsignedBigInteger('book_id');
             $table->timestamps();
+
+            $table->foreign('receipt_unique_id')->references('receipt_unique_id')->on('book_import_receipt')->cascadeOnUpdate()->cascadeOnDelete();
+            $table->foreign('book_id')->references('id')->on('books')->cascadeOnUpdate()->cascadeOnDelete();
         });
     }
 

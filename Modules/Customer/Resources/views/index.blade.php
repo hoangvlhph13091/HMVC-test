@@ -46,6 +46,7 @@
                         <th>ID</th>
                         <th>Tên Bạn Đọc</th>
                         <th>Giới Tính</th>
+                        <th>Tuổi</th>
                         <th>Ngày Sinh</th>
                         <th>Địa Chỉ</th>
                         <th>Số Điện Thoại</th>

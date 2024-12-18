@@ -12,7 +12,7 @@ return new class extends Migration
     public function up(): void
     {
         Schema::table('borrow_detail', function (Blueprint $table) {
-            $table->tinyInteger('status')->after('amount')->default(0);
+            $table->string('note')->after('status')->nullable();
         });
     }
 
@@ -22,7 +22,7 @@ return new class extends Migration
     public function down(): void
     {
         Schema::table('borrow_detail', function (Blueprint $table) {
-            $table->dropColumn('status');
+            $table->dropColumn('note');
         });
     }
 };

@@ -23,6 +23,11 @@ Route::middleware('auth')->group(function () {
         Route::post('/edit/{id}', [BorrowHistoryController::class, 'edit'])->name('borrowhistory.edit');
         Route::any('/return/{id}', [BorrowHistoryController::class, 'return'])->name('borrowhistory.return');
 
+        Route::get('/returnBook', [BorrowHistoryController::class, 'returnBookForm'])->name('borrowhistory.returnBookForm');
+        Route::post('/returnBook', [BorrowHistoryController::class, 'returnBook'])->name('borrowhistory.returnBook');
+        Route::get('/returnBook/getUserInfo', [BorrowHistoryController::class, 'getUserInfo'])->name('borrowhistory.returnBookForm.getUserInfo');
+
+
         Route::get('/addRow', [BorrowHistoryController::class, 'AddNewRow'])->name('borrowhistory.addRow');
         Route::GET('/findUser', [BorrowHistoryController::class, 'findUser'])->name('borrowhistory.findUser');
     });

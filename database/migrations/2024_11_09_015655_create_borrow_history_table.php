@@ -20,8 +20,9 @@ return new class extends Migration
             $table->string('reader_status');
             $table->string('reader_fee')->nullable();
             $table->dateTime('borrow_date')->default(now());
-            $table->tinyInteger('borrow_status')->default(1);
+            $table->tinyInteger('borrow_status')->default(0);
             $table->dateTime('return_date')->nullable();
+            $table->dateTime('actual_return_date')->nullable();
             $table->text('note')->nullable();
             $table->timestamps();
         });

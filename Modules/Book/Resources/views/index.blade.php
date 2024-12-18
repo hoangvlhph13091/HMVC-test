@@ -19,7 +19,7 @@
             </li>
         </ul>
         <div class="tab-content" id="quan_ly_sach-tabContent">
-            <div class="tab-pane fade show active" id="quan_ly_sach-home" role="tabpanel"
+            <div class="tab-pane fade show active" id="quan_ly_sach" role="tabpanel"
                 aria-labelledby="custom-content-below-home-tab">
                 <br>
                 <div class="inline-flex rounded-md shadow-sm" role="group">

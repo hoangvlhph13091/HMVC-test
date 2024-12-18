@@ -11,6 +11,7 @@ use Modules\Book\Entities\Book;
 use Modules\Customer\Entities\Customer;
 use Modules\BorrowHistory\Http\Requests\BorrowHistoryRequests;
 use Modules\BorrowHistory\Http\Requests\BorrowHistoryEditRequests;
+use Illuminate\Support\Facades\DB;
 
 class BorrowHistoryController extends Controller
 {
@@ -157,5 +158,56 @@ class BorrowHistoryController extends Controller
         }
 
         return redirect(route('borrowhistory'));
+    }
+
+    public function returnBookForm(){
+        $customers = Customer::all();
+        return view('borrowhistory::returnBook', compact('customers'));
+    }
+
+    public function getUserInfo(Request $request){
+        $id = $request->id;
+
+        $history = DB::table('borrow_detail')
+        ->join('borrow_history', 'borrow_history.id', '=', 'borrow_detail.history_id')
+        ->where('borrow_history.reader_id', '=', $id)
+        ->select('borrow_detail.*', 'borrow_history.borrow_date', 'borrow_history.return_date')
+        ->get();
+
+        return view('borrowhistory::component.bookReturnList', compact('history'));
+    }
+
+    public function returnBook(Request $request){
+        $idArr = $request->only('id');
+        $noteArr = $request->only('note');
+        $statusArr = $request->only('status');
+
+        $history_id_arr = [];
+        foreach ($idArr['id'] as $key => $value) {
+            $detail = HistoryDetail::find($value);
+            $detail->note = $noteArr['note'][$key];
+            $detail->status = $statusArr['status'][$key] ?? 0;
+            if (!in_array($detail->history_id, $history_id_arr)) {
+                array_push($history_id_arr, $detail->history_id);
+            }
+            $detail->save();
+        }
+
+        if (empty($history_id_arr)) {
+            return;
+        } else {
+            foreach ($history_id_arr as $key => $value) {
+                $his = BorrowHistory::find($value);
+                $count = HistoryDetail::Where('history_id', $value)->where('status', 0)->get();
+
+                $count = count($count);
+
+                if ($count == 0) {
+                    $his->borrow_status = 1;
+                    $his->save();
+                }
+            }
+            return;
+        }
     }
 }
