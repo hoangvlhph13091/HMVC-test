@@ -37,7 +37,6 @@
                             <th>{{ date('Y/m/d', strtotime($history->return_date)) }}</th>
                             <th>
                                 <a href="{{ route('borrowhistory.editForm', ['id' => $history->id]) }}" class="btn btn-info">Chi Tiết</a>
-                                <a href="{{ route('borrowhistory.return', ['id' => $history->id]) }}" onclick="return confirm('Xác nhận hoàn trả?')" class="btn btn-info">Hoàn Trả</a>
                             </th>
                         </tr>
                     @endforeach

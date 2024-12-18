@@ -31,7 +31,7 @@
                             <th>{{ $user->hasRole('admin') ? 'Quản Trị Viên' : 'Nhân Viên' }}</th>
                             <th>
                                 <a href="{{ route('user.editForm', ['id' => $user->id]) }}" class="btn btn-info">Chỉnh Sửa</a>
-                                <a href="{{ route('user.del', ['id' => $user->id]) }}" onclick="return confirm('Xóa Thành Viên??')" class="btn btn-info">Xóa</a>
+                                <a href="{{ route('user.del', ['id' => $user->id]) }}" onclick="return confirm('Xóa Thành Viên??')" class="btn btn-danger">Xóa</a>
                             </th>
                         </tr>
                     @endforeach

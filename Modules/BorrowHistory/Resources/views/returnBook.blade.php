@@ -16,10 +16,6 @@
                     <a class="nav-link active" id="quan_ly_sach-tab" data-toggle="pill" href="#quan_ly_sach" role="tab"
                         aria-controls="quan_ly_sach-home" aria-selected="true">Trả theo đầu sách</a>
                 </li>
-                <li class="nav-item">
-                    <a class="nav-link" id="form_nhap_sach-tab" data-toggle="pill" href="#form_nhap_sach" role="tab"
-                        aria-controls="form_nhap_sach" aria-selected="false">Trả theo Đơn Nhập</a>
-                </li>
             </ul>
 
             <div class="tab-content" id="quan_ly_sach-tabContent">
@@ -45,28 +41,6 @@
                         </div>
                     </form>
                 </div>
-
-                <div class="tab-pane fade" id="form_nhap_sach" role="tabpanel"
-                    aria-labelledby="custom-content-below-profile-tab">
-                    <form action="" id="book_return_receipt_form">
-                        @csrf
-                        <br>
-                        <div class="card-body">
-                            <div class="form-group">
-                                <label for="exampleInputPassword1">Tên Sách</label>
-                                <select id="select_name_receipt_form" class="form-control select_book">
-                                    <option value="">Chọn Bạn Đọc</option>
-                                    @foreach ($customers as $cust)
-                                        <option value="{{ $cust->id }}">{{ $cust->name }}</option>
-                                    @endforeach
-                                </select>
-                            </div>
-                        </div>
-                        <div id="append_book_area" style=" padding: 10px;">
-
-                        </div>
-                    </form>
-                </div>
             </div>
 
 
@@ -79,7 +53,6 @@
 @section('scripts')
     <script>
         $('#select_name').select2();
-        $('#select_name_receipt_form').select2();
         $('#select_name').on('change', function(e) {
             if ($.trim($(this).val()) == '') {
                 return;

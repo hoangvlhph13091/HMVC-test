@@ -30,7 +30,7 @@
                             <th>{{ $area->book_area_note }}</th>
                             <th>
                                 <a href="{{ route('area.editForm', ['id' => $area->id]) }}" class="btn btn-info">Chỉnh Sửa</a>
-                                <a href="{{ route('area.del', ['id' => $area->id]) }}" onclick="return confirm('Xóa Khu Vực??')" class="btn btn-info">Xóa</a>
+                                <a href="{{ route('area.del', ['id' => $area->id]) }}" onclick="return confirm('Xóa Khu Vực??')" class="btn btn-danger">Xóa</a>
                             </th>
                         </tr>
                     @endforeach

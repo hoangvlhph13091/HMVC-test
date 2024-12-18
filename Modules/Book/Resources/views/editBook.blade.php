@@ -26,15 +26,6 @@
                 <span class="text-red-600 err_text" id="price_err"></span>
             </div>
             <div class="form-group">
-                <label for="exampleInputFile">Hình Ảnh</label>
-                <div class="input-group">
-                    <div class="custom-file">
-                        <input type="file" class="custom-file-input" id="image" name="image" type="text" placeholder="Hình Ảnh" value="{{ $book->image }}">
-                        <label class="custom-file-label" for="image">Choose file</label>
-                    </div>
-                </div>
-            </div>
-            <div class="form-group">
                 <label for="exampleInputPassword1">Tác Giả</label>
                 <input type="text" class="form-control" id="author" name="author" type="text" placeholder="Tác Giả" value="{{ $book->author }}">
                 <span class="text-red-600 err_text" id="author_err"></span>
