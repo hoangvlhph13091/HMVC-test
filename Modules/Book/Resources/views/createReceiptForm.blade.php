@@ -74,17 +74,6 @@
                             <span class="text-red-600 err_text" id="price_0_err"></span>
                         </div>
                     </div>
-                    <div class="col-sm-2">
-                        <div class="form-group">
-                            <label for="exampleInputFile">Hình Ảnh</label>
-                            <div class="input-group">
-                                <div class="custom-file">
-                                    <input type="file" class="custom-file-input" id="image" name="image[]"placeholder="Hình Ảnh">
-                                    <label class="custom-file-label" for="image">Choose file</label>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
                     <div class="col-sm-1">
                         <div class="form-group">
                             <label for="exampleInputPassword1">Tác Giả</label>
@@ -116,7 +105,7 @@
                             <span class="text-red-600 err_text" id="area_0_err"></span>
                         </div>
                     </div>
-                    <div class="col-sm-1">
+                    <div class="col-sm-2">
                         <div class="form-group">
                             <label for="exampleInputPassword1">Số Lượng</label>
                             <input type="number" class="form-control" id="total_amount" name="total_amount[]" placeholder="Số Lượng">
@@ -129,7 +118,7 @@
                             <input type="text" class="form-control" id="overview[]" name="overview[]" placeholder="Tóm Tắt">
                         </div>
                     </div>
-                    <div class="col-sm-1">
+                    <div class="col-sm-2">
 
                     </div>
                 </div>
@@ -209,17 +198,6 @@
                                     <span class="text-red-600 err_text" id="price_`+counter+`_err"></span>
                                 </div>
                             </div>
-                            <div class="col-sm-2">
-                                <div class="form-group">
-                                    <label for="exampleInputFile">Hình Ảnh</label>
-                                    <div class="input-group">
-                                        <div class="custom-file">
-                                            <input type="file" class="custom-file-input" id="image" name="image[`+counter+`]"placeholder="Hình Ảnh">
-                                            <label class="custom-file-label" for="image">Choose file</label>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
                             <div class="col-sm-1">
                                 <div class="form-group">
                                     <label for="exampleInputPassword1">Tác Giả</label>
@@ -251,7 +229,7 @@
                                     <span class="text-red-600 err_text" id="area_`+counter+`_err"></span>
                                 </div>
                             </div>
-                            <div class="col-sm-1">
+                            <div class="col-sm-2">
                                 <div class="form-group">
                                     <label for="exampleInputPassword1">Số Lượng</label>
                                     <input type="number" class="form-control" id="total_amount" name="total_amount[`+counter+`]" placeholder="Số Lượng">
@@ -264,7 +242,7 @@
                                     <input type="text" class="form-control" id="overview" name="overview[`+counter+`]" placeholder="Tóm Tắt">
                                 </div>
                             </div>
-                            <div class="col-sm-1">
+                            <div class="col-sm-2">
                                 <div class="form-group">
                                     <button style="margin-top: 32px;" class="btn btn-danger btn_delete_row">Xóa Hàng</button>
                                 </div>
