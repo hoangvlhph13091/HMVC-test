@@ -292,4 +292,45 @@ class BookController extends Controller
 
         return redirect(route('book'));
     }
+
+    public function getBookDashboard()
+    {
+        $list = DB::table('borrow_detail')
+                ->selectRaw("book_name, SUM(borrow_detail.amount) AS total")
+                ->groupBy('book_id', 'book_name')->orderBy('total', 'DESC')
+                ->limit(5)->get()->toArray();
+
+        return ['data' => $list];
+    }
+
+    public function getBorrowedBookDashboard()
+    {
+        $list = DB::table('borrow_detail')
+                ->join('books', 'books.id', '=', 'borrow_detail.book_id')
+                ->selectRaw("book_name, SUM(borrow_detail.amount) AS total, total_amount")
+                ->groupBy('book_id', 'book_name')
+                ->limit(5)->get()->toArray();
+
+        return ['data' => $list];
+    }
+
+    public function getCustDashboard()
+    {
+        $year = date("Y");
+        $time =  $year."/01/01 00:00:00";
+        $timeEndMonth = date("Y/m/d 23:59:59", strtotime("+1 month", strtotime($time)));
+        $i = 0;
+        $list = [];
+        while ($i < 12) {
+            $i++;
+            $count = DB::table('customer')
+            ->selectRaw("COUNT(id) AS count")
+            ->whereBetween('created_at', [$time, $timeEndMonth])
+            ->get();
+            array_push($list, $count[0]->count);
+            $time = $timeEndMonth;
+            $timeEndMonth = date("Y/m/d", strtotime("+1 month", strtotime($time)));
+        }
+        return ['data' => $list];
+    }
 }

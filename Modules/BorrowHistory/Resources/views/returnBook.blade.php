@@ -26,7 +26,7 @@
                         <br>
                         <div class="card-body">
                             <div class="form-group">
-                                <label for="exampleInputPassword1">Tên Sách</label>
+                                <label for="exampleInputPassword1">Tên Bạn Đọc</label>
                                 <select id="select_name" class="form-control select_book">
                                     <option value="">Chọn Bạn Đọc</option>
                                     @foreach ($customers as $cust)

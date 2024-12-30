@@ -27,6 +27,8 @@ Route::middleware('auth')->group(function () {
         Route::get('/edit-receipt/{id}', [BookController::class, 'editReceiptForm'])->name('book.receipt.editForm');
         Route::post('/edit-receipt/{id}', [BookController::class, 'editReceipt'])->name('book.receipt.edit');
 
-
+        Route::get('/getBookDashboard', [BookController::class, 'getBookDashboard'])->name('book.getBookDashboard');
+        Route::get('/getBorrowedBookDashboard', [BookController::class, 'getBorrowedBookDashboard'])->name('book.getBorrowedBookDashboard');
+        Route::get('/getCustDashboard', [BookController::class, 'getCustDashboard'])->name('book.getCustDashboard');
     });
 });

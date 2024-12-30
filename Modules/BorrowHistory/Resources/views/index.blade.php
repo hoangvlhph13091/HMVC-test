@@ -32,7 +32,13 @@
                         <tr>
                             <th>{{ $history->id }}</th>
                             <th>{{ $history->reader_name }}</th>
-                            <th>{{ $history->borrow_status == 0 ? 'Chưa Trả' : 'Đã Trả' }}</th>
+                            <th>@if ($history->borrow_status == 1)
+                                    <span class="text-success">Đã Trả</span>
+                                @elseif ($history->borrow_status == 0 && date('Y/m/d', strtotime($history->return_date)) < date('Y/m/d'))
+                                    <span class="text-danger">Quá Hạn</span>
+                                @elseif ($history->borrow_status == 0 && date('Y/m/d', strtotime($history->return_date)) > date('Y/m/d'))
+                                    <span class="text-warning">Chưa Trả</span>
+                                @endif</th>
                             <th>{{ date('Y/m/d', strtotime($history->borrow_date)) }}</th>
                             <th>{{ date('Y/m/d', strtotime($history->return_date)) }}</th>
                             <th>

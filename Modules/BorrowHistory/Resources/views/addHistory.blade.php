@@ -103,19 +103,20 @@
                     <div class="col-sm-5">
                         <div class="form-group">
                             <label for="exampleInputPassword1">Tên Sách</label>
-                            <select id="select_book" class="form-control select_book" name="book_id[0]">
+                            <select id="select_book" class="form-control select_book" data-index="0" name="book_id[0]">
                                 <option value="">Chọn Sách</option>
                                 @foreach ($books as $book)
-                                    <option value="{{ $book->id }}">{{ $book->name }}</option>
+                                    <option class="option_0" data-amount="{{ $book->total_amount }}" value="{{ $book->id }}">{{ $book->name }}</option>
                                 @endforeach
                             </select>
+                            <input type="hidden" id="amount_index_0">
                             <span class="text-red-600 err_text" id="book_id_0_err"></span>
                         </div>
                     </div>
                     <div class="col-sm-5">
                         <div class="form-group">
                             <label for="exampleInputPassword1">Số Lượng</label>
-                            <input type="text" class="form-control" id="amount[0]" name="amount[0]">
+                            <input type="text" class="form-control input_amount" data-index="0" id="amount[0]" name="amount[0]">
                             <span class="text-red-600 err_text" id="amount_0_err"></span>
                         </div>
                     </div>
@@ -172,6 +173,7 @@
             if ($.trim($(this).val()) == '') {
                 return;
             }
+            $('#reader_name_err').text('');
             let id = $.trim($(this).val())
             let url = "{{ route('borrowhistory.findUser') }}"
             $.ajax({
@@ -182,9 +184,21 @@
                 },
                 success: function(response) {
                     let cust = response.customer
+                    let lateFlag = response.late
+                    let borrowed = response.borrowed
+
                     $('#reader_name').val(cust.name);
                     $('#reader_address').val(cust.address);
                     $('#reader_tel').val(cust.phone_number);
+
+                    if (lateFlag == true) {
+                        $('#reader_name_err').text('Bạn đọc đang có đơn mượn sách quá hạn').change();
+                        return;
+                    }
+                    if (parseInt(borrowed) >= 10) {
+                        $('#reader_name_err').text('Bạn đọc này đã mượn quá nhiều sách').change();
+                        return;
+                    }
                 }
             })
         })
@@ -210,19 +224,20 @@
                     <div class="col-sm-5">
                         <div class="form-group">
                             <label for="exampleInputPassword1">Tên Sách</label>
-                            <select id="select_book_` + counter + `" class="form-control select_book" name="book_id[` + counter + `]">
+                            <select id="select_book_` + counter + `" class="form-control select_book" data-index="` + counter + `" name="book_id[` + counter + `]">
                                 <option value="">Chọn Sách</option>
                                 @foreach ($books as $book)
-                                    <option value="{{ $book->id }}">{{ $book->name }}</option>
+                                    <option class="option_` + counter + `" data-amount="{{ $book->total_amount }}" value="{{ $book->id }}">{{ $book->name }}</option>
                                 @endforeach
                             </select>
+                            <input type="hidden" id="amount_index_` + counter + `">
                             <span class="text-red-600 err_text" id="book_id_` + counter + `_err"></span>
                         </div>
                     </div>
                     <div class="col-sm-5">
                         <div class="form-group">
                             <label for="exampleInputPassword1">Số Lượng</label>
-                            <input type="text" class="form-control" id="amount[` + counter + `]" name="amount[` + counter + `]
+                            <input type="text" class="form-control input_amount" data-index="` + counter + `" id="amount[` + counter + `]" name="amount[` + counter + `]
                                 placeholder="Giá Bìa">
                             <span class="text-red-600 err_text" id="amount_` + counter + `_err"></span>
                         </div>
@@ -258,7 +273,58 @@
                 $(this).closest(".row").remove();
                 counter -= 1
             });
+
+            $(document).on('change', '.select_book', function(e) {
+                e.preventDefault();
+                let index = $(this).attr('data-index');
+
+                let amount = $('.option_'+index+':selected').attr('data-amount');
+                $('#amount_index_'+index).val(amount).change();
+
+                let id = $('.option_'+index+':selected').val()
+                let url = "{{ route('borrowhistory.getBookRealAmount') }}"
+                $.ajax({
+                    type: 'GET',
+                    url: url,
+                    data: {
+                        id: id
+                    },
+                    success: function(response) {
+                       let realAmount = 0;
+                       realAmount = response.realAmount ?? 0;
+
+                        $('#amount_index_'+index).val(realAmount).change();
+                    }
+                })
+            });
+
+            $(document).on('change', '.input_amount', function(e) {
+                e.preventDefault();
+                let index = $(this).attr('data-index');
+                let inpuVal = $(this).val();
+                let amount = $('#amount_index_'+index).val();
+                $('#amount_' + index + '_err').text('');
+                if (parseInt(inpuVal) > parseInt(amount)) {
+                    $('#amount_' + index + '_err').text('Số lượng sách đăng ký mượn vượt quá số lượng sách còn trong kho').change();
+                }
+            });
         });
+
+        function checkAmount() {
+            let flag = true;
+            $('.input_amount').each(function() {
+                let index = $(this).attr('data-index');
+                let inpuVal = $(this).val();
+                let amount = $('#amount_index_'+index).val();
+                $('#amount_' + index + '_err').text('');
+                if (parseInt(inpuVal) > parseInt(amount)) {
+                    $('#amount_' + index + '_err').text('Số lượng sách đăng ký mượn vượt quá số lượng sách còn trong kho').change();
+                    flag = false;
+                }
+            })
+
+            return flag;
+        }
 
         $('#historyFrom').submit(function(e) {
             e.preventDefault();
@@ -267,6 +333,14 @@
             const data = new FormData(form);
             const curenturl = window.location.href;
             const backurl = $('#back_link').attr('href');
+            let flag =  true;
+
+            flag = checkAmount();
+            if (flag == false) {
+                alert('Số lượng sách đăng ký mượn vượt quá số lượng sách còn trong kho');
+                return;
+            }
+
             $.ajax({
                 type: 'POST',
                 enctype: "multipart/form-data",

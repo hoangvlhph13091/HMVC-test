@@ -18,7 +18,6 @@ use Illuminate\Support\Facades\Route;
 Route::middleware('auth')->group(function () {
     Route::get('/', function () {  return redirect(route('dashboard')); });
     Route::any('/dashboard', [DashboardController::class, 'index'])->name('dashboard');
-
 });
 
 require __DIR__.'/auth.php';

@@ -50,7 +50,23 @@ class BorrowHistoryController extends Controller
         $id = $request->id;
         $customer = Customer::find($id);
 
-        return response()->json( array('success' => true, 'customer'=>$customer) );
+        $histories = BorrowHistory::with('historyDetail')->where('reader_id', $id)->get();
+
+        $total = 0;
+        $late = false;
+        $now = date("Y-m-d");
+        foreach ($histories as $key => $his) {
+            if ($his->return_date < $now) {
+                $late = true;
+            }
+            foreach ($his->historyDetail as $key => $value) {
+                if ($value->status == 0) {
+                    $total += $value->amount;
+                }
+            }
+        }
+
+        return response()->json( array('success' => true, 'customer'=>$customer, 'late' => $late, 'borrowed' => $total) );
     }
 
     /**
@@ -209,5 +225,25 @@ class BorrowHistoryController extends Controller
             }
             return;
         }
+    }
+
+    public function getBookRealAmount(Request $request){
+        $bookID = $request->id;
+
+        $bookTotal = Book::where('id', $bookID)->pluck('total_amount')->first();
+
+        $borrowed = 0;
+
+        $borrowedAmountArr = HistoryDetail::Where('book_id', $bookID)->pluck('amount');
+
+        foreach ($borrowedAmountArr as $key => $value) {
+            $borrowed += $value;
+        }
+
+        $realAmount = 0;
+
+        $realAmount = $bookTotal - $borrowed;
+
+        return ['realAmount' => $realAmount];
     }
 }

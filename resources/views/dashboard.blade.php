@@ -30,7 +30,7 @@
             <a href="{{ route('dashboard') }}" class="brand-link">
                 <img src="{{ asset('assets/dist/img/AdminLTELogo.png') }}" alt="AdminLTE Logo"
                     class="brand-image img-circle elevation-3" style="opacity: .8">
-                <span class="brand-text font-weight-light">AdminLTE 3</span>
+                <span class="brand-text font-weight-light">V-Labrynth</span>
             </a>
 
             <!-- Sidebar -->
@@ -149,104 +149,165 @@
 </body>
 
 <script>
-    // Get context with jQuery - using jQuery's .get() method.
-    var pieChartCanvas = $('#pieChart').get(0).getContext('2d')
-    var pieData = {
-        labels: ['Book 1', 'Book 2', 'Book 3', 'Book 4', 'Book 5'],
-        datasets: [{
-            data: [700, 500, 400, 600, 300],
-            backgroundColor: ['#f56954', '#00a65a', '#f39c12', '#00c0ef', '#3c8dbc'],
-        }]
-    };
-    var pieOptions = {
-        maintainAspectRatio: false,
-        responsive: true,
-    }
-    //Create pie or douhnut chart
-    // You can switch between pie and douhnut using the method below.
-    new Chart(pieChartCanvas, {
-        type: 'pie',
-        data: pieData,
-        options: pieOptions
+
+    $(document).ready(function () {
+        var labelArr = [];
+        var dataArr = [];
+
+        const urlPieChart = '{{ route('book.getBookDashboard') }}'
+        $.ajax({
+            type: 'get',
+            url: urlPieChart,
+            success: function(response) {
+                var list = response.data;
+                $.each(list, function(key, value) {
+                    labelArr.push(list[key].book_name);
+                    dataArr.push(list[key].total);
+                })
+                createPieChart(labelArr, dataArr)
+            }
+        })
+
+        const urlBarChart = '{{ route('book.getBorrowedBookDashboard') }}'
+        $.ajax({
+            type: 'get',
+            url: urlBarChart,
+            success: function(response) {
+                var labelArr = [];
+                var totalBookArr = [];
+                var borrowedBookArr = [];
+                var list = response.data;
+                $.each(list, function(key, value) {
+                    labelArr.push(list[key].book_name);
+                    borrowedBookArr.push(list[key].total);
+                    totalBookArr.push(list[key].total_amount);
+                })
+                createBarChart(labelArr, borrowedBookArr, totalBookArr)
+            }
+        })
+
+        const urlLineChart = '{{ route('book.getCustDashboard') }}'
+        $.ajax({
+            type: 'get',
+            url: urlLineChart,
+            success: function(response) {
+                var dataReg = response.data;
+                createLineChart(dataReg)
+            }
+        })
     })
 
-    var areaChartData = {
-        labels: ['Book 1', 'Book 2', 'Book 3', 'Book 4', 'Book 5'],
-        datasets: [{
-                label: 'Cho Mượn',
-                backgroundColor: 'rgba(60,141,188,0.9)',
-                borderColor: 'rgba(60,141,188,0.8)',
-                pointRadius: false,
-                pointColor: '#3b8bba',
-                pointStrokeColor: 'rgba(60,141,188,1)',
-                pointHighlightFill: '#fff',
-                pointHighlightStroke: 'rgba(60,141,188,1)',
-                data: [28, 48, 40, 19, 56]
-            },
-            {
-                label: 'Tổng Có',
-                backgroundColor: 'rgba(210, 214, 222, 1)',
-                borderColor: 'rgba(210, 214, 222, 1)',
-                pointRadius: false,
-                pointColor: 'rgba(210, 214, 222, 1)',
-                pointStrokeColor: '#c1c7d1',
-                pointHighlightFill: '#fff',
-                pointHighlightStroke: 'rgba(220,220,220,1)',
-                data: [65, 59, 80, 81, 86]
-            },
-        ]
-    }
-
-    var barChartCanvas = $('#barChart').get(0).getContext('2d')
-    var barChartData = $.extend(true, {}, areaChartData)
-    var temp0 = areaChartData.datasets[0]
-    var temp1 = areaChartData.datasets[1]
-    barChartData.datasets[0] = temp1
-    barChartData.datasets[1] = temp0
-
-    var barChartOptions = {
-        responsive: true,
-        maintainAspectRatio: false,
-        datasetFill: false
-    }
-
-    new Chart(barChartCanvas, {
-        type: 'bar',
-        data: barChartData,
-        options: barChartOptions
-    })
-
-    var areaChartOptions = {
-        maintainAspectRatio: false,
-        responsive: true,
-        legend: {
-            display: false
-        },
-        scales: {
-            xAxes: [{
-                gridLines: {
-                    display: false,
-                }
-            }],
-            yAxes: [{
-                gridLines: {
-                    display: false,
-                }
+    function createPieChart(labelArr, dataArr) {
+        var pieChartCanvas = $('#pieChart').get(0).getContext('2d')
+        var pieData = {
+            labels: labelArr,
+            datasets: [{
+                data: dataArr,
+                backgroundColor: ['#f56954', '#00a65a', '#f39c12', '#00c0ef', '#3c8dbc'],
             }]
+        };
+        var pieOptions = {
+            maintainAspectRatio: false,
+            responsive: true,
         }
+        new Chart(pieChartCanvas, {
+            type: 'pie',
+            data: pieData,
+            options: pieOptions
+        })
     }
-    var lineChartCanvas = $('#lineChart').get(0).getContext('2d')
-    var lineChartOptions = $.extend(true, {}, areaChartOptions)
-    var lineChartData = $.extend(true, {}, areaChartData)
-    lineChartData.datasets[0].fill = false;
-    lineChartData.datasets[1].fill = false;
-    lineChartOptions.datasetFill = false
 
-    var lineChart = new Chart(lineChartCanvas, {
-        type: 'line',
-        data: lineChartData,
-        options: lineChartOptions
-    })
+    function createBarChart(labelArr, borrowedBookArr, totalBookArr) {
+        var areaChartData = {
+            labels: labelArr,
+            datasets: [{
+                    label: 'Cho Mượn',
+                    backgroundColor: 'rgba(60,141,188,0.9)',
+                    borderColor: 'rgba(60,141,188,0.8)',
+                    pointRadius: false,
+                    pointColor: '#3b8bba',
+                    pointStrokeColor: 'rgba(60,141,188,1)',
+                    pointHighlightFill: '#fff',
+                    pointHighlightStroke: 'rgba(60,141,188,1)',
+                    data: borrowedBookArr
+                },
+                {
+                    label: 'Tổng Có',
+                    backgroundColor: 'rgba(210, 214, 222, 1)',
+                    borderColor: 'rgba(210, 214, 222, 1)',
+                    pointRadius: false,
+                    pointColor: 'rgba(210, 214, 222, 1)',
+                    pointStrokeColor: '#c1c7d1',
+                    pointHighlightFill: '#fff',
+                    pointHighlightStroke: 'rgba(220,220,220,1)',
+                    data: totalBookArr
+                },
+            ]
+        }
+
+        var barChartCanvas = $('#barChart').get(0).getContext('2d')
+        var barChartData = $.extend(false, {}, areaChartData)
+        var temp0 = areaChartData.datasets[0]
+        var temp1 = areaChartData.datasets[1]
+        barChartData.datasets[0] = temp1
+        barChartData.datasets[1] = temp0
+
+        var barChartOptions = {
+            responsive: true,
+            maintainAspectRatio: false,
+            datasetFill: false
+        }
+
+        new Chart(barChartCanvas, {
+            type: 'bar',
+            data: barChartData,
+            options: barChartOptions
+        })
+    }
+
+    function createLineChart(regNum) {
+        var areaChartData = {
+            labels: ["01", "02", "03", "04", "05", "06", "07", "08", "09", "10", "11", "12" ],
+            datasets: [{
+                    label: 'Bạn Đọc',
+                    backgroundColor: 'rgba(60,141,188,0.9)',
+                    borderColor: 'rgba(60,141,188,0.8)',
+                    pointRadius: false,
+                    pointColor: '#3b8bba',
+                    pointStrokeColor: 'rgba(60,141,188,1)',
+                    pointHighlightFill: '#fff',
+                    pointHighlightStroke: 'rgba(60,141,188,1)',
+                    data: regNum
+                },
+            ]
+        }
+        var areaChartOptions = {
+            maintainAspectRatio: false,
+            responsive: true,
+            legend: {
+                display: false
+            },
+            scales: {
+                xAxes: [{
+                    gridLines: {
+                        display: false,
+                    }
+                }],
+            }
+        }
+        var lineChartCanvas = $('#lineChart').get(0).getContext('2d')
+        var lineChartOptions = $.extend(true, {}, areaChartOptions)
+        var lineChartData = $.extend(true, {}, areaChartData)
+        lineChartData.datasets[0].fill = false;
+        lineChartOptions.datasetFill = false
+
+        var lineChart = new Chart(lineChartCanvas, {
+            type: 'line',
+            data: lineChartData,
+            options: lineChartOptions
+        })
+    }
+
 </script>
 
 </html>

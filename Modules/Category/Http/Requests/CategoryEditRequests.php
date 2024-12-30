@@ -21,9 +21,9 @@ class CategoryEditRequests extends FormRequest
     public function messages()
     {
         return [
-            'name.required'=>'Title không đc để trống',
-            'name.min'=>'Title chứa tối thiểu 6 ký tự',
-            'name.max'=>'Title chứa tối đa 50 ký tự',
+            'name.required'=>'Tên phân loại không đc để trống',
+            'name.min'=>'Tên phân loại chứa tối thiểu 6 ký tự',
+            'name.max'=>'Tên phân loại chứa tối đa 50 ký tự',
             'name.unique'=>'Tên hạng mục bị trùng',
         ];
     }

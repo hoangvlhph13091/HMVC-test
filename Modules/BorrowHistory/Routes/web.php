@@ -30,5 +30,6 @@ Route::middleware('auth')->group(function () {
 
         Route::get('/addRow', [BorrowHistoryController::class, 'AddNewRow'])->name('borrowhistory.addRow');
         Route::GET('/findUser', [BorrowHistoryController::class, 'findUser'])->name('borrowhistory.findUser');
+        Route::GET('/getBookRealAmount', [BorrowHistoryController::class, 'getBookRealAmount'])->name('borrowhistory.getBookRealAmount');
     });
 });
