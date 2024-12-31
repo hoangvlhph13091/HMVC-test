@@ -92,5 +92,14 @@
                 }
             })
         })
+
+        $(document).on("change", "input.checkbox_status", function() {
+            var index = $(this).attr('data-index');
+           if ($(this).is(":checked")) {
+                $("#status_"+index).val(1).change()
+           } else(
+                $("#status_"+index).val(0).change()
+           )
+        })
     </script>
 @endsection

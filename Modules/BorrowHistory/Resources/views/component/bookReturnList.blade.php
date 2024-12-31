@@ -13,16 +13,22 @@
             <input type="text" class="form-control" readonly value="{{ $his->amount }}">
         </div>
     </div>
-    <div class="col-sm-2">
+    <div class="col-sm-1">
         <div class="form-group">
             <label for="exampleInputPassword1">Ngày Mượn</label>
-            <input type="text" class="form-control" readonly value="{{ $his->borrow_date }}">
+            <input type="text" class="form-control" readonly value="{{ date("y/m/d", strtotime( $his->borrow_date )) }}">
+        </div>
+    </div>
+    <div class="col-sm-1">
+        <div class="form-group">
+            <label for="exampleInputPassword1">Ngày Hẹn Trả</label>
+            <input type="text" class="form-control" readonly value="{{ date("y/m/d", strtotime( $his->return_date )) }}">
         </div>
     </div>
     <div class="col-sm-2">
         <div class="form-group">
-            <label for="exampleInputPassword1">Ngày Hẹn Trả</label>
-            <input type="text" class="form-control" readonly value="{{ $his->return_date }}">
+            <label for="exampleInputPassword1">Mã Đơn Mượn</label>
+            <input type="text" readonly name="his_id[{{ $loop->index + 1 }}]" value="{{  $his->his_id }}" class="form-control">
         </div>
     </div>
     <div class="col-sm-2">
@@ -33,8 +39,9 @@
     </div>
     <div class="col-sm-2">
         <div class="form-group" style="padding-top: 15%">
-            <input class="" type="checkbox" value="1" @if ($his->status == 1) checked @endif name="status[{{ $loop->index + 1 }}]">
+            <input class="checkbox_status" data-index="{{ $loop->index + 1 }}" type="checkbox" @if ($his->status == 1) checked @endif>
             <label class="">Hoàn Trả</label>
+            <input type="hidden" id="status_{{ $loop->index + 1 }}" name="status[{{ $loop->index + 1 }}]" value="0">
         </div>
     </div>
 </div>

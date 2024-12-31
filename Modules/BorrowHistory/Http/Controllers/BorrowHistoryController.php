@@ -187,7 +187,7 @@ class BorrowHistoryController extends Controller
         $history = DB::table('borrow_detail')
         ->join('borrow_history', 'borrow_history.id', '=', 'borrow_detail.history_id')
         ->where('borrow_history.reader_id', '=', $id)
-        ->select('borrow_detail.*', 'borrow_history.borrow_date', 'borrow_history.return_date')
+        ->select('borrow_detail.*', 'borrow_history.borrow_date', 'borrow_history.return_date', 'borrow_history.id AS his_id')
         ->get();
 
         return view('borrowhistory::component.bookReturnList', compact('history'));
@@ -199,32 +199,39 @@ class BorrowHistoryController extends Controller
         $statusArr = $request->only('status');
 
         $history_id_arr = [];
+        $history_id_arr_unreturn = [];
         foreach ($idArr['id'] as $key => $value) {
             $detail = HistoryDetail::find($value);
             $detail->note = $noteArr['note'][$key];
-            $detail->status = $statusArr['status'][$key] ?? 0;
-            if (!in_array($detail->history_id, $history_id_arr)) {
+            $detail->status = $statusArr['status'][$key];
+            if (!in_array($detail->history_id, $history_id_arr) && $statusArr['status'][$key] == 1) {
                 array_push($history_id_arr, $detail->history_id);
+            }
+            else if(!in_array($detail->history_id, $history_id_arr_unreturn) && $statusArr['status'][$key] == 0) {
+                array_push($history_id_arr_unreturn, $detail->history_id);
             }
             $detail->save();
         }
 
-        if (empty($history_id_arr)) {
-            return;
-        } else {
-            foreach ($history_id_arr as $key => $value) {
-                $his = BorrowHistory::find($value);
-                $count = HistoryDetail::Where('history_id', $value)->where('status', 0)->get();
+        foreach ($history_id_arr as $key => $value) {
+            $his = BorrowHistory::find($value);
+            $count = HistoryDetail::Where('history_id', $value)->where('status', 0)->get();
 
-                $count = count($count);
+            $count = count($count);
 
-                if ($count == 0) {
-                    $his->borrow_status = 1;
-                    $his->save();
-                }
+            if ($count == 0) {
+                $his->borrow_status = 1;
+                $his->save();
             }
-            return;
         }
+
+        foreach ($history_id_arr_unreturn as $key => $value) {
+            $his = BorrowHistory::find($value);
+            $his->borrow_status = 0;
+            $his->save();
+        }
+
+        return;
     }
 
     public function getBookRealAmount(Request $request){
