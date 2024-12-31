@@ -187,8 +187,6 @@
             const data = new FormData(form);
             const curenturl = window.location.href;
             const backurl = $('#back_link').attr('href');
-            console.log(data);
-
             $.ajax({
                 type: 'POST',
                 enctype: "multipart/form-data",
