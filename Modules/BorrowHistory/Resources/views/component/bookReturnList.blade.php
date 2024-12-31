@@ -4,7 +4,7 @@
         <div class="form-group">
             <label for="exampleInputPassword1">Tên Sách</label>
             <input class="form-control" type="text" readonly value="{{ $his->book_name }}">
-            <input type="hidden" value="{{ $his->id }}" name="id[{{ $loop->index + 1 }}]">
+            <input type="hidden" value="{{ $his->id }}" name="id[{{ $his->id }}]">
         </div>
     </div>
     <div class="col-sm-1">
@@ -28,20 +28,20 @@
     <div class="col-sm-2">
         <div class="form-group">
             <label for="exampleInputPassword1">Mã Đơn Mượn</label>
-            <input type="text" readonly name="his_id[{{ $loop->index + 1 }}]" value="{{  $his->his_id }}" class="form-control">
+            <input type="text" readonly name="his_id[{{ $his->id }}]" value="{{  $his->his_id }}" class="form-control">
         </div>
     </div>
     <div class="col-sm-2">
         <div class="form-group">
             <label for="exampleInputPassword1">Ghi Chú</label>
-            <input type="text" name="note[{{ $loop->index + 1 }}]" value="{{  $his->note }}" class="form-control">
+            <input type="text" name="note[{{ $his->id}}]" value="{{  $his->note }}" class="form-control">
         </div>
     </div>
     <div class="col-sm-2">
         <div class="form-group" style="padding-top: 15%">
-            <input class="checkbox_status" data-index="{{ $loop->index + 1 }}" type="checkbox" @if ($his->status == 1) checked @endif>
+            <input class="checkbox_status" data-index="{{ $his->id }}" type="checkbox" @if ($his->status == 1) checked @endif>
             <label class="">Hoàn Trả</label>
-            <input type="hidden" id="status_{{ $loop->index + 1 }}" name="status[{{ $loop->index + 1 }}]" value="0">
+            <input type="hidden" id="status_{{ $his->id }}" name="status[{{ $his->id }}]" value="0">
         </div>
     </div>
 </div>
