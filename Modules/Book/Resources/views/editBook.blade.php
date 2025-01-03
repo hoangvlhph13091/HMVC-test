@@ -33,9 +33,10 @@
             <div class="form-group">
                 <label for="">Ảnh Bìa</label>
                 <div class="custom-file">
-                    <input type="file" name="image" class="custom-file-input" id="customFile">
+                    <input type="file" name="image" class="custom-file-input image_upload" id="customFile">
                     <label class="custom-file-label" for="customFile">Ảnh Bìa</label>
                 </div>
+                <img src="{{ asset('storage/image/book/'.$book->image) }}" style="height: 100px" id="imgPreview" alt="">
             </div>
             <div class="form-group">
                 <label for="exampleInputPassword1">Khu Vực</label>
@@ -83,6 +84,20 @@
         $(function () {
             bsCustomFileInput.init();
         });
+        $('.image_upload').on('change', function(){
+            file = this.files[0];
+            if (file) {
+                let reader = new FileReader();
+                reader.onload = function (event) {
+                    $("#imgPreview")
+                        .attr("src", event.target.result);
+                };
+                reader.readAsDataURL(file);
+            } else{
+                $("#imgPreview")
+                .attr("src", '');
+            }
+        })
         $('#BookForm').submit(function(e){
             e.preventDefault();
             $('.err_text').text('');

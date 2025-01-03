@@ -63,7 +63,7 @@ class BookController extends Controller
         if ($request->has('image')) {
             $file_name = strtotime("now") . $request->file('image')->getClientOriginalName();;
             $imgPath = $request->file('image')->storeAs('public/image/book', $file_name);
-            $data['image'] = $imgPath;
+            $data['image'] = $file_name;
         }
         $tagData =  $request->only('tag');
         $newBook = $this->bookServices->saveBookData($data);
@@ -276,6 +276,14 @@ class BookController extends Controller
     {
         $data = $request->except(['_token', 'tag']);
         $tagData =  $request->only('tag');
+        if ($request->has('image') && $request->file('image') != NULL) {
+            $file_name = strtotime("now") . $request->file('image')->getClientOriginalName();;
+            $imgPath = $request->file('image')->storeAs('public/image/book', $file_name);
+            $data['image'] = $file_name;
+        }
+        else {
+            unset($data['image']);
+        }
 
         $this->bookServices->updateBookData($data, $id);
         $this->bookServices->updateBookTagData($tagData, $id);
