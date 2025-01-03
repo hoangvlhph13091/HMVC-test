@@ -103,6 +103,7 @@ class BookController extends Controller
         $tag = $request->only(['tag']);
         $area = $request->only(['area']);
         $book_id_list = $request->only(['book_id']);
+        $book_image_list = $request->only(['image']);
 
         $receipt = new BookReceipt();
         $receipt->fill($data);
@@ -119,6 +120,11 @@ class BookController extends Controller
                 $b->area = $area['area'][$key];
                 $b->overview = $overview['overview'][$key];
                 $b->total_amount = $b->total_amount + $total_amount['total_amount'][$key];
+                if ($book_image_list['image'][$key] != NULL) {
+                    $file_name = strtotime("now") . $book_image_list['image'][$key]->getClientOriginalName();;
+                    $imgPath = $book_image_list['image'][$key]->storeAs('public/image/book', $file_name);
+                    $b->image = $file_name;
+                }
                 $b->save();
 
                 BookTag::where('book_id', $book_id_list['book_id'][$key])->delete();
@@ -130,6 +136,11 @@ class BookController extends Controller
                 $book->area = $area['area'][$key];
                 $book->overview = $overview['overview'][$key];
                 $book->total_amount = $total_amount['total_amount'][$key];
+                if ($book_image_list['image'][$key] != NULL) {
+                    $file_name = strtotime("now") . $book_image_list['image'][$key]->getClientOriginalName();;
+                    $imgPath = $book_image_list['image'][$key]->storeAs('public/image/book', $file_name);
+                    $book->image = $file_name;
+                }
                 $book->save();
 
                 $b = $book->fresh();
@@ -187,6 +198,7 @@ class BookController extends Controller
          $tag = $request->only(['tag']);
          $area = $request->only(['area']);
          $book_id_list = $request->only(['book_id']);
+         $book_image_list = $request->only(['image']);
 
          $receipt = BookReceipt::find($id);
          $receipt->fill($data);
@@ -204,7 +216,12 @@ class BookController extends Controller
                 $b->author = $author['author'][$key];
                 $b->area = $area['area'][$key];
                 $b->overview = $overview['overview'][$key];
-                $b->total_amount = $book->total_amount + $total_amount['total_amount'][$key];
+                $b->total_amount = $b->total_amount + $total_amount['total_amount'][$key];
+                if (isset($book_image_list['image'][$key]) && $book_image_list['image'][$key] != NULL) {
+                    $file_name = strtotime("now") . $book_image_list['image'][$key]->getClientOriginalName();;
+                    $imgPath = $book_image_list['image'][$key]->storeAs('public/image/book', $file_name);
+                    $b->image = $file_name;
+                }
                 $b->save();
 
                 BookTag::where('book_id', $book_id_list['book_id'][$key])->delete();
@@ -216,6 +233,11 @@ class BookController extends Controller
                 $book->area = $area['area'][$key];
                 $book->overview = $overview['overview'][$key];
                 $book->total_amount = $total_amount['total_amount'][$key];
+                if (isset($book_image_list['image'][$key]) && $book_image_list['image'][$key] != NULL) {
+                    $file_name = strtotime("now") . $book_image_list['image'][$key]->getClientOriginalName();;
+                    $imgPath = $book_image_list['image'][$key]->storeAs('public/image/book', $file_name);
+                    $book->image = $file_name;
+                }
                 $book->save();
 
                 $b = $book->fresh();

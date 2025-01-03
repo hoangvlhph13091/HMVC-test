@@ -47,16 +47,19 @@ class BorrowHistoryController extends Controller
 
     public function findUser(Request $request)
     {
-        $id = $request->id;
-        $customer = Customer::find($id);
-
-        $histories = BorrowHistory::with('historyDetail')->where('reader_id', $id)->get();
-
+        $val = $request->value;
+        $type = $request->type;
+        $customer = Customer::Where($type, $val)->first();
         $total = 0;
         $late = false;
+        $lateReturnTime = 0;
         $now = date("Y-m-d");
+        if ($customer == NULL) {
+            return response()->json( array('success' => true, 'customer'=>[], 'late' => $late, 'borrowed' => $total, 'lateReturnTime' => $lateReturnTime) );
+        }
+        $histories = BorrowHistory::with('historyDetail')->where('reader_id', $customer->id)->get();
         foreach ($histories as $key => $his) {
-            if ($his->return_date < $now) {
+            if ($his->return_date < $now && $his->borrow_status == 0) {
                 $late = true;
             }
             foreach ($his->historyDetail as $key => $value) {
@@ -64,9 +67,12 @@ class BorrowHistoryController extends Controller
                     $total += $value->amount;
                 }
             }
-        }
 
-        return response()->json( array('success' => true, 'customer'=>$customer, 'late' => $late, 'borrowed' => $total) );
+            $lateCount = HistoryDetail::where('history_id', $his->id)->where('return_status', 2)->get();
+            $lateCount = count($lateCount);
+            $lateReturnTime += $lateCount;
+        }
+        return response()->json( array('success' => true, 'customer'=>$customer, 'late' => $late, 'borrowed' => $total, 'lateReturnTime' => $lateReturnTime) );
     }
 
     /**
@@ -201,13 +207,29 @@ class BorrowHistoryController extends Controller
         $idArr = $request->only('id');
         $noteArr = $request->only('note');
         $statusArr = $request->only('status');
-
+        $returnTime = date('Y/m/d', strtotime('now'));
         $history_id_arr = [];
         $history_id_arr_unreturn = [];
         foreach ($idArr['id'] as $key => $value) {
             $detail = HistoryDetail::find($value);
             $detail->note = $noteArr['note'][$key];
             $detail->status = $statusArr['status'][$key];
+            $his = BorrowHistory::find($detail->history_id);
+            if ($statusArr['status'][$key] == 1) {
+                $detail->return_date = $returnTime;
+                if ($returnTime < $his->return_date) {
+                    $detail->return_status = 1;
+                } else {
+                    $detail->return_status = 2;
+                }
+            } else {
+                $detail->return_date = NULL;
+                if ($returnTime < $his->return_date) {
+                    $detail->return_status = 0;
+                } else {
+                    $detail->return_status = 2;
+                }
+            }
             if (!in_array($detail->history_id, $history_id_arr) && $statusArr['status'][$key] == 1) {
                 array_push($history_id_arr, $detail->history_id);
             }

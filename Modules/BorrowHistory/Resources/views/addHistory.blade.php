@@ -27,7 +27,7 @@
                     <div class="col-sm-4">
                         <div class="form-group">
                             <label for="exampleInputPassword1"> ID</label>
-                            <input class="form-control" id="reader_id" name="reader_id" type="text" placeholder="id">
+                            <input class="form-control" data-type="id" id="reader_id" name="reader_id" type="text" placeholder="id">
                             <span class="text-red-600 err_text" id="reader_id_err"></span>
                         </div>
                     </div>
@@ -55,7 +55,7 @@
                     <div class="col-sm-4">
                         <div class="form-group">
                             <label for="exampleInputPassword1">Số Điện Thoại</label>
-                            <input class="form-control" id="reader_tel" name="reader_phone" type="text"
+                            <input class="form-control" data-type="phone_number" id="reader_tel" name="reader_phone" type="text"
                                 placeholder="Số Điện Thoại">
                             <span class="text-red-600 err_text" id="reader_phone_err"></span>
                         </div>
@@ -156,47 +156,52 @@
                     if ($(this).attr('id') == "reader_registed") {
                         $('#reader_name').prop('readonly', true).change();
                         $('#reader_id').prop('readonly', false).change();
-                        $('#reader_tel').prop('readonly', true).change();
                         $('#reader_address').prop('readonly', true).change();
                         $('#reader_fee').val(0).change();
                     } else if ($(this).attr('id') == "reader_not_resgisterd") {
                         $('#reader_name').prop('readonly', false).change();
                         $('#reader_id').prop('readonly', true).change();
-                        $('#reader_tel').prop('readonly', false).change();
                         $('#reader_address').prop('readonly', false).change();
                         $('#reader_fee').val(20000).change();
                     }
                 }
             })
         });
-        $('#reader_id').on('blur', function() {
+        $('#reader_id, #reader_tel').on('blur', function() {
             if ($.trim($(this).val()) == '') {
                 return;
             }
             $('#reader_name_err').text('');
-            let id = $.trim($(this).val())
+            let type = $(this).attr('data-type');
+            let value = $.trim($(this).val())
             let url = "{{ route('borrowhistory.findUser') }}"
             $.ajax({
                 type: 'GET',
                 url: url,
                 data: {
-                    id: id
+                    value: value,
+                    type: type
                 },
                 success: function(response) {
                     let cust = response.customer
                     let lateFlag = response.late
                     let borrowed = response.borrowed
+                    let lateReturnTime = response.lateReturnTime
 
                     $('#reader_name').val(cust.name);
                     $('#reader_address').val(cust.address);
                     $('#reader_tel').val(cust.phone_number);
-
+                    $('#reader_id').val(cust.id);
                     if (lateFlag == true) {
                         $('#reader_name_err').text('Bạn đọc đang có đơn mượn sách quá hạn').change();
                         return;
                     }
                     if (parseInt(borrowed) >= 10) {
                         $('#reader_name_err').text('Bạn đọc này đã mượn quá nhiều sách').change();
+                        return;
+                    }
+                    if (parseInt(lateReturnTime) >= 5) {
+                        $('#reader_name_err').text('Bạn đọc này thường xuyên trả sách muộn').change();
                         return;
                     }
                 }
@@ -256,13 +261,11 @@
                     if ($(this).attr('id') == "reader_registed") {
                         $('#reader_name').prop('readonly', true).change();
                         $('#reader_id').prop('readonly', false).change();
-                        $('#reader_tel').prop('readonly', true).change();
                         $('#reader_address').prop('readonly', true).change();
                         $('#reader_fee').val(0).change();
                     } else if ($(this).attr('id') == "reader_not_resgisterd") {
                         $('#reader_name').prop('readonly', false).change();
                         $('#reader_id').prop('readonly', true).change();
-                        $('#reader_tel').prop('readonly', false).change();
                         $('#reader_address').prop('readonly', false).change();
                         $('#reader_fee').val(20000).change();
                     }

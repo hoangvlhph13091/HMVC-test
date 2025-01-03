@@ -60,64 +60,78 @@
                     $count = 0
                 @endphp
                 @foreach ($books as $book)
+                    @if ($count > 0 )
+                        <hr>
+                    @endif
                     <div class="row">
-                        <div class="col-sm-2">
-                            <div class="form-group">
-                                <label for="exampleInputPassword1">Tên Sách</label>
-                                <input type="text" class="form-control" id="name" name="name[{{ $count }}]" placeholder="Tên Sách" value="{{ $book->name }}">
-                                <span class="text-red-600 err_text" id="name_0_err"></span>
+                        <div class="row">
+                            <div class="col-sm-2">
+                                <div class="form-group">
+                                    <label for="exampleInputPassword1">Tên Sách</label>
+                                    <input type="text" class="form-control" id="name" name="name[{{ $count }}]" placeholder="Tên Sách" value="{{ $book->name }}">
+                                    <span class="text-red-600 err_text" id="name_0_err"></span>
+                                </div>
+                                <input type="hidden" name="book_id[{{ $count }}]" id="" value="{{ $book->id }}">
                             </div>
-                            <input type="hidden" name="book_id[{{ $count }}]" id="" value="{{ $book->id }}">
-                        </div>
-                        <div class="col-sm-1">
-                            <div class="form-group">
-                                <label for="exampleInputPassword1">Giá Bìa</label>
-                                <input type="text" class="form-control" id="price[]" name="price[{{ $count }}]" placeholder="Giá Bìa" value="{{ $book->price }}">
-                                <span class="text-red-600 err_text" id="price_0_err"></span>
+                            <div class="col-sm-2">
+                                <div class="form-group">
+                                    <label for="exampleInputPassword1">Giá Bìa</label>
+                                    <input type="text" class="form-control" id="price[]" name="price[{{ $count }}]" placeholder="Giá Bìa" value="{{ $book->price }}">
+                                    <span class="text-red-600 err_text" id="price_0_err"></span>
+                                </div>
                             </div>
-                        </div>
-                        <div class="col-sm-1">
-                            <div class="form-group">
-                                <label for="exampleInputPassword1">Tác Giả</label>
-                                <input type="text" class="form-control" id="author" name="author[{{ $count }}]" placeholder="Tác Giả" value="{{ $book->author }}">
-                                <span class="text-red-600 err_text" id="author_0_err"></span>
+                            <div class="col-sm-2">
+                                <div class="form-group">
+                                    <label for="exampleInputPassword1">Tác Giả</label>
+                                    <input type="text" class="form-control" id="author" name="author[{{ $count }}]" placeholder="Tác Giả" value="{{ $book->author }}">
+                                    <span class="text-red-600 err_text" id="author_0_err"></span>
+                                </div>
                             </div>
-                        </div>
-                        <div class="col-sm-2">
-                            <div class="form-group">
-                                <label class="block text-gray-700 text-sm font-bold mb-2" for="title">
-                                    Phân Loại
-                                </label>
-                                <select class="select2" name="tag[{{ $count }}]" data-placeholder="Select a State" style="width: 100%;">
-                                    @foreach ($categories as $cate)
-                                        <option @if ($book->bookCategory->category_id == $cate->id) selected @endif value="{{ $cate->id }}">{{ $cate->name }}</option>
-                                    @endforeach
-                                </select>
-                                <span class="text-red-600 err_text" id="tag_0_err"></span>
+                            <div class="col-sm-2">
+                                <div class="form-group">
+                                    <label class="block text-gray-700 text-sm font-bold mb-2" for="title">
+                                        Phân Loại
+                                    </label>
+                                    <select class="select2" name="tag[{{ $count }}]" data-placeholder="Select a State" style="width: 100%;">
+                                        @foreach ($categories as $cate)
+                                            <option @if ($book->bookCategory->category_id == $cate->id) selected @endif value="{{ $cate->id }}">{{ $cate->name }}</option>
+                                        @endforeach
+                                    </select>
+                                    <span class="text-red-600 err_text" id="tag_0_err"></span>
+                                </div>
                             </div>
-                        </div>
-                        <div class="col-sm-1">
-                            <div class="form-group">
-                                <label for="exampleInputPassword1">Khu Vực</label>
-                                <select id="area" name="area[{{ $count }}]" class="form-control select2">
-                                    @foreach ($areas as $area)
-                                        <option @if ($book->area == $area->id) selected @endif value="{{ $area->id }}">{{ $area->book_area_name }}</option>
-                                    @endforeach
-                                </select>
-                                <span class="text-red-600 err_text" id="area_0_err"></span>
-                            </div>
-                        </div>
-                        <div class="col-sm-2">
-                            <div class="form-group">
-                                <label for="exampleInputPassword1">Số Lượng</label>
-                                <input type="number" class="form-control" id="total_amount" name="total_amount[{{ $count }}]" placeholder="Số Lượng" value="{{ $book->total_amount }}">
-                                <span class="text-red-600 err_text" id="total_amount_0_err"></span>
+                            <div class="col-sm-2">
+                                <div class="form-group">
+                                    <label for="exampleInputPassword1">Khu Vực</label>
+                                    <select id="area" name="area[{{ $count }}]" class="form-control select2">
+                                        @foreach ($areas as $area)
+                                            <option @if ($book->area == $area->id) selected @endif value="{{ $area->id }}">{{ $area->book_area_name }}</option>
+                                        @endforeach
+                                    </select>
+                                    <span class="text-red-600 err_text" id="area_0_err"></span>
+                                </div>
                             </div>
                         </div>
-                        <div class="col-sm-1">
-                            <div class="form-group">
-                                <label for="exampleInputPassword1">Tóm Tắt</label>
-                                <input type="text" class="form-control" name="overview[{{ $count }}]" placeholder="Tóm Tắt">
+                        <div class="row">
+                            <div class="col-sm-2">
+                                <div class="form-group">
+                                    <label for="exampleInputPassword1">Số Lượng</label>
+                                    <input type="number" class="form-control" id="total_amount" name="total_amount[{{ $count }}]" placeholder="Số Lượng" value="{{ $book->total_amount }}">
+                                    <span class="text-red-600 err_text" id="total_amount_0_err"></span>
+                                </div>
+                            </div>
+                            <div class="col-sm-4">
+                                <label for="">Ảnh Bìa</label>
+                                <div class="custom-file">
+                                    <input type="file" name="image[{{ $count }}]" class="custom-file-input image_upload" id="customFile">
+                                    <label class="custom-file-label" for="customFile">Ảnh Bìa</label>
+                                </div>
+                            </div>
+                            <div class="col-sm-4">
+                                <div class="form-group">
+                                    <label for="exampleInputPassword1">Tóm Tắt</label>
+                                    <textarea name="overview[{{ $count }}]" id="overview" cols="30" rows="4" placeholder="Tóm Tắt">{{ $book->overview }}</textarea>
+                                </div>
                             </div>
                         </div>
                         <div class="col-sm-2">
@@ -155,7 +169,9 @@
         $(document).ready(function(){
             $('.select2').select2()
         });
-
+        $(function () {
+            bsCustomFileInput.init();
+        });
         $('#tag_target').click(function() {
             $('#nested_list_warp').toggle('hide');
         })
@@ -216,63 +232,75 @@
         $('#add_new_row').on('click', function(e){
             e.preventDefault();
             counter ++
-            let html = `<div class="row book_add_row">
-                            <div class="col-sm-2">
-                                <div class="form-group">
-                                    <label for="exampleInputPassword1">Tên Sách</label>
-                                    <input type="text" class="form-control" id="name" name="name[`+counter+`]" placeholder="Tên Sách">
-                                    <span class="text-red-600 err_text" id="name_`+counter+`_err"></span>
+            let html = `<hr>
+                        <div class="row book_add_row">
+                            <div class="row">
+                                <div class="col-sm-2">
+                                    <div class="form-group">
+                                        <label for="exampleInputPassword1">Tên Sách</label>
+                                        <input type="text" class="form-control" id="name" name="name[`+counter+`]" placeholder="Tên Sách">
+                                        <span class="text-red-600 err_text" id="name_`+counter+`_err"></span>
+                                    </div>
+                                </div>
+                                <div class="col-sm-2">
+                                    <div class="form-group">
+                                        <label for="exampleInputPassword1">Giá Bìa</label>
+                                        <input type="text" class="form-control" id="price" name="price[`+counter+`]" placeholder="Giá Bìa">
+                                        <span class="text-red-600 err_text" id="price_`+counter+`_err"></span>
+                                    </div>
+                                </div>
+                                <div class="col-sm-2">
+                                    <div class="form-group">
+                                        <label for="exampleInputPassword1">Tác Giả</label>
+                                        <input type="text" class="form-control" id="author" name="author[`+counter+`]" placeholder="Tác Giả">
+                                        <span class="text-red-600 err_text" id="author_`+counter+`_err"></span>
+                                    </div>
+                                </div>
+                                <div class="col-sm-2">
+                                    <div class="form-group">
+                                        <label class="block text-gray-700 text-sm font-bold mb-2" for="title">
+                                            Phân Loại
+                                        </label>
+                                        <select class="select2" name="tag[`+counter+`]" data-placeholder="Select a State" style="width: 100%;">
+                                            @foreach ($categories as $cate)
+                                                <option value="{{ $cate->id }}">{{ $cate->name }}</option>
+                                            @endforeach
+                                        </select>
+                                        <span class="text-red-600 err_text" id="tag_`+counter+`_err"></span>
+                                    </div>
+                                </div>
+                                <div class="col-sm-2">
+                                    <div class="form-group">
+                                        <label for="exampleInputPassword1">Khu Vực</label>
+                                        <select id="area" name="area[`+counter+`]" class="form-control">
+                                            @foreach ($areas as $area)
+                                                <option value="{{ $area->id }}">{{ $area->book_area_name }}</option>
+                                            @endforeach
+                                        </select>
+                                        <span class="text-red-600 err_text" id="area_`+counter+`_err"></span>
+                                    </div>
                                 </div>
                             </div>
-                            <div class="col-sm-1">
-                                <div class="form-group">
-                                    <label for="exampleInputPassword1">Giá Bìa</label>
-                                    <input type="text" class="form-control" id="price" name="price[`+counter+`]" placeholder="Giá Bìa">
-                                    <span class="text-red-600 err_text" id="price_`+counter+`_err"></span>
+                            <div class="row">
+                                <div class="col-sm-2">
+                                    <div class="form-group">
+                                        <label for="exampleInputPassword1">Số Lượng</label>
+                                        <input type="number" class="form-control" id="total_amount" name="total_amount[`+counter+`]" placeholder="Số Lượng">
+                                        <span class="text-red-600 err_text" id="total_amount_`+counter+`_err"></span>
+                                    </div>
                                 </div>
-                            </div>
-                            <div class="col-sm-1">
-                                <div class="form-group">
-                                    <label for="exampleInputPassword1">Tác Giả</label>
-                                    <input type="text" class="form-control" id="author" name="author[`+counter+`]" placeholder="Tác Giả">
-                                    <span class="text-red-600 err_text" id="author_`+counter+`_err"></span>
+                                <div class="col-sm-4">
+                                    <label for="">Ảnh Bìa</label>
+                                    <div class="custom-file">
+                                        <input type="file" name="image[`+counter+`]" class="custom-file-input image_upload" id="customFile">
+                                        <label class="custom-file-label" for="customFile">Ảnh Bìa</label>
+                                    </div>
                                 </div>
-                            </div>
-                            <div class="col-sm-2">
-                                <div class="form-group">
-                                    <label class="block text-gray-700 text-sm font-bold mb-2" for="title">
-                                        Phân Loại
-                                    </label>
-                                    <select class="select2" name="tag[`+counter+`]" data-placeholder="Select a State" style="width: 100%;">
-                                        @foreach ($categories as $cate)
-                                            <option value="{{ $cate->id }}">{{ $cate->name }}</option>
-                                        @endforeach
-                                    </select>
-                                    <span class="text-red-600 err_text" id="tag_`+counter+`_err"></span>
-                                </div>
-                            </div>
-                            <div class="col-sm-1">
-                                <div class="form-group">
-                                    <label for="exampleInputPassword1">Khu Vực</label>
-                                    <select id="area" name="area[`+counter+`]" class="form-control">
-                                        @foreach ($areas as $area)
-                                            <option value="{{ $area->id }}">{{ $area->book_area_name }}</option>
-                                        @endforeach
-                                    </select>
-                                    <span class="text-red-600 err_text" id="area_`+counter+`_err"></span>
-                                </div>
-                            </div>
-                            <div class="col-sm-2">
-                                <div class="form-group">
-                                    <label for="exampleInputPassword1">Số Lượng</label>
-                                    <input type="number" class="form-control" id="total_amount" name="total_amount[`+counter+`]" placeholder="Số Lượng">
-                                    <span class="text-red-600 err_text" id="total_amount_`+counter+`_err"></span>
-                                </div>
-                            </div>
-                            <div class="col-sm-1">
-                                <div class="form-group">
-                                    <label for="exampleInputPassword1">Tóm Tắt</label>
-                                    <input type="text" class="form-control" id="overview" name="overview[`+counter+`]" placeholder="Tóm Tắt">
+                                <div class="col-sm-4">
+                                    <div class="form-group">
+                                        <label for="exampleInputPassword1">Tóm Tắt</label>
+                                        <textarea name="overview[`+counter+`]" id="overview" cols="30" rows="4" placeholder="Tóm Tắt">{{ $book->overview }}</textarea>
+                                    </div>
                                 </div>
                             </div>
                             <div class="col-sm-2">

@@ -59,6 +59,7 @@
                     <label for="exampleInputPassword1"> Số Điện Thoại</label>
                     <input type="text" class="form-control" id="phone_number" name="phone_number"
                         placeholder=" Số Điện Thoại">
+                    <span class="text-red-600 err_text" id="phone_number_err"></span>
                 </div>
             </div>
             <!-- /.card-body -->

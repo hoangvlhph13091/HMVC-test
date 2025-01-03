@@ -17,7 +17,7 @@ class CustomerEditRequest extends FormRequest
             'name'=>"required|unique:customer,name,".$this->id,
             'date_of_birth'=>"required",
             'address'=>"required",
-            'phone_number'=>"required|numeric",
+            'phone_number'=>"required|numeric||unique:customer,phone_number,".$this->id,
         ];
     }
 
@@ -29,6 +29,7 @@ class CustomerEditRequest extends FormRequest
             'date_of_birth.required'=>'Hãy nhập ngày sinh',
             'address.required'=>'Hãy nhập địa chỉ',
             'phone_number.required'=>'Hãy nhập số điện thoại',
+            'phone_number.unique'=>'Số điện thoại này đã được đăng ký',
         ];
     }
 

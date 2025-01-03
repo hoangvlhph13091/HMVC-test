@@ -17,7 +17,7 @@ class CustomerRequests extends FormRequest
             'name'=>"required|unique:customer",
             'date_of_birth'=>"required",
             'address'=>"required",
-            'phone_number'=>"required|numeric",
+            'phone_number'=>"required|numeric|unique:customer,phone_number",
         ];
     }
 
@@ -29,6 +29,7 @@ class CustomerRequests extends FormRequest
             'date_of_birth.required'=>'Hãy nhập ngày sinh',
             'address.required'=>'Hãy nhập địa chỉ',
             'phone_number.required'=>'Hãy nhập số điện thoại',
+            'phone_number.unique'=>'Số điện thoại này đã được đăng ký',
         ];
     }
 
