@@ -32,6 +32,13 @@
                     <span class="text-red-600 err_text" id="author_err"></span>
                 </div>
                 <div class="form-group">
+                    <label for="">Ảnh Bìa</label>
+                    <div class="custom-file">
+                        <input type="file"  name="image" class="custom-file-input" id="customFile">
+                        <label class="custom-file-label" for="customFile">Ảnh Bìa</label>
+                    </div>
+                </div>
+                <div class="form-group">
                     <label for="exampleInputPassword1">Khu Vực</label>
                     <select id="area" name="area" class="form-control">
                         @foreach ($areas as $area)
@@ -72,9 +79,13 @@
 @endsection
 
 @section('scripts')
+
     <script src="{{ Module::asset('Category:js/viewTree.js') }}"></script>
     <link rel="stylesheet" href="{{ Module::asset('Category:css/viewtree.css') }}">
     <script>
+        $(function () {
+            bsCustomFileInput.init();
+        });
         $(document).ready(function(){
             $('.select2').select2()
         });

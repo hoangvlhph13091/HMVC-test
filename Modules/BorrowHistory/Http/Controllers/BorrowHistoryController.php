@@ -177,16 +177,20 @@ class BorrowHistoryController extends Controller
     }
 
     public function returnBookForm(){
-        $customers = Customer::all();
+        $customers = DB::table('borrow_history')
+            ->select('reader_name AS name', 'reader_id AS id')
+            ->distinct()->get();
         return view('borrowhistory::returnBook', compact('customers'));
     }
 
     public function getUserInfo(Request $request){
         $id = $request->id;
+        $name = $request->name;
 
         $history = DB::table('borrow_detail')
         ->join('borrow_history', 'borrow_history.id', '=', 'borrow_detail.history_id')
         ->where('borrow_history.reader_id', '=', $id)
+        ->where('borrow_history.reader_name', '=', $name)
         ->select('borrow_detail.*', 'borrow_history.borrow_date', 'borrow_history.return_date', 'borrow_history.id AS his_id')
         ->get();
 

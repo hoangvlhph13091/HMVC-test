@@ -16,6 +16,7 @@ use Modules\Book\Http\Services\BookServices;
 use Modules\Book\Http\Requests\BookEditRequests;
 use Modules\Book\Http\Requests\ReceiptRequests;
 use Modules\Area\Entities\Area;
+use Illuminate\Support\Facades\Hash;
 use Exception;
 
 class BookController extends Controller
@@ -60,7 +61,8 @@ class BookController extends Controller
 
         $data = $request->except(['_token', 'tag']);
         if ($request->has('image')) {
-            $imgPath = $request->file('image')->store('public/image');
+            $file_name = strtotime("now") . $request->file('image')->getClientOriginalName();;
+            $imgPath = $request->file('image')->storeAs('public/image/book', $file_name);
             $data['image'] = $imgPath;
         }
         $tagData =  $request->only('tag');

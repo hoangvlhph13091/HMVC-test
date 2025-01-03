@@ -30,7 +30,7 @@
                                 <select id="select_name" class="form-control select_book">
                                     <option value="">Chọn Bạn Đọc</option>
                                     @foreach ($customers as $cust)
-                                        <option value="{{ $cust->id }}">{{ $cust->name }}</option>
+                                        <option data-name="{{ $cust->name }}" value="{{ $cust->id }}">{{ $cust->name }}</option>
                                     @endforeach
                                 </select>
                                 <span class="text-red-600 err_text" id="book_id_0_err"></span>
@@ -54,17 +54,22 @@
     <script>
         $('#select_name').select2();
         $('#select_name').on('change', function(e) {
-            if ($.trim($(this).val()) == '') {
+            console.log();
+
+            if ($.trim($(this).val()) == '' && $.trim($('option:selected').attr('data-name')) == '') {
+                $('#append_book_area').html('').change();
                 return;
             }
 
             let id = $.trim($(this).val())
+            let name = $.trim($('option:selected').attr('data-name'))
             let url = "{{ route('borrowhistory.returnBookForm.getUserInfo') }}"
             $.ajax({
                 type: 'GET',
                 url: url,
                 data: {
-                    id: id
+                    id: id,
+                    name: name
                 },
                 success: function(response) {
                     $('#append_book_area').html('').change();

@@ -44,7 +44,7 @@
                 class="nav-link {{ request()->is('customer*') ? 'active' : 'link-dark' }}">
                 <i class="nav-icon fas fa-glasses"></i>
                 <p>
-                    Quản Lý Bạn Đọc
+                    Quản Lý Thành Viên
                 </p>
             </a>
         </li>
@@ -71,7 +71,7 @@
                 class="nav-link {{ request()->is('user*') ? 'active' : 'link-dark' }}">
                 <i class="nav-icon fas fa-user"></i>
                 <p>
-                    Quản Lý Thành Viên
+                    Quản Lý Nhân Viên
                 </p>
             </a>
         </li>

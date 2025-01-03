@@ -32,9 +32,11 @@
                         <thead>
                             <tr>
                                 <th>ID</th>
-                                <th>Thêm sách</th>
-                                <th>Tóm Tắt</th>
+                                <th>Tên sách</th>
+                                <th>Ảnh Bìa</th>
+                                <th>Tác Giả</th>
                                 <th>Giá Bìa</th>
+                                <th>Tóm Tắt</th>
                                 <th></th>
                             </tr>
                         </thead>
@@ -43,8 +45,10 @@
                                 <tr>
                                     <th>{{ $book->id }}</th>
                                     <th>{{ $book->name }}</th>
-                                    <th>{{ $book->overview }}</th>
+                                    <th><img style="height: 100px" src="{{ asset('storage/image/book/'.$book->image) }}" alt=""></th>
+                                    <th>{{ $book->author }}</th>
                                     <th>{{ $book->price }}</th>
+                                    <th>{{ $book->overview }}</th>
                                     <th>
                                         <a href="{{ route('book.editForm', ['id' => $book->id]) }}"
                                             class="btn btn-info">Edit</a>
@@ -57,9 +61,11 @@
                         <tfoot>
                             <tr>
                                 <th>ID</th>
-                                <th>Thêm sách</th>
-                                <th>Tóm Tắt</th>
+                                <th>Tên sách</th>
+                                <th>Ảnh Bìa</th>
+                                <th>Tác Giả</th>
                                 <th>Giá Bìa</th>
+                                <th>Tóm Tắt</th>
                                 <th></th>
                             </tr>
                         </tfoot>
@@ -135,7 +141,7 @@
             }],
             "columnDefs": [{
                 orderable: false,
-                targets: [4]
+                targets: [6]
             }]
         }).buttons().container().appendTo('#example1_wrapper .col-md-6:eq(0)');
 
