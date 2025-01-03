@@ -25,10 +25,23 @@
             <input type="text" class="form-control" readonly value="{{ date("y/m/d", strtotime( $his->return_date )) }}">
         </div>
     </div>
-    <div class="col-sm-2">
+    <div class="col-sm-1">
         <div class="form-group">
             <label for="exampleInputPassword1">Mã Đơn Mượn</label>
             <input type="text" readonly name="his_id[{{ $his->id }}]" value="{{  $his->his_id }}" class="form-control">
+        </div>
+    </div>
+    <div class="col-sm-1">
+        <div class="form-group">
+            <label for="exampleInputPassword1">Trạng Thái</label>
+            <input type="text" readonly
+            @if (strtotime( $his->return_date ) < strtotime('now'))
+                value="Quá Hạn" style="color: red; font-weight: 700; background: #d7d7d7"
+            @elseif (strtotime( $his->return_date ) > strtotime('now'))
+                value="Còn Hạn" style="color: Yellow; font-weight: 700; background: #d7d7d7"
+            @elseif ($his->status == 1 && strtotime( $his->return_date ) > strtotime('now'))
+                value="Đã Trả" style="color: Green; font-weight: 700; background: #d7d7d7"
+            @endif  class="form-control">
         </div>
     </div>
     <div class="col-sm-2">
